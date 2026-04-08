@@ -1,0 +1,11 @@
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.csproj.AssemblyReference.cache
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.Form1.resources
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.Properties.Resources.resources
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.csproj.GenerateResource.cache
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.csproj.CoreCompileInputs.cache
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\bin\Debug\Invetory.exe.config
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\bin\Debug\Invetory.exe
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\bin\Debug\Invetory.pdb
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.exe
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.pdb
+C:\_fac\an3\sem2\II\II_proj\Invetory\Invetory\obj\Debug\Invetory.exe.config
