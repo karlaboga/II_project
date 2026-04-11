@@ -1,3 +1,0 @@
-waiter1,monday,morning,yes
-chef1,monday,morning,yes
-waiter1,friday,morning,yes
