@@ -1,12 +1,53 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Invetory\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Invetory\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}|Invetory\\Invetory.csproj|c:\\users\\v\\documents\\github\\ii_project\\invetory\\invetory\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}|Invetory\\Invetory.csproj|solutionrelative:invetory\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}|Invetory\\Invetory.csproj|c:\\users\\v\\documents\\github\\ii_project\\invetory\\invetory\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}|Invetory\\Invetory.csproj|solutionrelative:invetory\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Invetory\\Invetory\\Form1.cs",
+              "RelativeDocumentMoniker": "Invetory\\Form1.cs",
+              "ToolTip": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Invetory\\Invetory\\Form1.cs",
+              "RelativeToolTip": "Invetory\\Form1.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAADwvxYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T00:11:52.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Invetory\\Invetory\\Form1.cs",
+              "RelativeDocumentMoniker": "Invetory\\Form1.cs",
+              "ToolTip": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Invetory\\Invetory\\Form1.cs [Design]",
+              "RelativeToolTip": "Invetory\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T00:11:48.774Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

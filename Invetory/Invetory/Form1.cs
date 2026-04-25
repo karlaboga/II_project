@@ -20,7 +20,7 @@ namespace Invetory
             dataGridView1.DataSource = inventory;
         }
 
-        //ADD
+        //ADD ceva [e aici
         private void button_Add_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBox_Product.Text) ||
