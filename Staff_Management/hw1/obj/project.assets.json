@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\Lab2\\hw1\\hw1\\hw1.csproj",
+      "projectUniqueName": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Staff_Management\\hw1\\hw1.csproj",
       "projectName": "hw1",
-      "projectPath": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\Lab2\\hw1\\hw1\\hw1.csproj",
+      "projectPath": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Staff_Management\\hw1\\hw1.csproj",
       "packagesPath": "C:\\Users\\Karla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\Lab2\\hw1\\hw1\\obj\\",
+      "outputPath": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Staff_Management\\hw1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
