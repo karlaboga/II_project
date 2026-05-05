@@ -1,0 +1,45 @@
+﻿@model System.Collections.Generic.List<BengosMenu.Models.Dish>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bengos Menu</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .price {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .ingredient {
+            color: #666;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bengos Menu</h1>
+    @foreach (var dish in Model)
+    {
+        <div class="card">
+            <h2>@dish.Name <span class="price">@dish.Price.ToString("C")</span></h2>
+            <h4>Ingredients:</h4>
+            @foreach (var ingredient in dish.DishIngredients)
+            {
+                <div class="ingredient">@ingredient.Produs.Name - @ingredient.Quantity @ingredient.Produs.Unit</div>
+            }
+        </div>
+    }
+</body>
+</html>
