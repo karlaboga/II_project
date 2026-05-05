@@ -11,7 +11,7 @@
       "RelativeMoniker": "D:0:0:{8DDF913C-D967-4459-B45C-1A4D78A381D5}|hw1\\hw1.csproj|solutionrelative:hw1\\users.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8DDF913C-D967-4459-B45C-1A4D78A381D5}|hw1\\hw1.csproj|c:\\users\\karla\\utcn\\an3\\sem2\\ii\\proiect\\push\\ii_project\\staff_management\\hw1\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{8DDF913C-D967-4459-B45C-1A4D78A381D5}|hw1\\hw1.csproj|C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Staff_Management\\hw1\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{8DDF913C-D967-4459-B45C-1A4D78A381D5}|hw1\\hw1.csproj|solutionrelative:hw1\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -51,8 +51,7 @@
               "RelativeToolTip": "hw1\\users.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2026-04-24T06:05:37.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-24T06:05:37.433Z"
             },
             {
               "$type": "Document",
@@ -64,8 +63,7 @@
               "RelativeToolTip": "hw1\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T06:04:59.219Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-24T06:04:59.219Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "ToolTip": "C:\\Users\\Karla\\UTCN\\an3\\sem2\\II\\proiect\\push\\II_project\\Staff_Management\\hw1\\MainForm.cs [Design]",
               "RelativeToolTip": "hw1\\MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-24T06:04:48.533Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-04-24T06:04:48.533Z"
             }
           ]
         }
