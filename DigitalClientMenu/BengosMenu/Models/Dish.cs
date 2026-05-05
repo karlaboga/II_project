@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema; // Add this line
+using System.ComponentModel.DataAnnotations.Schema;
 namespace BengosMenu.Models
 {
-    [Table("Produs")] // Maps to your dbo.Produs table
+    [Table("Produs")]
     public class Produs
     {
         [Key]
@@ -13,7 +13,7 @@ namespace BengosMenu.Models
         public decimal Quantity { get; set; }
         public string Unit { get; set; } = "pcs";
     }
-    [Table("Dish")] // Maps to your dbo.Dish table (fixes the "dbo.Dishes" error)
+    [Table("Dish")]
     public class Dish
     {
         [Key]
@@ -21,9 +21,10 @@ namespace BengosMenu.Models
         [Required]
         public string Name { get; set; }
         public decimal Price { get; set; }
+        public string Category { get; set; }
         public ICollection<DishIngredient> DishIngredients { get; set; }
     }
-    [Table("DishIngredient")] // Maps to your dbo.DishIngredient table
+    [Table("DishIngredient")]
     public class DishIngredient
     {
         public int DishId { get; set; }
