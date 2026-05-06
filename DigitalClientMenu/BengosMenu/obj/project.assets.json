@@ -527,14 +527,9 @@
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-<<<<<<< HEAD
-        "net8.0": {
-          "framework": "net8.0",
-          "targetAlias": "net8.0",
-=======
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
->>>>>>> 6e0d4042e8b9f42d8e35ff0dc7ca69ed766036f7
           "projectReferences": {}
         }
       },
@@ -551,14 +546,9 @@
       "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
-<<<<<<< HEAD
-      "net8.0": {
-        "framework": "net8.0",
-        "targetAlias": "net8.0",
-=======
       "net10.0": {
+        "framework": "net10.0",
         "targetAlias": "net10.0",
->>>>>>> 6e0d4042e8b9f42d8e35ff0dc7ca69ed766036f7
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Sqlite": {
             "target": "Package",
@@ -584,10 +574,7 @@
             "privateAssets": "all"
           }
         },
-<<<<<<< HEAD
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
-=======
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -1002,8 +989,15 @@
           "System.Xml.XPath": "(,4.3.32767]",
           "System.Xml.XPath.XDocument": "(,5.0.32767]"
         }
->>>>>>> 6e0d4042e8b9f42d8e35ff0dc7ca69ed766036f7
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\DigitalClientMenu\\BengosMenu\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }
