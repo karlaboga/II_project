@@ -1,0 +1,15 @@
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\bin\Debug\net8.0\BengosMenu.deps.json
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\bin\Debug\net8.0\BengosMenu.runtimeconfig.json
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\bin\Debug\net8.0\BengosMenu.dll
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\bin\Debug\net8.0\BengosMenu.pdb
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.csproj.AssemblyReference.cache
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.AssemblyInfoInputs.cache
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.AssemblyInfo.cs
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.csproj.CoreCompileInputs.cache
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.sourcelink.json
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.dll
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\refint\BengosMenu.dll
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.pdb
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\BengosMenu.genruntimeconfig.cache
+C:\Users\Diana\Documents\GitHub\II_project\DigitalClientMenu\BengosMenu\obj\Debug\net8.0\ref\BengosMenu.dll
