@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BengosMenu")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afa918aeac286fd0509c8757c63f4b687022adf9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ad096e7d0acac5fd5538b7f77146f4ac061d8b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BengosMenu")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BengosMenu")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

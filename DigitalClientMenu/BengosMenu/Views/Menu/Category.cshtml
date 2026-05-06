@@ -1,177 +1,84 @@
-﻿@model System.Collections.Generic.List<BengosMenu.Models.Dish>
+@model IEnumerable<BengosMenu.Models.Dish>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = ViewBag.Category + " - Bengos Menu";
+    ViewData["Title"] = "Category - " + ViewBag.Category;
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>@ViewBag.Category - Bengos Menu</title>
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #F8F8F8;
-            color: #3D3B3A;
-        }
+<style>
+    .dish-card {
+        background-color: #FFFFFF;
+        border: 1px solid #CCCBCB;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+    .dish-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .dish-name {
+        color: #3D3B3A;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .dish-price {
+        color: #3E3C3B;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .dish-description {
+        color: #464443;
+        margin-bottom: 15px;
+    }
+    .ingredient-badge {
+        display: inline-block;
+        background-color: #E2E2E1;
+        color: #3D3B3A;
+        padding: 5px 12px;
+        border-radius: 20px;
+        margin: 3px;
+        font-size: 0.85rem;
+    }
+</style>
 
-        .header {
-            background: #3E3C3B;
-            color: #FFFFFF;
-            padding: 40px 24px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-family: 'Georgia', serif;
-            font-size: 36px;
-            font-weight: 300;
-            color: #FFFFFF;
-            margin-bottom: 8px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #3D3B3A;
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-size: 14px;
-            padding: 8px 16px;
-            background: #FFFFFF;
-            border-radius: 8px;
-            border: 0.5px solid #E2E2E1;
-        }
-
-            .back-link:hover {
-                background: #EEEDED;
-                text-decoration: none;
-            }
-
-        .dish-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .dish-card {
-            background: #FFFFFF;
-            border: 0.5px solid #E2E2E1;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-            .dish-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 8px 16px rgba(61,59,58,0.15);
-            }
-
-        .dish-img {
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            background: #F8F8F8;
-        }
-
-        .dish-info {
-            padding: 20px;
-        }
-
-        .dish-name {
-            font-size: 18px;
-            font-weight: 500;
-            color: #3D3B3A;
-            margin-bottom: 8px;
-        }
-
-        .dish-ingredients {
-            font-size: 13px;
-            color: #464443;
-            line-height: 1.5;
-            margin-bottom: 12px;
-        }
-
-        .dish-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .dish-price {
-            font-family: 'Georgia', serif;
-            font-size: 22px;
-            font-weight: 600;
-            color: #3E3C3B;
-        }
-
-        .add-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #3D3B3A;
-            border: none;
-            color: #FFFFFF;
-            font-size: 24px;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-            .add-btn:hover {
-                background: #464443;
-            }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="@Url.Action("Index", "Menu")" class="back-link">← Back to Menu</a>
-
-        <div class="header">
-            <h1>@ViewBag.Category</h1>
-        </div>
-
-        <div class="dish-grid">
-            @foreach (var dish in Model)
-            {
-                <div class="dish-card">
-                    <div class="dish-img">
-                        @if (ViewBag.Category == "Main Course") { <text>🍽️</text> }
-                        else if (ViewBag.Category == "Dessert") { <text>🍰</text> }
-                        else if (ViewBag.Category == "Drinks") { <text>🍹</text> }
-                        else { <text>🍽️</text> }
-                    </div>
-                    <div class="dish-info">
-                        <div class="dish-name">@dish.Name</div>
-                        <div class="dish-ingredients">
-                            @foreach (var ingredient in dish.DishIngredients)
-                            {
-                                @ingredient.Produs.Name @ingredient.Quantity @ingredient.Produs.Unit
-                            }
-                        </div>
-                        <div class="dish-footer">
-                            <span class="dish-price">@dish.Price.ToString("C")</span>
-                            <button class="add-btn">+</button>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+<div class="row" style="padding: 50px 0;">
+    <div class="col-12">
+        <a asp-controller="Menu" asp-action="Index" style="color: #3D3B3A; text-decoration: none;">← Back to Categories</a>
+        <h1 style="color: #3D3B3A; margin-top: 20px;">@ViewBag.Category</h1>
     </div>
-</body>
-</html>
+</div>
+
+<div class="row">
+    @foreach (var dish in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="dish-card">
+                <div class="dish-name">@dish.Name</div>
+                <div class="dish-price">$@dish.Price.ToString("0.00")</div>
+                @if (!string.IsNullOrEmpty(dish.Description))
+                {
+                    <div class="dish-description">@dish.Description</div>
+                }
+                @if (dish.DishIngredients != null && dish.DishIngredients.Any())
+                {
+                    <div>
+                        <small style="color: #3E3C3B;">Ingredients:</small><br />
+                        @foreach (var ingredient in dish.DishIngredients)
+                        {
+                            <span class="ingredient-badge">@ingredient.Produs.Name (@ingredient.Quantity @ingredient.Produs.Unit)</span>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center" style="padding: 50px;">
+        <p style="color: #3E3C3B;">No dishes found in this category.</p>
+    </div>
+}
