@@ -1,0 +1,81 @@
+﻿@model System.Collections.Generic.List<BengosMenu.Models.Dish>
+@{
+    ViewBag.Title = ViewBag.Category + " - Bengos Menu";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Category - Bengos Menu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .price {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .ingredient {
+            color: #666;
+            margin-left: 20px;
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 style="margin: 10px 0; color: white;">@ViewBag.Category</h1>
+    </div>
+    <div class="container">
+        <a href="@Url.Action("Index")" class="back-link">← Back to Menu</a>
+        <h2 style="color: #2c3e50;">@ViewBag.Category</h2>
+        @foreach (var dish in Model)
+        {
+            <div class="card">
+                <h2>@dish.Name <span class="price">@dish.Price.ToString("C")</span></h2>
+                <h4 style="color: #555;">Ingredients:</h4>
+                @foreach (var ingredient in dish.DishIngredients)
+                {
+                    <div class="ingredient">• @ingredient.Produs.Name - @ingredient.Quantity @ingredient.Produs.Unit</div>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

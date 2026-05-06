@@ -1,45 +1,131 @@
-﻿@model System.Collections.Generic.List<BengosMenu.Models.Dish>
+﻿@model System.Collections.Generic.List<string>
+@{
+    ViewBag.Title = "Bengos Menu";
+}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bengos Menu</title>
+    <title>Bengos - Fine Dining</title>
     <style>
         body {
-            font-family: Arial;
-            margin: 40px;
+            font-family: 'Segoe UI', Arial;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
         }
 
-        .card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 20px;
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 20px auto;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .qr-section {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .qr-code {
+            max-height: 150px;
+            background: white;
+            padding: 10px;
             border-radius: 8px;
         }
 
-        .price {
-            color: #2ecc71;
-            font-weight: bold;
-            font-size: 1.2em;
+        .qr-text {
+            color: #ddd;
+            margin-top: 10px;
+            font-size: 0.9em;
         }
 
-        .ingredient {
-            color: #666;
-            margin-left: 20px;
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+            .category-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .category-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .category-name {
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Bengos Menu</h1>
-    @foreach (var dish in Model)
-    {
-        <div class="card">
-            <h2>@dish.Name <span class="price">@dish.Price.ToString("C")</span></h2>
-            <h4>Ingredients:</h4>
-            @foreach (var ingredient in dish.DishIngredients)
+    <div class="header">
+        <h1 style="margin: 10px 0; color: white;">Welcome to Bengos</h1>
+        <div class="description">
+            Experience the art of fine dining at Bengos, where culinary excellence meets warm hospitality.
+            Our chefs craft each dish with passion, using only the freshest ingredients sourced locally.
+            From sizzling main courses to decadent desserts and handcrafted drinks, every bite tells a story.
+        </div>
+        <div class="qr-section">
+            <img src="@Url.Action("GenerateQRCode")" alt="Scan to open menu" class="qr-code" />
+            <p class="qr-text">Scan to open menu on your phone</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Our Menu</h1>
+        <div class="categories">
+            @foreach (var category in Model)
             {
-                <div class="ingredient">@ingredient.Produs.Name - @ingredient.Quantity @ingredient.Produs.Unit</div>
+                <a href="@Url.Action("Category", new { category = category })" class="category-card">
+                    <div class="category-icon">
+                        @if (category == "Main Course")
+                        {<text>🍽️</text> }
+                    else if (category == "Dessert")
+                    { <text>🍰</text> }
+                else if (category == "Drinks")
+                { <text>🍹</text>}
+                    </div>
+                    <div class="category-name">@category</div>
+                </a>
             }
         </div>
-    }
+    </div>
 </body>
 </html>
