@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-/Users/user/Desktop/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/
+C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\
 BengosRestaurantApp
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-/Users/user/Desktop/II_project/BengosRestaurantApp/App.xaml
+C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\App.xaml
 7-809209972
 
-9-114313620
-198-1451264299
+10-1823466169
+2001574548405
 BillingWindow.xaml;InventoryWindow.xaml;LoginWindow.xaml;MainWindow.xaml;MenuWindow.xaml;PaymentWindow.xaml;StaffWindow.xaml;
 
 False

@@ -108,7 +108,7 @@ namespace BengosRestaurantApp {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/BengosRestaurantApp;V1.0.0.0;component/menuwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/BengosRestaurantApp;component/menuwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\MenuWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
