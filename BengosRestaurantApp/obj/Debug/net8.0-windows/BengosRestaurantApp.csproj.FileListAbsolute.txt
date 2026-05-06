@@ -69,6 +69,4 @@ C:/Users/Diana/Documents/GitHub/II_project/BengosRestaurantApp/obj/Debug/net8.0-
 C:/Users/Diana/Documents/GitHub/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/BengosRestaurantApp.pdb
 C:/Users/Diana/Documents/GitHub/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/BengosRestaurantApp.genruntimeconfig.cache
 C:/Users/Diana/Documents/GitHub/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/ref/BengosRestaurantApp.dll
-/Users/user/Desktop/II_project/BengosRestaurantApp/bin/Debug/net8.0-windows/QRCoder.dll
 /Users/user/Desktop/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/BengosRestaurantApp.csproj.AssemblyReference.cache
-/Users/user/Desktop/II_project/BengosRestaurantApp/obj/Debug/net8.0-windows/BengosRe.6B28BFBE.Up2Date

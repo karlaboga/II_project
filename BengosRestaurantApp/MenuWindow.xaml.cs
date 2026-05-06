@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Threading.Tasks;
 
 namespace BengosRestaurantApp
 {
@@ -24,9 +23,7 @@ namespace BengosRestaurantApp
 
         private async void MenuWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var publicIp = await IpHelper.GetPublicIpAddressAsync();
-            // TxtPublicIp removed - functionality can be added back if needed
-            // ImgQrCode.Source = IpHelper.GenerateQrCode(publicIp);
+            // QR code functionality removed
         }
 
         private void LoadMenuItems()
