@@ -2,6 +2,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Threading.Tasks;
 
 namespace BengosRestaurantApp
@@ -23,8 +25,8 @@ namespace BengosRestaurantApp
         private async void MenuWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var publicIp = await IpHelper.GetPublicIpAddressAsync();
-            TxtPublicIp.Text = $"Public IP: {publicIp}";
-            ImgQrCode.Source = IpHelper.GenerateQrCode(publicIp);
+            // TxtPublicIp removed - functionality can be added back if needed
+            // ImgQrCode.Source = IpHelper.GenerateQrCode(publicIp);
         }
 
         private void LoadMenuItems()
@@ -61,14 +63,56 @@ namespace BengosRestaurantApp
             };
         }
 
-        private void CategoryFilter_Changed(object sender, RoutedEventArgs e)
+        private void PillAll_Click(object sender, MouseButtonEventArgs e)
+        {
+            UpdateCategoryFilter("All");
+            UpdatePillColors("All");
+        }
+
+        private void PillFood_Click(object sender, MouseButtonEventArgs e)
+        {
+            UpdateCategoryFilter("Food");
+            UpdatePillColors("Food");
+        }
+
+        private void PillDrinks_Click(object sender, MouseButtonEventArgs e)
+        {
+            UpdateCategoryFilter("Drinks");
+            UpdatePillColors("Drinks");
+        }
+
+        private void PillDesserts_Click(object sender, MouseButtonEventArgs e)
+        {
+            UpdateCategoryFilter("Desserts");
+            UpdatePillColors("Desserts");
+        }
+
+        private void UpdatePillColors(string activeCategory)
+        {
+            var allPills = new[] { PillAll, PillFood, PillDrinks, PillDesserts };
+            foreach (var pill in allPills)
+            {
+                pill.Background = Brushes.White;
+                pill.BorderBrush = new SolidColorBrush(Color.FromRgb(0xE2, 0xE2, 0xE1));
+                foreach (TextBlock tb in FindVisualChildren<TextBlock>(pill))
+                {
+                    tb.Foreground = new SolidColorBrush(Color.FromRgb(0x3D, 0x3B, 0x3A));
+                }
+            }
+
+            Border activePill = activeCategory == "All" ? PillAll :
+                              activeCategory == "Food" ? PillFood :
+                              activeCategory == "Drinks" ? PillDrinks : PillDesserts;
+            activePill.Background = new SolidColorBrush(Color.FromRgb(0x3E, 0x3C, 0x3B));
+            foreach (TextBlock tb in FindVisualChildren<TextBlock>(activePill))
+            {
+                tb.Foreground = Brushes.White;
+            }
+        }
+
+        private void UpdateCategoryFilter(string selectedCategory)
         {
             FilteredItems.Clear();
-
-            string selectedCategory = "All";
-            if (RbFood.IsChecked == true) selectedCategory = "Food";
-            else if (RbDrinks.IsChecked == true) selectedCategory = "Drinks";
-            else if (RbDesserts.IsChecked == true) selectedCategory = "Desserts";
 
             if (selectedCategory == "All")
             {
@@ -79,6 +123,22 @@ namespace BengosRestaurantApp
             {
                 foreach (var item in AllMenuItems.Where(m => m.Category == selectedCategory))
                     FilteredItems.Add(item);
+            }
+        }
+
+        private static System.Collections.Generic.IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T)
+                        yield return (T)child;
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                        yield return childOfChild;
+                }
             }
         }
 

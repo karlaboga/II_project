@@ -1,9 +1,117 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About Bengos";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bengos Restaurant - About</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <p>Use this area to provide additional information.</p>
-</main>
+        body {
+            background: #F8F8F8;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #3D3B3A;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border: 0.5px solid #E2E2E1;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px rgba(204,203,203,0.3);
+        }
+
+        h1 {
+            font-family: 'Georgia', serif;
+            color: #3E3C3B;
+            font-size: 36px;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            color: #3D3B3A;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #464443;
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            color: #3E3C3B;
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #3D3B3A;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+            .back-link:hover {
+                color: #464443;
+                text-decoration: underline;
+            }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+            .feature-list li {
+                padding: 8px 0;
+                color: #464443;
+                padding-left: 24px;
+                position: relative;
+            }
+
+            .feature-list li::before {
+                content: '•';
+                color: #CCCBCB;
+                position: absolute;
+                left: 0;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="@Url.Action("Index", "Home")" class="back-link">← Back to Home</a>
+
+        <div class="card">
+            <h1>About Bengos</h1>
+            <p>Welcome to <span class="highlight">Bengos Restaurant</span>, where culinary excellence meets warm hospitality.</p>
+
+            <h2>Our Story</h2>
+            <p>Founded with a passion for fine dining, Bengos has been serving exceptional dishes crafted with the freshest local ingredients. Our chefs bring creativity and expertise to every plate.</p>
+
+            <h2>What We Offer</h2>
+            <ul class="feature-list">
+                <li>Sizzling main courses made with premium ingredients</li>
+                <li>Decadent desserts handcrafted daily</li>
+                <li>Handpicked wine and drink selection</li>
+                <li>Warm, elegant atmosphere for memorable dining</li>
+            </ul>
+
+            <h2>Experience</h2>
+            <p>From the moment you walk in, our team ensures every visit is special. Experience the art of fine dining at Bengos.</p>
+        </div>
+    </div>
+</body>
+</html>
