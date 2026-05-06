@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace BengosRestaurantApp
 {
@@ -16,6 +17,14 @@ namespace BengosRestaurantApp
             LoadMenuItems();
             FilteredItems = new ObservableCollection<MenuItem>(AllMenuItems);
             LvMenu.ItemsSource = FilteredItems;
+            Loaded += MenuWindow_Loaded;
+        }
+
+        private async void MenuWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var publicIp = await IpHelper.GetPublicIpAddressAsync();
+            TxtPublicIp.Text = $"Public IP: {publicIp}";
+            ImgQrCode.Source = IpHelper.GenerateQrCode(publicIp);
         }
 
         private void LoadMenuItems()
