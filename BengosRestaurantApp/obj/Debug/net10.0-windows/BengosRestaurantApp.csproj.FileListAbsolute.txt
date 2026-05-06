@@ -35,3 +35,6 @@
 /Users/user/Desktop/II_project/BengosRestaurantApp/bin/Debug/net10.0-windows/QRCoder.dll
 /Users/user/Desktop/II_project/BengosRestaurantApp/obj/Debug/net10.0-windows/BengosRestaurantApp.csproj.AssemblyReference.cache
 /Users/user/Desktop/II_project/BengosRestaurantApp/obj/Debug/net10.0-windows/BengosRe.6B28BFBE.Up2Date
+C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net10.0-windows\BengosRestaurantApp.dll
+C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net10.0-windows\refint\BengosRestaurantApp.dll
+C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net10.0-windows\BengosRestaurantApp.pdb
