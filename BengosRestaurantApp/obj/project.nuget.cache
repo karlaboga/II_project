@@ -1,16 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+De1x70Im2c=",
+  "dgSpecHash": "IaYXMR45fVI=",
   "success": true,
-  "projectFilePath": "/Users/user/Desktop/II_project/BengosRestaurantApp/BengosRestaurantApp.csproj",
+  "projectFilePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
   "expectedPackageFiles": [
-    "/Users/user/.nuget/packages/microsoft.win32.systemevents/8.0.0/microsoft.win32.systemevents.8.0.0.nupkg.sha512",
-    "/Users/user/.nuget/packages/qrcoder/1.4.3/qrcoder.1.4.3.nupkg.sha512",
-    "/Users/user/.nuget/packages/system.drawing.common/8.0.0/system.drawing.common.8.0.0.nupkg.sha512",
-    "/Users/user/.nuget/packages/microsoft.netcore.app.ref/8.0.24/microsoft.netcore.app.ref.8.0.24.nupkg.sha512",
-    "/Users/user/.nuget/packages/microsoft.windowsdesktop.app.ref/8.0.24/microsoft.windowsdesktop.app.ref.8.0.24.nupkg.sha512",
-    "/Users/user/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.24/microsoft.aspnetcore.app.ref.8.0.24.nupkg.sha512",
-    "/Users/user/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.24/microsoft.netcore.app.host.osx-arm64.8.0.24.nupkg.sha512"
+    "C:\\Users\\Diana\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\Diana\\.nuget\\packages\\qrcoder\\1.4.3\\qrcoder.1.4.3.nupkg.sha512",
+    "C:\\Users\\Diana\\.nuget\\packages\\system.drawing.common\\8.0.0\\system.drawing.common.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }
