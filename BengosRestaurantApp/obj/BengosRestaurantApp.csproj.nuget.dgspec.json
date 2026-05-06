@@ -1,36 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\V\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj": {}
+    "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\V\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj": {
+    "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\V\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+        "projectUniqueName": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
         "projectName": "BengosRestaurantApp",
-        "projectPath": "C:\\Users\\V\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
-        "packagesPath": "C:\\Users\\V\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\V\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\",
+        "projectPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+        "packagesPath": "C:\\Users\\Diana\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\V\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Diana\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net10.0-windows"
+          "net8.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net10.0-windows7.0": {
-            "targetAlias": "net10.0-windows",
+          "net8.0-windows": {
+            "framework": "net8.0-windows7.0",
+            "targetAlias": "net8.0-windows",
             "projectReferences": {}
           }
         },
@@ -42,13 +43,24 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
-        "net10.0-windows7.0": {
-          "targetAlias": "net10.0-windows",
+        "net8.0-windows": {
+          "framework": "net8.0-windows7.0",
+          "targetAlias": "net8.0-windows",
+          "dependencies": {
+            "QRCoder": {
+              "target": "Package",
+              "version": "[1.4.3, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -60,7 +72,15 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

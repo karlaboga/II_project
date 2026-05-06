@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BengosRestaurantApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22ff541a410bccc67802cfc1cf61854ecef7c370")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0da83671d1b7b8c1b6effcd60899dd78d5f0954")]
 [assembly: System.Reflection.AssemblyProductAttribute("BengosRestaurantApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BengosRestaurantApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

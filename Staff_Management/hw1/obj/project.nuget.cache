@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "6hql0+3oaUc=",
+  "dgSpecHash": "WYejlBT8EFI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\V\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
+  "projectFilePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
+      "targetGraphs": []
+    }
+  ]
 }
