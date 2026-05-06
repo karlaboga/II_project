@@ -50,12 +50,6 @@ namespace BengosRestaurantApp
                     "Web App Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-            catch
-            {
-                MessageBox.Show("Please open the DigitalClientMenu project in Visual Studio and run it.",
-                    "Web App Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
