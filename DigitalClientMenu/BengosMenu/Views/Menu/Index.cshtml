@@ -3,137 +3,300 @@
     ViewBag.Title = "Bengos Menu";
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Bengos - Fine Dining</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bengos Restaurant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Segoe UI', Arial;
-            margin: 0;
-            padding: 0;
             background: #F8F8F8;
-            color: #3D3B3A;
-        }
-
-        .header {
-            background: #3E3C3B;
-            color: #FFFFFF;
-            padding: 40px;
-            text-align: center;
-        }
-
-        .description {
-            max-width: 800px;
-            margin: 20px auto;
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #E2E2E1;
-        }
-
-        .qr-section {
-            margin: 30px auto;
-            text-align: center;
-            background: #EEEDED;
-            padding: 20px;
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        .qr-code {
-            max-height: 150px;
-            background: #FFFFFF;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #CCCBCB;
-        }
-
-        .qr-text {
-            color: #464443;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #3D3B3A;
-        }
-
-        .categories {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 16px;
+            font-family: 'Jost', sans-serif;
         }
 
-        .category-card {
-            background: #FFFFFF;
-            border-radius: 12px;
-            padding: 30px;
-            width: 250px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(204,203,203,0.3);
-            transition: transform 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            border: 1px solid #E2E2E1;
+        .phone-frame {
+            width: 390px;
+            background: #F8F8F8;
+            border-radius: 48px;
+            padding: 24px 20px 32px;
+            box-shadow: 0 40px 80px rgba(61,59,58,0.18);
+            overflow: hidden;
         }
 
-            .category-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 12px rgba(61,59,58,0.15);
-            }
-
-        .category-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
+        /* Hero */
+        .hero {
+            background: #3E3C3B;
+            border-radius: 20px;
+            padding: 28px 24px 22px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .category-name {
-            font-size: 1.5em;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 1px solid rgba(204,203,203,0.2);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: -40px;
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            border: 1px solid rgba(204,203,203,0.12);
+        }
+        .hero-eyebrow {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #CCCBCB;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px;
+            font-weight: 300;
+            color: #FFFFFF;
+            line-height: 1.1;
+            margin-bottom: 4px;
+        }
+        .hero-title em { font-style: italic; color: #E2E2E1; }
+        .hero-sub {
+            font-size: 12px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+        }
+        .hero-actions { display: flex; gap: 10px; }
+        .btn-primary {
+            background: #CCCBCB;
             color: #3D3B3A;
-            font-weight: bold;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 30px;
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border: 0.5px solid rgba(255,255,255,0.22);
+            padding: 11px 18px;
+            border-radius: 30px;
+            font-family: 'Jost', sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            color: #464443;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        /* Category pills */
+        .category-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 22px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        .category-row::-webkit-scrollbar { display: none; }
+        .cat-pill {
+            background: #FFFFFF;
+            border: 0.5px solid rgba(61,59,58,0.1);
+            border-radius: 30px;
+            padding: 7px 16px;
+            font-size: 12px;
+            white-space: nowrap;
+            cursor: pointer;
+            color: #3D3B3A;
+            font-weight: 400;
+        }
+        .cat-pill.active {
+            background: #3E3C3B;
+            color: #FFFFFF;
+            border-color: #3E3C3B;
+        }
+
+        /* Dish grid */
+        .dish-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .dish-card {
+            background: #FFFFFF;
+            border: 0.5px solid rgba(61,59,58,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .dish-img {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+        }
+        .dish-img.bg1 { background: #3D3B3A; }
+        .dish-img.bg2 { background: #464443; }
+        .dish-img.bg3 { background: #3E3C3B; }
+        .dish-img.bg4 { background: #464443; }
+        .dish-info { padding: 10px 12px 12px; }
+        .dish-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; color: #3D3B3A; }
+        .dish-desc { font-size: 11px; color: #464443; line-height: 1.5; margin-bottom: 8px; }
+        .dish-footer { display: flex; align-items: center; justify-content: space-between; }
+        .dish-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #3E3C3B;
+        }
+        .add-btn {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            background: #3D3B3A;
+            border: none;
+            color: #FFFFFF;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Nav bar */
+        .nav-bar {
+            background: #FFFFFF;
+            border: 0.5px solid rgba(61,59,58,0.08);
+            border-radius: 20px;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            color: #CCCBCB;
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+        .nav-item.active { color: #3D3B3A; }
+        .nav-item i { font-size: 20px; }
+        .cart-badge { position: relative; display: inline-block; }
+        .badge-dot {
+            position: absolute;
+            top: -4px; right: -4px;
+            width: 8px; height: 8px;
+            background: #3E3C3B;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 style="margin: 10px 0; color: #FFFFFF;">Welcome to Bengos</h1>
-        <div class="description">
-            Experience the art of fine dining at Bengos, where culinary excellence meets warm hospitality.
-            Our chefs craft each dish with passion, using only the freshest ingredients sourced locally.
-            From sizzling main courses to decadent desserts and handcrafted drinks, every bite tells a story.
-        </div>
-        <div class="qr-section">
-            <img src="@Url.Action("GenerateQRCode")" alt="Scan to open menu" class="qr-code" />
-            <p class="qr-text">Scan to open menu on your phone</p>
+
+<div class="phone-frame">
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-eyebrow">Welcome</div>
+        <div class="hero-title">Bengos <em>Restaurant</em></div>
+        <div class="hero-sub">Fine dining · Est. 2024</div>
+        <div class="hero-actions">
+            <button class="btn-primary">View Menu</button>
+            <button class="btn-ghost">Reserve</button>
         </div>
     </div>
-    <div class="container">
-        <h1>Our Menu</h1>
-        <div class="categories">
-            @foreach (var category in Model)
-            {
-                <a href="@Url.Action("Category", new { category = category })" class="category-card">
-                    <div class="category-icon">
-                        @if (category == "Main Course")
-                        {<text>🍽️</text> }
-                    else if (category == "Dessert")
-                    { <text>🍰</text> }
-                else if (category == "Drinks")
-                { <text>🍹</text>}
+
+    <!-- Browse -->
+    <div class="section-label">Browse Categories</div>
+    <div class="category-row">
+        <div class="cat-pill active">All</div>
+        <div class="cat-pill">Food</div>
+        <div class="cat-pill">Drinks</div>
+        <div class="cat-pill">Desserts</div>
+    </div>
+
+    <!-- Dish grid -->
+    <div class="dish-grid">
+        @foreach (var category in Model)
+        {
+            <div class="dish-card">
+                <div class="dish-img bg1">
+                    @if (category == "Main Course") { <text>🍽️</text> }
+                    else if (category == "Dessert") { <text>🍰</text> }
+                    else if (category == "Drinks") { <text>🍹</text> }
+                </div>
+                <div class="dish-info">
+                    <div class="dish-name">@category</div>
+                    <div class="dish-desc">Fresh ingredients, crafted with passion</div>
+                    <div class="dish-footer">
+                        <span class="dish-price">$0.00</span>
+                        <button class="add-btn">+</button>
                     </div>
-                    <div class="category-name">@category</div>
-                </a>
-            }
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Bottom nav -->
+    <div class="nav-bar">
+        <div class="nav-item active">
+            <span>🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <span>🔍</span>
+            <span>Search</span>
+        </div>
+        <div class="nav-item">
+            <span class="cart-badge">
+                <span>🛍</span>
+                <span class="badge-dot"></span>
+            </span>
+            <span>Order</span>
+        </div>
+        <div class="nav-item">
+            <span>♡</span>
+            <span>Saved</span>
+        </div>
+        <div class="nav-item">
+            <span>👤</span>
+            <span>Profile</span>
         </div>
     </div>
+
+</div>
+
 </body>
 </html>
