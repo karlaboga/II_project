@@ -5,7 +5,7 @@
         Height="600" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F0F0F5">
+        Background="#F8F8F8">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,34 +19,34 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="1" Text="Bengos Restaurant" FontSize="28" FontWeight="Bold"
-                   Foreground="#993556" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                   Foreground="#3D3B3A" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
             <Button x:Name="BtnInventory" Content="📦 Inventory Management"
                     Height="60" FontSize="16" FontWeight="Bold"
-                    Background="#009650" Foreground="White" BorderThickness="0"
+                    Background="#3E3C3B" Foreground="#FFFFFF" BorderThickness="0"
                     Margin="0,5" Click="BtnInventory_Click"/>
             <Button x:Name="BtnStaff" Content="👥 Staff Management"
                     Height="60" FontSize="16" FontWeight="Bold"
-                    Background="#4682B4" Foreground="White" BorderThickness="0"
+                    Background="#464443" Foreground="#FFFFFF" BorderThickness="0"
                     Margin="0,5" Click="BtnStaff_Click"/>
             <Button x:Name="BtnBilling" Content="💳 Billing &amp; Payments"
                     Height="60" FontSize="16" FontWeight="Bold"
-                    Background="#C83232" Foreground="White" BorderThickness="0"
+                    Background="#3D3B3A" Foreground="#FFFFFF" BorderThickness="0"
                     Margin="0,5" Click="BtnBilling_Click"/>
             <Button x:Name="BtnMenu" Content="🍽️ Digital Client Menu"
                     Height="60" FontSize="16" FontWeight="Bold"
-                    Background="#993556" Foreground="White" BorderThickness="0"
+                    Background="#3E3C3B" Foreground="#FFFFFF" BorderThickness="0"
                     Margin="0,5" Click="BtnMenu_Click"/>
             <Button x:Name="BtnExit" Content="Exit"
                     Height="60" FontSize="16" FontWeight="Bold"
-                    Background="Gray" Foreground="White" BorderThickness="0"
+                    Background="#CCCBCB" Foreground="#3D3B3A" BorderThickness="0"
                     Margin="0,5" Click="BtnExit_Click"/>
         </StackPanel>
 
         <!-- Footer -->
         <TextBlock Grid.Row="3" Text="Bengos Restaurant Management System"
-                   FontSize="10" Foreground="Gray" HorizontalAlignment="Center" Margin="0,10"/>
+                   FontSize="10" Foreground="#464443" HorizontalAlignment="Center" Margin="0,10"/>
     </Grid>
 </Window>

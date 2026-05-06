@@ -1,33 +1,28 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Bengos Restaurant - Home";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+<main style="background-color: #F8F8F8; padding: 20px;">
+    <section class="row" aria-labelledby="bengosTitle" style="text-align: center; padding: 40px; background-color: #3E3C3B; color: #FFFFFF; border-radius: 8px; margin-bottom: 30px;">
+        <h1 id="title" style="color: #FFFFFF;">Welcome to Bengos Restaurant</h1>
+        <p class="lead" style="color: #E2E2E1; font-size: 1.2em;">Experience the art of fine dining where culinary excellence meets warm hospitality.</p>
+        <p><a href="@Url.Action("Index", "Menu")" class="btn" style="background-color: #FFFFFF; color: #3D3B3A; padding: 10px 30px; text-decoration: none; border-radius: 4px; font-weight: bold;">View Our Menu &raquo;</a></p>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
+    <div class="row" style="display: flex; gap: 20px; justify-content: center;">
+        <section class="col-md-4" aria-labelledby="freshTitle" style="background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(204,203,203,0.3);">
+            <h2 id="freshTitle" style="color: #3D3B3A;">Fresh Ingredients</h2>
+            <p style="color: #464443; line-height: 1.6;">
+                Our chefs craft each dish with passion, using only the freshest ingredients sourced locally.
             </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
         </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <section class="col-md-4" aria-labelledby="menuTitle" style="background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(204,203,203,0.3);">
+            <h2 id="menuTitle" style="color: #3D3B3A;">Diverse Menu</h2>
+            <p style="color: #464443; line-height: 1.6;">From sizzling main courses to decadent desserts and handcrafted drinks, every bite tells a story.</p>
         </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <section class="col-md-4" aria-labelledby="serviceTitle" style="background-color: #FFFFFF; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(204,203,203,0.3);">
+            <h2 id="serviceTitle" style="color: #3D3B3A;">Exceptional Service</h2>
+            <p style="color: #464443; line-height: 1.6;">Warm hospitality in an elegant atmosphere that makes every visit memorable.</p>
         </section>
     </div>
 </main>

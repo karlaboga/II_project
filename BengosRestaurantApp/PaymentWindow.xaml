@@ -5,7 +5,7 @@
         Height="450" Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#FBEAF0">
+        Background="#F8F8F8">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,34 +19,34 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Text="Payment Method" FontSize="20" FontWeight="Bold"
-                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                   Foreground="#3D3B3A" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
         <!-- Amount -->
-        <TextBlock Grid.Row="1" Text="Total Amount:" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Text="Total Amount:" FontWeight="Bold" Foreground="#464443" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="2" x:Name="TxtAmount" FontSize="24" FontWeight="Bold"
-                   Foreground="#993556" HorizontalAlignment="Center" Margin="0,5,0,20"/>
+                   Foreground="#3E3C3B" HorizontalAlignment="Center" Margin="0,5,0,20"/>
 
         <!-- Payment Methods -->
         <RadioButton Grid.Row="3" x:Name="RbCard" Content="Card Payment" IsChecked="True"
-                     GroupName="PaymentMethod" Margin="0,5" Checked="RbPayment_Checked"/>
+                     GroupName="PaymentMethod" Foreground="#3D3B3A" Margin="0,5" Checked="RbPayment_Checked"/>
         <RadioButton Grid.Row="4" x:Name="RbCash" Content="Cash Payment" GroupName="PaymentMethod"
-                     Margin="0,5" Checked="RbPayment_Checked"/>
+                     Foreground="#3D3B3A" Margin="0,5" Checked="RbPayment_Checked"/>
 
         <!-- Cash Input -->
         <StackPanel Grid.Row="5" x:Name="CashPanel" Visibility="Collapsed" Margin="0,10">
-            <TextBlock Text="Cash Given:" Margin="0,0,0,5"/>
-            <TextBox x:Name="TxtCashGiven" Height="30" TextChanged="TxtCashGiven_TextChanged"/>
-            <TextBlock Text="Change:" Margin="0,10,0,5"/>
-            <TextBlock x:Name="TxtChange" FontSize="16" FontWeight="Bold"/>
+            <TextBlock Text="Cash Given:" Foreground="#464443" Margin="0,0,0,5"/>
+            <TextBox x:Name="TxtCashGiven" Height="30" Background="#FFFFFF" BorderBrush="#CCCBCB" TextChanged="TxtCashGiven_TextChanged"/>
+            <TextBlock Text="Change:" Foreground="#464443" Margin="0,10,0,5"/>
+            <TextBlock x:Name="TxtChange" FontSize="16" FontWeight="Bold" Foreground="#3D3B3A"/>
         </StackPanel>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
             <Button x:Name="BtnConfirm" Content="Confirm Payment" Width="120" Height="35"
-                    Background="#D4537E" Foreground="White" BorderThickness="0" Margin="5"
+                    Background="#3E3C3B" Foreground="#FFFFFF" BorderThickness="0" Margin="5"
                     Click="BtnConfirm_Click"/>
             <Button x:Name="BtnBack" Content="Back" Width="80" Height="35"
-                    Background="#F4C0D1" BorderThickness="0" Margin="5"
+                    Background="#CCCBCB" Foreground="#3D3B3A" BorderThickness="0" Margin="5"
                     Click="BtnBack_Click"/>
         </StackPanel>
     </Grid>

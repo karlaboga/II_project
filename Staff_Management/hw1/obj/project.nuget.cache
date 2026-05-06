@@ -1,18 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "WYejlBT8EFI=",
+  "dgSpecHash": "PeoWConovhQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
-  "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "projectFilePath": "/Users/user/Desktop/II_project/Staff_Management/hw1/hw1.csproj",
+  "expectedPackageFiles": [
+    "/Users/user/.nuget/packages/microsoft.netcore.app.ref/8.0.24/microsoft.netcore.app.ref.8.0.24.nupkg.sha512",
+    "/Users/user/.nuget/packages/microsoft.windowsdesktop.app.ref/8.0.24/microsoft.windowsdesktop.app.ref.8.0.24.nupkg.sha512",
+    "/Users/user/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.24/microsoft.aspnetcore.app.ref.8.0.24.nupkg.sha512",
+    "/Users/user/.nuget/packages/microsoft.netcore.app.host.osx-arm64/8.0.24/microsoft.netcore.app.host.osx-arm64.8.0.24.nupkg.sha512"
+  ],
+  "logs": []
 }

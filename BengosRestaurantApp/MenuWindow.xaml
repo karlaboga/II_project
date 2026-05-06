@@ -5,7 +5,7 @@
         Height="600" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#FBEAF0">
+        Background="#F8F8F8">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,25 +17,25 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Text="Bengos Restaurant Menu" FontSize="24" FontWeight="Bold"
-                   Foreground="#993556" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                   Foreground="#3D3B3A" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
         <!-- Category Filter -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
             <RadioButton x:Name="RbAll" Content="All" IsChecked="True" Margin="5" GroupName="Category"
-                         Checked="CategoryFilter_Changed"/>
+                         Foreground="#3D3B3A" Checked="CategoryFilter_Changed"/>
             <RadioButton x:Name="RbFood" Content="Food" Margin="5" GroupName="Category"
-                         Checked="CategoryFilter_Changed"/>
+                         Foreground="#3D3B3A" Checked="CategoryFilter_Changed"/>
             <RadioButton x:Name="RbDrinks" Content="Drinks" Margin="5" GroupName="Category"
-                         Checked="CategoryFilter_Changed"/>
+                         Foreground="#3D3B3A" Checked="CategoryFilter_Changed"/>
             <RadioButton x:Name="RbDesserts" Content="Desserts" Margin="5" GroupName="Category"
-                         Checked="CategoryFilter_Changed"/>
+                         Foreground="#3D3B3A" Checked="CategoryFilter_Changed"/>
         </StackPanel>
 
         <!-- Menu Items -->
-        <ListView x:Name="LvMenu" Grid.Row="2" Background="White">
+        <ListView x:Name="LvMenu" Grid.Row="2" Background="#FFFFFF">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10">
+                    <Border BorderBrush="#E2E2E1" BorderThickness="0,0,0,1" Padding="10">
                         <Grid Width="700">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -43,18 +43,18 @@
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0" Width="80" Height="80" Background="LightGray" CornerRadius="5">
+                            <Border Grid.Column="0" Width="80" Height="80" Background="#EEEDED" CornerRadius="5">
                                 <TextBlock Text="🍽️" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
 
                             <StackPanel Grid.Column="1" Margin="10,0">
-                                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Foreground="Gray" Margin="0,5,0,0"/>
-                                <TextBlock Text="{Binding Ingredients}" TextWrapping="Wrap" FontSize="11" Foreground="DarkGray" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Foreground="#3D3B3A"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Foreground="#464443" Margin="0,5,0,0"/>
+                                <TextBlock Text="{Binding Ingredients}" TextWrapping="Wrap" FontSize="11" Foreground="#CCCBCB" Margin="0,5,0,0"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="2" Text="{Binding PriceDisplay}" FontSize="18" FontWeight="Bold"
-                                       Foreground="#993556" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                       Foreground="#3E3C3B" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -62,16 +62,18 @@
         </ListView>
 
         <!-- QR Code Section -->
-        <Border Grid.Row="3" BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,10,0,0">
+        <Border Grid.Row="3" BorderBrush="#CCCBCB" BorderThickness="1" Padding="10" Margin="0,10,0,0"
+                Background="#EEEDED">
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock Text="Scan QR Code for Public IP" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="Scan QR Code for Public IP" FontSize="14" FontWeight="Bold" Foreground="#3D3B3A" HorizontalAlignment="Center" Margin="0,0,0,5"/>
                 <Image x:Name="ImgQrCode" Width="150" Height="150"/>
-                <TextBlock x:Name="TxtPublicIp" HorizontalAlignment="Center" Margin="0,5,0,0" FontSize="12" Foreground="Gray"/>
+                <TextBlock x:Name="TxtPublicIp" HorizontalAlignment="Center" Margin="0,5,0,0" FontSize="12" Foreground="#464443"/>
             </StackPanel>
         </Border>
 
         <!-- Close Button -->
-        <Button Grid.Row="4" Content="Close" Width="100" Height="35" Background="Gray" Foreground="White"
-                BorderThickness="0" HorizontalAlignment="Right" Margin="0,10,0,0" Click="BtnClose_Click"/>
+        <Button Grid.Row="4" Content="Close" Width="100" Height="35"
+                Background="#3E3C3B" Foreground="#FFFFFF" BorderThickness="0"
+                HorizontalAlignment="Right" Margin="0,10,0,0" Click="BtnClose_Click"/>
     </Grid>
 </Window>
