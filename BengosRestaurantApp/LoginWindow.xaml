@@ -1,0 +1,41 @@
+<Window x:Class="BengosRestaurantApp.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Staff Login"
+        Height="400" Width="450"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="LightGray">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="Staff Management System" FontSize="20" FontWeight="Bold"
+                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <!-- Username -->
+        <TextBlock Grid.Row="1" Text="Username:" Margin="0,0,0,5"/>
+        <TextBox Grid.Row="2" x:Name="TxtUsername" Height="30" FontSize="14"/>
+
+        <!-- Password -->
+        <TextBlock Grid.Row="3" Text="Password:" Margin="0,15,0,5"/>
+        <PasswordBox Grid.Row="4" x:Name="TxtPassword" Height="30" FontSize="14"/>
+
+        <!-- Login Button -->
+        <Button Grid.Row="5" x:Name="BtnLogin" Content="Login" Height="40" FontSize="14" FontWeight="Bold"
+                Background="#0078D7" Foreground="White" BorderThickness="0"
+                Margin="0,20,0,0" Click="BtnLogin_Click"/>
+
+        <!-- Error Message -->
+        <TextBlock Grid.Row="6" x:Name="LblError" Foreground="Red" HorizontalAlignment="Center"
+                   Margin="0,10,0,0" Text=""/>
+    </Grid>
+</Window>

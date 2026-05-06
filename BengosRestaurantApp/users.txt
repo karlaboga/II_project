@@ -1,0 +1,5 @@
+waiter1,pass1,waiter
+waiter2,pass2,waiter
+chef1,pass3,chef
+chef2,pass4,chef
+admin,admin123,Admin
