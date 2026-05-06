@@ -1,12 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "IaYXMR45fVI=",
+  "dgSpecHash": "mvFvKlKCaSs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Diana\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
-    "C:\\Users\\Diana\\.nuget\\packages\\qrcoder\\1.4.3\\qrcoder.1.4.3.nupkg.sha512",
     "C:\\Users\\Diana\\.nuget\\packages\\system.drawing.common\\8.0.0\\system.drawing.common.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
+      "projectPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

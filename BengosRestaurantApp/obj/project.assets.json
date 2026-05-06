@@ -24,18 +24,6 @@
           }
         }
       },
-      "QRCoder/1.4.3": {
-        "type": "package",
-        "dependencies": {
-          "System.Drawing.Common": "6.0.0"
-        },
-        "compile": {
-          "lib/net6.0-windows7.0/QRCoder.dll": {}
-        },
-        "runtime": {
-          "lib/net6.0-windows7.0/QRCoder.dll": {}
-        }
-      },
       "System.Drawing.Common/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -93,27 +81,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "QRCoder/1.4.3": {
-      "sha512": "fWuFqjm8GTlEb2GqBl3Hi8HZZeZQwBSHxvRPtPjyNbT82H0ff0JwavKRBmMaXCno1Av6McPC8aJzri0Mj2w9Jw==",
-      "type": "package",
-      "path": "qrcoder/1.4.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net35/QRCoder.dll",
-        "lib/net40/QRCoder.dll",
-        "lib/net5.0-windows7.0/QRCoder.dll",
-        "lib/net5.0/QRCoder.dll",
-        "lib/net6.0-windows7.0/QRCoder.dll",
-        "lib/net6.0/QRCoder.dll",
-        "lib/netstandard1.3/QRCoder.dll",
-        "lib/netstandard2.0/QRCoder.dll",
-        "nuget-icon.png",
-        "nuget-readme.md",
-        "qrcoder.1.4.3.nupkg.sha512",
-        "qrcoder.nuspec"
-      ]
-    },
     "System.Drawing.Common/8.0.0": {
       "sha512": "JkbHJjtI/dWc5dfmEdJlbe3VwgZqCkZRtfuWFh5GOv0f+gGCfBtzMpIVkmdkj2AObO9y+oiOi81UGwH3aBYuqA==",
       "type": "package",
@@ -157,7 +124,6 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "QRCoder >= 1.4.3",
       "System.Drawing.Common >= 8.0.0"
     ]
   },
@@ -213,10 +179,6 @@
         "framework": "net8.0-windows7.0",
         "targetAlias": "net8.0-windows",
         "dependencies": {
-          "QRCoder": {
-            "target": "Package",
-            "version": "[1.4.3, )"
-          },
           "System.Drawing.Common": {
             "target": "Package",
             "version": "[8.0.0, )"
@@ -244,5 +206,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }
