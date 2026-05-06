@@ -35,7 +35,8 @@ namespace BengosMenu.Controllers
         public ActionResult GenerateQRCode()
         {
             // REPLACE WITH YOUR WINDOWS HOST'S WIFI IP (get via ipconfig)
-            string url = "http://192.168.1.5:44391";
+            // Default IIS Express ports: http://localhost:8080 or https://localhost:44391
+            string url = "http://localhost:8080";
             using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
             {
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
