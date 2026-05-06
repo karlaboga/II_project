@@ -2,38 +2,84 @@
     ViewData["Title"] = "Home - Bengos Restaurant";
 }
 
-<div class="text-center" style="padding: 50px 0;">
-    <h1 class="display-4" style="color: #3D3B3A;">Welcome to Bengos Restaurant</h1>
-    <p class="lead" style="color: #3E3C3B;">Experience the finest dining with our carefully crafted menu.</p>
-    <div class="mt-5">
-        <a asp-controller="Menu" asp-action="Index" class="btn btn-lg" style="background-color: #3D3B3A; color: #FFFFFF; padding: 15px 40px; border-radius: 30px; text-decoration: none;">
-            View Our Menu
-        </a>
-    </div>
+<style>
+    .welcome-section {
+        background-color: #cfc0bd;
+        padding: 50px 0;
+        text-align: center;
+    }
+    .welcome-title {
+        color: #76938e;
+        font-size: 2.5rem;
+        font-weight: 300;
+    }
+    .welcome-subtitle {
+        color: #7f9183;
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+    .btn-menu {
+        background-color: #76938e;
+        color: #cfc0bd;
+        padding: 15px 40px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 30px;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+    .btn-menu:hover {
+        background-color: #7f9183;
+        color: #cfc0bd;
+    }
+    .feature-card {
+        background-color: #b8b8aa;
+        border: 1px solid #988071;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    .feature-title {
+        color: #76938e;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    .feature-text {
+        color: #7f9183;
+    }
+</style>
+
+<div class="welcome-section">
+    <h1 class="welcome-title">Welcome to Bengos Restaurant</h1>
+    <p class="welcome-subtitle">Experience the finest dining with our carefully crafted menu.</p>
+    <a href="@Url.Action("Index", "Menu")" class="btn-menu">
+        View Our Menu
+    </a>
 </div>
 
-<div class="row mt-5" style="margin-top: 80px !important;">
-    <div class="col-md-4 mb-4">
-        <div class="card" style="background-color: #FFFFFF; border: 1px solid #CCCBCB; border-radius: 15px;">
-            <div class="card-body text-center" style="padding: 30px;">
-                <h3 style="color: #3D3B3A;">🍽️ Quality Food</h3>
-                <p style="color: #3E3C3B;">Fresh ingredients, expertly prepared</p>
+<div class="container" style="margin-top: 50px; padding-bottom: 50px;">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <h3 class="feature-title">🍽️ Quality Food</h3>
+                <p class="feature-text">Fresh ingredients, expertly prepared</p>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card" style="background-color: #FFFFFF; border: 1px solid #CCCBCB; border-radius: 15px;">
-            <div class="card-body text-center" style="padding: 30px;">
-                <h3 style="color: #3D3B3A;">⏰ Quick Service</h3>
-                <p style="color: #3E3C3B;">Fast and friendly service</p>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <h3 class="feature-title">⏰ Quick Service</h3>
+                <p class="feature-text">Fast and friendly service</p>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card" style="background-color: #FFFFFF; border: 1px solid #CCCBCB; border-radius: 15px;">
-            <div class="card-body text-center" style="padding: 30px;">
-                <h3 style="color: #3D3B3A;">💯 Best Prices</h3>
-                <p style="color: #3E3C3B;">Great value for your money</p>
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <h3 class="feature-title">💯 Best Prices</h3>
+                <p class="feature-text">Great value for your money</p>
             </div>
         </div>
     </div>

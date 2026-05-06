@@ -5,10 +5,10 @@
         Height="700" Width="450"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F8F8F8">
-    <Border Background="#FFFFFF" CornerRadius="20" Margin="15" Padding="20">
+        Background="#cfc0bd">
+    <Border Background="#b8b8aa" CornerRadius="20" Margin="15" Padding="20">
         <Border.Effect>
-            <DropShadowEffect Color="#CCCBCB" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect Color="#988071" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
@@ -21,34 +21,34 @@
 
             <!-- Header -->
             <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <TextBlock Text="Bengos" FontSize="32" FontWeight="Light" 
-                           Foreground="#3D3B3A" HorizontalAlignment="Center"/>
+                <TextBlock Text="bengos" FontSize="32" FontWeight="Light" 
+                           Foreground="#76938e" HorizontalAlignment="Center"/>
                 <TextBlock Text="MENU" FontSize="11" 
-                           Foreground="#CCCBCB" HorizontalAlignment="Center"/>
+                           Foreground="#988071" HorizontalAlignment="Center"/>
             </StackPanel>
 
             <!-- Category Pills -->
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" 
                         Margin="0,0,0,15">
-                <Border x:Name="PillAll" Background="#3E3C3B" 
+                <Border x:Name="PillAll" Background="#76938e" 
                        Padding="12,6" Margin="3" Cursor="Hand" CornerRadius="15"
                        MouseLeftButtonUp="PillAll_Click">
-                    <TextBlock Text="All" Foreground="#FFFFFF" FontSize="11"/>
+                    <TextBlock Text="All" Foreground="#cfc0bd" FontSize="11"/>
                 </Border>
-                <Border x:Name="PillFood" Background="#FFFFFF" BorderBrush="#E2E2E1" 
+                <Border x:Name="PillFood" Background="#cfc0bd" BorderBrush="#b8b8aa" 
                        BorderThickness="1" Padding="12,6" Margin="3" Cursor="Hand" CornerRadius="15"
                        MouseLeftButtonUp="PillFood_Click">
-                    <TextBlock Text="Food" Foreground="#3D3B3A" FontSize="11"/>
+                    <TextBlock Text="Food" Foreground="#7f9183" FontSize="11"/>
                 </Border>
-                <Border x:Name="PillDrinks" Background="#FFFFFF" BorderBrush="#E2E2E1" 
+                <Border x:Name="PillDrinks" Background="#cfc0bd" BorderBrush="#b8b8aa" 
                        BorderThickness="1" Padding="12,6" Margin="3" Cursor="Hand" CornerRadius="15"
                        MouseLeftButtonUp="PillDrinks_Click">
-                    <TextBlock Text="Drinks" Foreground="#3D3B3A" FontSize="11"/>
+                    <TextBlock Text="Drinks" Foreground="#7f9183" FontSize="11"/>
                 </Border>
-                <Border x:Name="PillDesserts" Background="#FFFFFF" BorderBrush="#E2E2E1" 
+                <Border x:Name="PillDesserts" Background="#cfc0bd" BorderBrush="#b8b8aa" 
                        BorderThickness="1" Padding="12,6" Margin="3" Cursor="Hand" CornerRadius="15"
                        MouseLeftButtonUp="PillDesserts_Click">
-                    <TextBlock Text="Desserts" Foreground="#3D3B3A" FontSize="11"/>
+                    <TextBlock Text="Desserts" Foreground="#7f9183" FontSize="11"/>
                 </Border>
             </StackPanel>
 
@@ -57,8 +57,8 @@
                       BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="#F8F8F8" CornerRadius="12" 
-                                BorderBrush="#E2E2E1" BorderThickness="1" 
+                        <Border Background="#cfc0bd" CornerRadius="12" 
+                                BorderBrush="#b8b8aa" BorderThickness="1" 
                                 Padding="12" Margin="0,0,0,10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -68,7 +68,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Border Grid.Column="0" Width="50" Height="50" 
-                                        Background="#EEEDED" CornerRadius="8">
+                                        Background="#b8b8aa" CornerRadius="8">
                                     <TextBlock Text="🍽️" FontSize="24" 
                                                HorizontalAlignment="Center" 
                                                VerticalAlignment="Center"/>
@@ -76,15 +76,15 @@
 
                                 <StackPanel Grid.Column="1" Margin="10,0,5,0">
                                     <TextBlock Text="{Binding Name}" FontSize="14" 
-                                               FontWeight="Medium" Foreground="#3D3B3A"/>
+                                               FontWeight="Medium" Foreground="#7f9183"/>
                                     <TextBlock Text="{Binding Description}" 
                                                TextWrapping="Wrap" FontSize="11" 
-                                               Foreground="#464443" Margin="0,3,0,0"/>
+                                               Foreground="#988071" Margin="0,3,0,0"/>
                                 </StackPanel>
 
                                 <TextBlock Grid.Column="2" Text="{Binding PriceDisplay}" 
                                            FontSize="16" FontWeight="SemiBold"
-                                           Foreground="#3E3C3B" 
+                                           Foreground="#76938e" 
                                            VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
@@ -94,7 +94,7 @@
 
             <!-- Close Button -->
             <Button Grid.Row="4" Content="CLOSE" Width="120" Height="40"
-                    Background="#3D3B3A" Foreground="#FFFFFF" BorderThickness="0"
+                    Background="#76938e" Foreground="#cfc0bd" BorderThickness="0"
                     HorizontalAlignment="Center" Margin="0,15,0,0" Click="BtnClose_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
