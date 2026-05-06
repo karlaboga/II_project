@@ -5,10 +5,10 @@
         Height="700" Width="450"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F8F8F8">
-    <Border Background="#3E3C3B" CornerRadius="20" Margin="20" Padding="30,40">
+        Background="#cfc0bd">
+    <Border Background="#76938e" CornerRadius="20" Margin="20" Padding="30,40">
         <Border.Effect>
-            <DropShadowEffect Color="#3D3B3A" BlurRadius="20" ShadowDepth="0" Opacity="0.3"/>
+            <DropShadowEffect Color="#988071" BlurRadius="20" ShadowDepth="0" Opacity="0.3"/>
         </Border.Effect>
         <Grid>
             <Grid.RowDefinitions>
@@ -20,26 +20,26 @@
             </Grid.RowDefinitions>
 
             <!-- Logo -->
-            <Border Grid.Row="0" Width="100" Height="100" Background="#FFFFFF" 
+            <Border Grid.Row="0" Width="100" Height="100" Background="#b8b8aa" 
                     CornerRadius="50" Margin="0,0,0,20" HorizontalAlignment="Center">
                 <Image Source="Bengos_Logo.png" Height="60" Stretch="Uniform"/>
             </Border>
 
             <!-- Title -->
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,30">
-                <TextBlock Text="Bengos" FontSize="36" FontWeight="Light" 
-                           Foreground="#FFFFFF" HorizontalAlignment="Center"/>
+                <TextBlock Text="bengos" FontSize="36" FontWeight="Light" 
+                           Foreground="#cfc0bd" HorizontalAlignment="Center"/>
                 <TextBlock Text="Restaurant" FontSize="36" FontWeight="Light" 
-                           Foreground="#E2E2E1" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                           Foreground="#b8b8aa" HorizontalAlignment="Center" Margin="0,0,0,8"/>
                 <TextBlock Text="Management System" FontSize="12" 
-                           Foreground="#CCCBCB" HorizontalAlignment="Center"/>
+                           Foreground="#988071" HorizontalAlignment="Center"/>
             </StackPanel>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="3" HorizontalAlignment="Stretch" Margin="20,0">
             <Button x:Name="BtnInventory" Content="📦 Inventory" 
                     Height="52" FontSize="15" FontWeight="Medium"
-                    Background="#FFFFFF" Foreground="#3D3B3A" BorderThickness="0"
+                    Background="#cfc0bd" Foreground="#76938e" BorderThickness="0"
                     Margin="0,6" Click="BtnInventory_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -51,7 +51,7 @@
             </Button>
             <Button x:Name="BtnStaff" Content="👥 Staff" 
                     Height="52" FontSize="15" FontWeight="Medium"
-                    Background="#FFFFFF" Foreground="#3D3B3A" BorderThickness="0"
+                    Background="#cfc0bd" Foreground="#76938e" BorderThickness="0"
                     Margin="0,6" Click="BtnStaff_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -63,7 +63,7 @@
             </Button>
             <Button x:Name="BtnBilling" Content="💳 Payments" 
                     Height="52" FontSize="15" FontWeight="Medium"
-                    Background="#FFFFFF" Foreground="#3D3B3A" BorderThickness="0"
+                    Background="#cfc0bd" Foreground="#76938e" BorderThickness="0"
                     Margin="0,6" Click="BtnBilling_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -75,7 +75,7 @@
             </Button>
             <Button x:Name="BtnMenu" Content="🍽️ Menu" 
                     Height="52" FontSize="15" FontWeight="Medium"
-                    Background="#FFFFFF" Foreground="#3D3B3A" BorderThickness="0"
+                    Background="#cfc0bd" Foreground="#76938e" BorderThickness="0"
                     Margin="0,6" Click="BtnMenu_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -87,7 +87,7 @@
             </Button>
             <Button x:Name="BtnExit" Content="Exit" 
                     Height="52" FontSize="15" FontWeight="Medium"
-                    Background="#CCCBCB" Foreground="#3D3B3A" BorderThickness="0"
+                    Background="#988071" Foreground="#76938e" BorderThickness="0"
                     Margin="0,6" Click="BtnExit_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -101,7 +101,7 @@
 
             <!-- Footer -->
             <TextBlock Grid.Row="4" Text="© 2024 Bengos Restaurant" 
-                       FontSize="10" Foreground="#CCCBCB" 
+                       FontSize="10" Foreground="#988071" 
                        HorizontalAlignment="Center" Margin="0,20,0,0"/>
         </Grid>
     </Border>

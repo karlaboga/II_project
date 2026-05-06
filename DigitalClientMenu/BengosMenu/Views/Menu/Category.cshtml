@@ -4,9 +4,13 @@
 }
 
 <style>
+    .page-header {
+        color: #76938e;
+        padding: 50px 0 40px 0;
+    }
     .dish-card {
-        background-color: #FFFFFF;
-        border: 1px solid #CCCBCB;
+        background-color: #b8b8aa;
+        border: 1px solid #988071;
         border-radius: 15px;
         padding: 20px;
         margin-bottom: 20px;
@@ -17,68 +21,77 @@
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
     .dish-name {
-        color: #3D3B3A;
+        color: #76938e;
         font-size: 1.3rem;
         font-weight: 600;
         margin-bottom: 10px;
     }
     .dish-price {
-        color: #3E3C3B;
+        color: #7f9183;
         font-size: 1.2rem;
         font-weight: 600;
         margin-bottom: 10px;
     }
     .dish-description {
-        color: #464443;
+        color: #988071;
         margin-bottom: 15px;
     }
     .ingredient-badge {
         display: inline-block;
-        background-color: #E2E2E1;
-        color: #3D3B3A;
+        background-color: #cfc0bd;
+        color: #7f9183;
         padding: 5px 12px;
         border-radius: 20px;
         margin: 3px;
         font-size: 0.85rem;
     }
+    .back-link {
+        color: #988071;
+        text-decoration: none;
+    }
+    .back-link:hover {
+        color: #76938e;
+    }
 </style>
 
-<div class="row" style="padding: 50px 0;">
-    <div class="col-12">
-        <a asp-controller="Menu" asp-action="Index" style="color: #3D3B3A; text-decoration: none;">← Back to Categories</a>
-        <h1 style="color: #3D3B3A; margin-top: 20px;">@ViewBag.Category</h1>
+<div class="container">
+    <div class="row page-header">
+        <div class="col-12">
+            <a href="@Url.Action("Index", "Menu")" class="back-link">← Back to Categories</a>
+            <h1>@ViewBag.Category</h1>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    @foreach (var dish in Model)
-    {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="dish-card">
-                <div class="dish-name">@dish.Name</div>
-                <div class="dish-price">$@dish.Price.ToString("0.00")</div>
-                @if (!string.IsNullOrEmpty(dish.Description))
-                {
-                    <div class="dish-description">@dish.Description</div>
-                }
-                @if (dish.DishIngredients != null && dish.DishIngredients.Any())
-                {
-                    <div>
-                        <small style="color: #3E3C3B;">Ingredients:</small><br />
-                        @foreach (var ingredient in dish.DishIngredients)
-                        {
-                            <span class="ingredient-badge">@ingredient.Produs.Name (@ingredient.Quantity @ingredient.Produs.Unit)</span>
-                        }
-                    </div>
-                }
+    <div class="row">
+        @foreach (var dish in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="dish-card">
+                    <div class="dish-name">@dish.Name</div>
+                    <div class="dish-price">$@dish.Price.ToString("0.00")</div>
+                    @if (!string.IsNullOrEmpty(dish.Description))
+                    {
+                        <div class="dish-description">@dish.Description</div>
+                    }
+                    @if (dish.DishIngredients != null && dish.DishIngredients.Any())
+                    {
+                        <div>
+                            <small style="color: #7f9183;">Ingredients:</small><br />
+                            @foreach (var ingredient in dish.DishIngredients)
+                            {
+                                <span class="ingredient-badge">@ingredient.Produs.Name (@ingredient.Quantity @ingredient.Produs.Unit)</span>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center" style="padding: 50px;">
+            <p style="color: #7f9183;">No dishes found in this category.</p>
         </div>
     }
 </div>
-
-@if (!Model.Any())
-{
-    <div class="text-center" style="padding: 50px;">
-        <p style="color: #3E3C3B;">No dishes found in this category.</p>
-    </div>
-}

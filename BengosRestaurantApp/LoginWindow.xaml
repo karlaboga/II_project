@@ -5,11 +5,10 @@
         Height="500" Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F8F8F8">
-    <Border Background="#EEEDED" CornerRadius="20" Margin="20" Padding="30">
+        Background="#cfc0bd">
+    <Border Background="#b8b8aa" CornerRadius="20" Margin="20" Padding="30">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -21,26 +20,26 @@
 
             <!-- Title -->
             <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
-                <TextBlock Text="Bengos" FontSize="32" FontWeight="Light" 
-                           Foreground="#3D3B3A" HorizontalAlignment="Center"/>
+                <TextBlock Text="bengos" FontSize="32" FontWeight="Light" 
+                           Foreground="#76938e" HorizontalAlignment="Center"/>
                 <TextBlock Text="Staff Portal" FontSize="14" 
-                           Foreground="#464443" HorizontalAlignment="Center"/>
+                           Foreground="#7f9183" HorizontalAlignment="Center"/>
             </StackPanel>
 
             <!-- Username -->
-            <TextBlock Grid.Row="1" Text="USERNAME" Foreground="#464443" 
+            <TextBlock Grid.Row="1" Text="USERNAME" Foreground="#7f9183" 
                        FontSize="10" Margin="0,0,0,5"/>
-            <Border Grid.Row="2" Background="#FFFFFF" CornerRadius="8" 
-                    BorderBrush="#CCCBCB" BorderThickness="1" Padding="12,8">
+            <Border Grid.Row="2" Background="#cfc0bd" CornerRadius="8" 
+                    BorderBrush="#988071" BorderThickness="1" Padding="12,8">
                 <TextBox x:Name="TxtUsername" Height="30" FontSize="14"
                          Background="Transparent" BorderThickness="0"/>
             </Border>
 
             <!-- Password -->
-            <TextBlock Grid.Row="3" Text="PASSWORD" Foreground="#464443" 
+            <TextBlock Grid.Row="3" Text="PASSWORD" Foreground="#7f9183" 
                        FontSize="10" Margin="0,20,0,5"/>
-            <Border Grid.Row="4" Background="#FFFFFF" CornerRadius="8" 
-                    BorderBrush="#CCCBCB" BorderThickness="1" Padding="12,8">
+            <Border Grid.Row="4" Background="#cfc0bd" CornerRadius="8" 
+                    BorderBrush="#988071" BorderThickness="1" Padding="12,8">
                 <PasswordBox x:Name="TxtPassword" Height="30" FontSize="14"
                              Background="Transparent" BorderThickness="0"/>
             </Border>
@@ -48,7 +47,7 @@
             <!-- Login Button -->
             <Button Grid.Row="5" x:Name="BtnLogin" Content="LOGIN" Height="48" 
                     FontSize="12" FontWeight="Medium"
-                    Background="#3E3C3B" Foreground="#FFFFFF" BorderThickness="0"
+                    Background="#76938e" Foreground="#cfc0bd" BorderThickness="0"
                     Margin="0,30,0,0" Click="BtnLogin_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -60,12 +59,12 @@
             </Button>
 
             <!-- Error Message -->
-            <TextBlock Grid.Row="6" x:Name="LblError" Foreground="#C83232" 
+            <TextBlock Grid.Row="6" x:Name="LblError" Foreground="#988071" 
                        HorizontalAlignment="Center" Margin="0,15,0,0" Text=""/>
 
             <!-- Footer -->
             <TextBlock Grid.Row="7" Text="© 2024 Bengos Restaurant" 
-                       FontSize="10" Foreground="#CCCBCB" 
+                       FontSize="10" Foreground="#988071" 
                        HorizontalAlignment="Center" Margin="0,20,0,0"/>
         </Grid>
     </Border>
