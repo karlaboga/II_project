@@ -1,16 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio Community 2022
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BengosRestaurantApp", "BengosRestaurantApp\BengosRestaurantApp.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BengosMenu", "DigitalClientMenu\BengosMenu\BengosMenu.csproj", "{7119950D-7ED7-42D1-A6A0-584DDDEBD8D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BengosMenu", "DigitalClientMenu\BengosMenu\BengosMenu.csproj", "{B2C3D4E5-F6A7-8901-BCD-EF2345678901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invetory", "Invetory\Invetory\Invetory.csproj", "{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory", "Invetory\Invetory\Invetory.csproj", "{C3D4E5F6-A7B8-9012-CDE-EF3456789012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework", "Billing&Payments\Homework\Homework.csproj", "{FF64DE81-F0D1-4281-9CDB-C4A35E09086A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingPayments", "Billing&Payments\Homework\Homework.csproj", "{D4E5F6A7-B8C9-0123-DEF-EF4567890123}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hw1", "Staff_Management\hw1\hw1.csproj", "{E5F6A7B8-C9D0-1234-EF56-EF5678901234}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement", "Staff_Management\hw1\hw1.csproj", "{E5F6A7B8-C9D0-1234-EF56-EF5678901234}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,18 +20,18 @@ Global
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7119950D-7ED7-42D1-A6A0-584DDDEBD8D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7119950D-7ED7-42D1-A6A0-584DDDEBD8D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7119950D-7ED7-42D1-A6A0-584DDDEBD8D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7119950D-7ED7-42D1-A6A0-584DDDEBD8D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7C8D1D4-A9DA-465B-9759-9655DDBBD932}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF64DE81-F0D1-4281-9CDB-C4A35E09086A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF64DE81-F0D1-4281-9CDB-C4A35E09086A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF64DE81-F0D1-4281-9CDB-C4A35E09086A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF64DE81-F0D1-4281-9CDB-C4A35E09086A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCD-EF2345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCD-EF2345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCD-EF2345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCD-EF2345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDE-EF3456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDE-EF3456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDE-EF3456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDE-EF3456789012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F6A7-B8C9-0123-DEF-EF4567890123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F6A7-B8C9-0123-DEF-EF4567890123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F6A7-B8C9-0123-DEF-EF4567890123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F6A7-B8C9-0123-DEF-EF4567890123}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5F6A7B8-C9D0-1234-EF56-EF5678901234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5F6A7B8-C9D0-1234-EF56-EF5678901234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5F6A7B8-C9D0-1234-EF56-EF5678901234}.Release|Any CPU.ActiveCfg = Release|Any CPU
