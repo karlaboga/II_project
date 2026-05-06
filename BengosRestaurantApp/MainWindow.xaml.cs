@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Windows;
 
 namespace BengosRestaurantApp
@@ -33,8 +34,25 @@ namespace BengosRestaurantApp
 
         private void BtnMenu_Click(object sender, RoutedEventArgs e)
         {
-            var window = new MenuWindow();
-            window.ShowDialog();
+            // Launch the ASP.NET MVC web app (DigitalClientMenu)
+            var webAppPath = System.IO.Path.Combine(
+                System.AppDomain.CurrentDomain.BaseDirectory,
+                "..\\..\\..\\..\\DigitalClientMenu\\BengosMenu\\BengosMenu.csproj");
+
+            // Try to open in Visual Studio or run with dotnet
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://localhost:44300", // Default IIS Express port
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                MessageBox.Show("Please open the DigitalClientMenu project in Visual Studio and run it.",
+                    "Web App Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
