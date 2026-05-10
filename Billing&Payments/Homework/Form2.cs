@@ -39,14 +39,10 @@ namespace Homework
             Cash_input.Visible = isCash;
             Change.Visible = isCash;
             Change_Value.Visible = isCash;
-
             if (!isCash)
                 Change_Value.Text = "-";
-           
-
         }
-
-        private void TxtCashGiven_TextChanged(object sender, EventArgs e)
+        private void TxtCashGiven_TextChanged(object? sender, EventArgs e)
         {
             if (double.TryParse(Cash_input.Text, out double given))
             {

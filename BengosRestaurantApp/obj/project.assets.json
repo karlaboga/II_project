@@ -128,23 +128,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Diana\\.nuget\\packages\\": {},
+    "C:\\Users\\honor\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+      "projectUniqueName": "D:\\Facultate\\Anul 3\\sem 2\\II\\Proiect\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
       "projectName": "BengosRestaurantApp",
-      "projectPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
-      "packagesPath": "C:\\Users\\Diana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\",
+      "projectPath": "D:\\Facultate\\Anul 3\\sem 2\\II\\Proiect\\II_project\\BengosRestaurantApp\\BengosRestaurantApp.csproj",
+      "packagesPath": "C:\\Users\\honor\\.nuget\\packages\\",
+      "outputPath": "D:\\Facultate\\Anul 3\\sem 2\\II\\Proiect\\II_project\\BengosRestaurantApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Diana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\honor\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -153,11 +153,11 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0-windows7.0": {
-          "framework": "net8.0-windows7.0",
           "targetAlias": "net8.0-windows",
           "projectReferences": {}
         }
@@ -176,7 +176,6 @@
     },
     "frameworks": {
       "net8.0-windows7.0": {
-        "framework": "net8.0-windows7.0",
         "targetAlias": "net8.0-windows",
         "dependencies": {
           "System.Drawing.Common": {
@@ -195,6 +194,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[8.0.26, 8.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[8.0.26, 8.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[8.0.26, 8.0.26]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[8.0.26, 8.0.26]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -206,13 +223,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Diana\\Documents\\GitHub\\II_project\\BengosRestaurantApp\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
-    }
-  ]
+  }
 }

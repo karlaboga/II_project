@@ -95,7 +95,7 @@ namespace Homework
                 Order_Summary.Columns["colQty"].ReadOnly = false;
             }
         }
-        private void DgvOrder_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DgvOrder_CellEndEdit(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex != Order_Summary.Columns["colQty"].Index) return;
 
@@ -218,7 +218,7 @@ namespace Homework
     }
     public class OrderItem
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public double Price { get; set; }
         public double Total => Quantity * Price;

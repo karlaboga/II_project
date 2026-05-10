@@ -107,3 +107,38 @@ C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net8.0-
 C:\Users\Diana\Documents\GitHub\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\ref\BengosRestaurantApp.dll
 =======
 >>>>>>> c9905f5fb968a21f619661ce0e2070eb6ac6cf51
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\Bengos_Logo.png
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\users.txt
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\BengosRestaurantApp.exe
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\BengosRestaurantApp.deps.json
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\BengosRestaurantApp.runtimeconfig.json
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\BengosRestaurantApp.dll
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\bin\Debug\net8.0-windows\BengosRestaurantApp.pdb
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.csproj.AssemblyReference.cache
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BillingWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\InventoryWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\LoginWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\MainWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\MenuWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\PaymentWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\StaffWindow.baml
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BillingWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\InventoryWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\LoginWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\MainWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\MenuWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\PaymentWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\StaffWindow.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\App.g.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp_MarkupCompile.cache
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.g.resources
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.AssemblyInfoInputs.cache
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.AssemblyInfo.cs
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.csproj.CoreCompileInputs.cache
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.sourcelink.json
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.dll
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\refint\BengosRestaurantApp.dll
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.pdb
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\BengosRestaurantApp.genruntimeconfig.cache
+D:\Facultate\Anul 3\sem 2\II\Proiect\II_project\BengosRestaurantApp\obj\Debug\net8.0-windows\ref\BengosRestaurantApp.dll

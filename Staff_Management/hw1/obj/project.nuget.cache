@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "WYejlBT8EFI=",
+  "dgSpecHash": "G4fnyZofSF8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Diana\\Documents\\GitHub\\II_project\\Staff_Management\\hw1\\hw1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Facultate\\Anul 3\\sem 2\\II\\Proiect\\II_project\\Staff_Management\\hw1\\hw1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\honor\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.26\\microsoft.windowsdesktop.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\honor\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.26\\microsoft.netcore.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\honor\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.26\\microsoft.aspnetcore.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\honor\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.26\\microsoft.netcore.app.host.win-x64.8.0.26.nupkg.sha512"
+  ],
   "logs": []
 }
