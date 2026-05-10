@@ -1,2 +1,0 @@
-waiter1,tuesday,night,yes
-waiter1,monday,night,yes
