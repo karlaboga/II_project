@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Menu - Bengos Restaurant";
+}
+<style>
+    .page-header { color: #76938e; padding: 50px 0 40px 0; }
+    .category-card { background-color: #b8b8aa; border: 1px solid #988071; border-radius: 15px; padding: 30px; margin-bottom: 20px; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+    .category-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .category-title { color: #76938e; font-size: 1.5rem; margin-bottom: 10px; }
+    .category-link { color: #7f9183; text-decoration: none; }
+    .category-link:hover { color: #988071; }
+</style>
+<div class="container">
+    <div class="row page-header">
+        <div class="col-12">
+            <h1>Our Menu Categories</h1>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <a href="@Url.Action("Category", "Menu", new { category })" class="category-link">
+                    <div class="category-card">
+                        <h3 class="category-title">@category</h3>
+                        <p>Click to view dishes</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
