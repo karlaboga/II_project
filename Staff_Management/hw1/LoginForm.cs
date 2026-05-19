@@ -82,6 +82,7 @@ namespace hw1
 
             //titlu
             lblTitle.Font = new Font("Arial", 16F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(61, 59, 58);
             lblTitle.Location = new Point(96, 22);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(409, 77);
@@ -91,6 +92,7 @@ namespace hw1
 
             //eticheta username
             lblUsername.Font = new Font("Arial", 10F);
+            lblUsername.ForeColor = Color.FromArgb(70, 68, 67);
             lblUsername.Location = new Point(115, 114);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(150, 36);
@@ -99,6 +101,8 @@ namespace hw1
 
             //casuta username
             txtUsername.Font = new Font("Arial", 12F);
+            txtUsername.BackColor = Color.FromArgb(255, 255, 255);
+            txtUsername.ForeColor = Color.FromArgb(61, 59, 58);
             txtUsername.Location = new Point(115, 153);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(409, 44);
@@ -106,6 +110,7 @@ namespace hw1
 
             //eticheta parola
             lblPassword.Font = new Font("Arial", 10F);
+            lblPassword.ForeColor = Color.FromArgb(70, 68, 67);
             lblPassword.Location = new Point(115, 224);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(150, 33);
@@ -114,6 +119,8 @@ namespace hw1
 
             //casuta parola
             txtPassword.Font = new Font("Arial", 12F);
+            txtPassword.BackColor = Color.FromArgb(255, 255, 255);
+            txtPassword.ForeColor = Color.FromArgb(61, 59, 58);
             txtPassword.Location = new Point(115, 260);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(409, 44);
@@ -121,10 +128,10 @@ namespace hw1
             txtPassword.UseSystemPasswordChar = true;
 
             //buton login
-            btnLogin.BackColor = Color.FromArgb(0, 120, 215);
+            btnLogin.BackColor = Color.FromArgb(62, 60, 59);
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Arial", 12F, FontStyle.Bold);
-            btnLogin.ForeColor = Color.White;
+            btnLogin.ForeColor = Color.FromArgb(255, 255, 255);
             btnLogin.Location = new Point(222, 335);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(189, 77);
@@ -135,7 +142,7 @@ namespace hw1
 
             //eticheta eroare
             lblError.Font = new Font("Arial", 9F);
-            lblError.ForeColor = Color.Red;
+            lblError.ForeColor = Color.FromArgb(200, 50, 50);
             lblError.Location = new Point(115, 420);
             lblError.Name = "lblError";
             lblError.Size = new Size(409, 25);
@@ -144,7 +151,7 @@ namespace hw1
             lblError.TextAlign = ContentAlignment.MiddleCenter;
 
             //setari forma
-            BackColor = Color.LightGray;
+            BackColor = Color.FromArgb(238, 237, 237);
             ClientSize = new Size(649, 454);
 
             Controls.Add(lblTitle);

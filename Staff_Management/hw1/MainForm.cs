@@ -78,6 +78,7 @@ namespace hw1
 
             //titlu
             lblTitle.Font = new Font("Arial", 16F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.FromArgb(61, 59, 58);
             lblTitle.Location = new Point(225, 19);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(452, 73);
@@ -87,6 +88,7 @@ namespace hw1
 
             //eticheta staff
             lblStaff.Font = new Font("Arial", 10F);
+            lblStaff.ForeColor = Color.FromArgb(70, 68, 67);
             lblStaff.Location = new Point(127, 92);
             lblStaff.Name = "lblStaff";
             lblStaff.Size = new Size(133, 40);
@@ -95,6 +97,7 @@ namespace hw1
 
             //eticheta zi
             lblDay.Font = new Font("Arial", 10F);
+            lblDay.ForeColor = Color.FromArgb(70, 68, 67);
             lblDay.Location = new Point(290, 92);
             lblDay.Name = "lblDay";
             lblDay.Size = new Size(93, 40);
@@ -103,6 +106,7 @@ namespace hw1
 
             //eticheta tip tura
             lblShiftType.Font = new Font("Arial", 10F);
+            lblShiftType.ForeColor = Color.FromArgb(70, 68, 67);
             lblShiftType.Location = new Point(457, 92);
             lblShiftType.Name = "lblShiftType";
             lblShiftType.Size = new Size(113, 40);
@@ -111,6 +115,8 @@ namespace hw1
 
             //dropdown staff
             cmbStaff.Font = new Font("Arial", 11F);
+            cmbStaff.BackColor = Color.FromArgb(255, 255, 255);
+            cmbStaff.ForeColor = Color.FromArgb(61, 59, 58);
             cmbStaff.Items.AddRange(new object[] { "waiter1", "waiter2", "chef1", "chef2" });
             cmbStaff.Location = new Point(127, 141);
             cmbStaff.Name = "cmbStaff";
@@ -119,6 +125,8 @@ namespace hw1
 
             //dropdown zile
             cmbDay.Font = new Font("Arial", 11F);
+            cmbDay.BackColor = Color.FromArgb(255, 255, 255);
+            cmbDay.ForeColor = Color.FromArgb(61, 59, 58);
             cmbDay.Items.AddRange(new object[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" });
             cmbDay.Location = new Point(290, 141);
             cmbDay.Name = "cmbDay";
@@ -128,6 +136,8 @@ namespace hw1
 
             //dropdown tip tura
             cmbShiftType.Font = new Font("Arial", 11F);
+            cmbShiftType.BackColor = Color.FromArgb(255, 255, 255);
+            cmbShiftType.ForeColor = Color.FromArgb(61, 59, 58);
             cmbShiftType.Items.AddRange(new object[] { "morning", "evening", "night" });
             cmbShiftType.Location = new Point(446, 141);
             cmbShiftType.Name = "cmbShiftType";
@@ -136,6 +146,7 @@ namespace hw1
 
             //checkbox overtime
             chkOvertime.Font = new Font("Arial", 11F);
+            chkOvertime.ForeColor = Color.FromArgb(70, 68, 67);
             chkOvertime.Location = new Point(697, 136);
             chkOvertime.Name = "chkOvertime";
             chkOvertime.Size = new Size(179, 51);
@@ -144,10 +155,10 @@ namespace hw1
             chkOvertime.CheckedChanged += ChkOvertime_CheckedChanged;
 
             //buton add
-            btnAdd.BackColor = Color.FromArgb(0, 150, 80);
+            btnAdd.BackColor = Color.FromArgb(62, 60, 59);
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Arial", 11F, FontStyle.Bold);
-            btnAdd.ForeColor = Color.White;
+            btnAdd.ForeColor = Color.FromArgb(255, 255, 255);
             btnAdd.Location = new Point(127, 194);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(153, 48);
@@ -157,10 +168,10 @@ namespace hw1
             btnAdd.Click += BtnAdd_Click;
 
             //buton delete
-            btnDelete.BackColor = Color.FromArgb(200, 50, 50);
+            btnDelete.BackColor = Color.FromArgb(70, 68, 67);
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Arial", 11F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
+            btnDelete.ForeColor = Color.FromArgb(255, 255, 255);
             btnDelete.Location = new Point(287, 194);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(153, 48);
@@ -170,10 +181,10 @@ namespace hw1
             btnDelete.Click += BtnDelete_Click;
 
             //buton clear all
-            btnClear.BackColor = Color.Gray;
+            btnClear.BackColor = Color.FromArgb(204, 203, 203);
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Arial", 11F, FontStyle.Bold);
-            btnClear.ForeColor = Color.White;
+            btnClear.ForeColor = Color.FromArgb(61, 59, 58);
             btnClear.Location = new Point(447, 194);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(153, 48);
@@ -185,10 +196,14 @@ namespace hw1
             //tabela cu ture
             dgvShifts.AllowUserToAddRows = false;
             dgvShifts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvShifts.BackgroundColor = Color.White;
+            dgvShifts.BackgroundColor = Color.FromArgb(255, 255, 255);
+            dgvShifts.BorderStyle = BorderStyle.None;
+            dgvShifts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(62, 60, 59);
+            dgvShifts.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
             dgvShifts.ColumnHeadersHeight = 35;
             dgvShifts.Columns.AddRange(new DataGridViewColumn[] { col1, col2, col3, col4 });
             dgvShifts.Font = new Font("Arial", 11F);
+            dgvShifts.GridColor = Color.FromArgb(204, 203, 203);
             dgvShifts.Location = new Point(117, 276);
             dgvShifts.MultiSelect = false;
             dgvShifts.Name = "dgvShifts";
@@ -224,7 +239,7 @@ namespace hw1
 
             //setari forma
             AutoScaleMode = AutoScaleMode.None;
-            BackColor = Color.FromArgb(240, 240, 245);
+            BackColor = Color.FromArgb(248, 248, 248);
             ClientSize = new Size(970, 739);
             Controls.Add(lblTitle);
             Controls.Add(lblStaff);

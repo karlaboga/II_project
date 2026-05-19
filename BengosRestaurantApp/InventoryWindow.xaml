@@ -5,7 +5,7 @@
         Height="550" Width="800"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#F0F0F5">
+        Background="#cfc0bd">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,17 +16,17 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Text="Inventory Management" FontSize="18" FontWeight="Bold"
-                   Foreground="#993556" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                   Foreground="#76938e" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
         <!-- Input Fields -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
             <StackPanel Margin="5">
-                <TextBlock Text="Product:" Margin="0,0,0,5"/>
-                <TextBox x:Name="TxtProduct" Width="120" Height="25"/>
+                <TextBlock Text="Product:" Foreground="#7f9183" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtProduct" Width="120" Height="25" Background="#cfc0bd" BorderBrush="#988071"/>
             </StackPanel>
             <StackPanel Margin="5">
-                <TextBlock Text="Category:" Margin="0,0,0,5"/>
-                <ComboBox x:Name="CmbCategory" Width="120" Height="25">
+                <TextBlock Text="Category:" Foreground="#7f9183" Margin="0,0,0,5"/>
+                <ComboBox x:Name="CmbCategory" Width="120" Height="25" Background="#cfc0bd" BorderBrush="#988071">
                     <ComboBoxItem Content="Food"/>
                     <ComboBoxItem Content="Drinks"/>
                     <ComboBoxItem Content="Desserts"/>
@@ -34,32 +34,32 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Margin="5">
-                <TextBlock Text="Quantity:" Margin="0,0,0,5"/>
-                <TextBox x:Name="TxtQuantity" Width="80" Height="25"/>
+                <TextBlock Text="Quantity:" Foreground="#7f9183" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtQuantity" Width="80" Height="25" Background="#cfc0bd" BorderBrush="#988071"/>
             </StackPanel>
             <StackPanel Margin="5">
-                <TextBlock Text="Unit:" Margin="0,0,0,5"/>
-                <TextBox x:Name="TxtUnit" Width="80" Height="25"/>
+                <TextBlock Text="Unit:" Foreground="#7f9183" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtUnit" Width="80" Height="25" Background="#cfc0bd" BorderBrush="#988071"/>
             </StackPanel>
             <StackPanel Margin="5">
-                <TextBlock Text="Min Stock:" Margin="0,0,0,5"/>
-                <TextBox x:Name="TxtMinStock" Width="80" Height="25"/>
+                <TextBlock Text="Min Stock:" Foreground="#7f9183" Margin="0,0,0,5"/>
+                <TextBox x:Name="TxtMinStock" Width="80" Height="25" Background="#cfc0bd" BorderBrush="#988071"/>
             </StackPanel>
         </StackPanel>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,100,0,0">
-            <Button x:Name="BtnAdd" Content="Add" Width="80" Height="30" Background="#009650" Foreground="White"
-                    BorderThickness="0" Margin="5" Click="BtnAdd_Click"/>
-            <Button x:Name="BtnEdit" Content="Edit" Width="80" Height="30" Background="#4682B4" Foreground="White"
-                    BorderThickness="0" Margin="5" Click="BtnEdit_Click"/>
-            <Button x:Name="BtnDelete" Content="Delete" Width="80" Height="30" Background="#C83232" Foreground="White"
-                    BorderThickness="0" Margin="5" Click="BtnDelete_Click"/>
+            <Button x:Name="BtnAdd" Content="Add" Width="80" Height="30"
+                    Background="#76938e" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnAdd_Click"/>
+            <Button x:Name="BtnEdit" Content="Edit" Width="80" Height="30"
+                    Background="#7f9183" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnEdit_Click"/>
+            <Button x:Name="BtnDelete" Content="Delete" Width="80" Height="30"
+                    Background="#988071" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnDelete_Click"/>
         </StackPanel>
 
         <!-- DataGrid -->
         <DataGrid x:Name="DgInventory" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
-                  Background="White" Margin="0,10,0,10">
+                  Background="#b8b8aa" BorderBrush="#988071" Margin="0,10,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="50"/>
                 <DataGridTextColumn Header="Product" Binding="{Binding ProductName}" Width="*"/>
@@ -71,7 +71,8 @@
         </DataGrid>
 
         <!-- Close Button -->
-        <Button Grid.Row="3" Content="Close" Width="100" Height="35" Background="Gray" Foreground="White"
-                BorderThickness="0" HorizontalAlignment="Right" Click="BtnClose_Click"/>
+        <Button Grid.Row="3" Content="Close" Width="100" Height="35"
+                Background="#76938e" Foreground="#cfc0bd" BorderThickness="0"
+                HorizontalAlignment="Right" Click="BtnClose_Click"/>
     </Grid>
 </Window>

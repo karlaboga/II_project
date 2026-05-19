@@ -5,7 +5,7 @@
         Height="600" Width="650"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#FBEAF0">
+        Background="#cfc0bd">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,10 +16,11 @@
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Text="Billing &amp; Payments" FontSize="20" FontWeight="Bold"
-                   Foreground="#993556" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                   Foreground="#76938e" HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
         <!-- Order Grid -->
-        <DataGrid x:Name="DgOrder" Grid.Row="1" AutoGenerateColumns="False" Background="White"
+        <DataGrid x:Name="DgOrder" Grid.Row="1" AutoGenerateColumns="False"
+                  Background="#b8b8aa" BorderBrush="#988071"
                   CellEditEnding="DgOrder_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Item" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
@@ -32,29 +33,29 @@
         <!-- Totals -->
         <StackPanel Grid.Row="2" Margin="0,10,0,10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-                <TextBlock Text="Subtotal: " FontWeight="Bold" Width="100"/>
-                <TextBlock x:Name="TxtSubtotal" Text="0.00" Width="100"/>
+                <TextBlock Text="Subtotal: " FontWeight="Bold" Width="100" Foreground="#7f9183"/>
+                <TextBlock x:Name="TxtSubtotal" Text="0.00" Width="100" Foreground="#76938e"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-                <TextBlock Text="Discount: " FontWeight="Bold" Width="100"/>
-                <TextBlock x:Name="TxtDiscount" Text="0.00" Width="100"/>
+                <TextBlock Text="Discount: " FontWeight="Bold" Width="100" Foreground="#7f9183"/>
+                <TextBlock x:Name="TxtDiscount" Text="0.00" Width="100" Foreground="#76938e"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-                <TextBlock Text="Total: " FontWeight="Bold" Width="100" FontSize="14"/>
-                <TextBlock x:Name="TxtTotal" Text="$0.00" Width="100" FontSize="14" Foreground="#993556"/>
+                <TextBlock Text="Total: " FontWeight="Bold" Width="100" FontSize="14" Foreground="#7f9183"/>
+                <TextBlock x:Name="TxtTotal" Text="$0.00" Width="100" FontSize="14" Foreground="#76938e"/>
             </StackPanel>
         </StackPanel>
 
         <!-- Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="BtnEditQty" Content="Edit Order" Width="100" Height="35"
-                    Background="#F4C0D1" BorderThickness="0" Margin="5" Click="BtnEditQty_Click"/>
+                    Background="#988071" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnEditQty_Click"/>
             <Button x:Name="BtnDiscount" Content="Add Discount" Width="100" Height="35"
-                    Background="#993556" Foreground="White" BorderThickness="0" Margin="5" Click="BtnDiscount_Click"/>
+                    Background="#76938e" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnDiscount_Click"/>
             <Button x:Name="BtnPay" Content="Pay Now" Width="100" Height="35"
-                    Background="#D4537E" Foreground="White" BorderThickness="0" Margin="5" Click="BtnPay_Click"/>
+                    Background="#7f9183" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnPay_Click"/>
             <Button x:Name="BtnClose" Content="Close" Width="100" Height="35"
-                    Background="Gray" Foreground="White" BorderThickness="0" Margin="5" Click="BtnClose_Click"/>
+                    Background="#988071" Foreground="#cfc0bd" BorderThickness="0" Margin="5" Click="BtnClose_Click"/>
         </StackPanel>
     </Grid>
 </Window>

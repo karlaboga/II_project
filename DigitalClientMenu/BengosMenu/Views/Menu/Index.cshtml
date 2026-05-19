@@ -1,131 +1,58 @@
-﻿@model System.Collections.Generic.List<string>
 @{
-    ViewBag.Title = "Bengos Menu";
+    ViewData["Title"] = "Menu - Bengos Restaurant";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Bengos - Fine Dining</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial;
-            margin: 0;
-            padding: 0;
-            background: #f5f5f5;
-        }
 
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px 40px;
-            text-align: center;
-        }
+<style>
+    .page-header {
+        color: #76938e;
+        padding: 50px 0 40px 0;
+    }
+    .category-card {
+        background-color: #b8b8aa;
+        border: 1px solid #988071;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+    }
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .category-title {
+        color: #76938e;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    .category-link {
+        color: #7f9183;
+        text-decoration: none;
+    }
+    .category-link:hover {
+        color: #988071;
+    }
+</style>
 
-        .description {
-            max-width: 800px;
-            margin: 20px auto;
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #ddd;
-        }
-
-        .qr-section {
-            margin: 20px auto;
-            text-align: center;
-        }
-
-        .qr-code {
-            max-height: 150px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .qr-text {
-            color: #ddd;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .category-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            width: 250px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-
-            .category-card:hover {
-                transform: translateY(-5px);
-            }
-
-        .category-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        .category-name {
-            font-size: 1.5em;
-            color: #2c3e50;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1 style="margin: 10px 0; color: white;">Welcome to Bengos</h1>
-        <div class="description">
-            Experience the art of fine dining at Bengos, where culinary excellence meets warm hospitality.
-            Our chefs craft each dish with passion, using only the freshest ingredients sourced locally.
-            From sizzling main courses to decadent desserts and handcrafted drinks, every bite tells a story.
-        </div>
-        <div class="qr-section">
-            <img src="@Url.Action("GenerateQRCode")" alt="Scan to open menu" class="qr-code" />
-            <p class="qr-text">Scan to open menu on your phone</p>
+<div class="container">
+    <div class="row page-header">
+        <div class="col-12">
+            <a href="@Url.Action("Index", "Home")" style="color: #988071; text-decoration: none;">← Back to Home</a>
+            <h1>Our Menu Categories</h1>
         </div>
     </div>
-    <div class="container">
-        <h1>Our Menu</h1>
-        <div class="categories">
-            @foreach (var category in Model)
-            {
-                <a href="@Url.Action("Category", new { category = category })" class="category-card">
-                    <div class="category-icon">
-                        @if (category == "Main Course")
-                        {<text>🍽️</text> }
-                    else if (category == "Dessert")
-                    { <text>🍰</text> }
-                else if (category == "Drinks")
-                { <text>🍹</text>}
+
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <a href="@Url.Action("Category", "Menu", new { category = category })" class="category-link">
+                    <div class="category-card">
+                        <h3 class="category-title">@category</h3>
+                        <p>Click to view dishes</p>
                     </div>
-                    <div class="category-name">@category</div>
                 </a>
-            }
-        </div>
+            </div>
+        }
     </div>
-</body>
-</html>
+</div>

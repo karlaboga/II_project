@@ -1,0 +1,6 @@
+﻿CREATE TABLE Produs (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Quantity DECIMAL(10,2) NOT NULL,
+    Unit NVARCHAR(20) DEFAULT 'pcs'
+);

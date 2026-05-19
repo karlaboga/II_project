@@ -1,81 +1,97 @@
-﻿@model System.Collections.Generic.List<BengosMenu.Models.Dish>
+@model IEnumerable<BengosMenu.Models.Dish>
 @{
-    ViewBag.Title = ViewBag.Category + " - Bengos Menu";
+    ViewData["Title"] = "Category - " + ViewBag.Category;
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <title>@ViewBag.Category - Bengos Menu</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial;
-            margin: 0;
-            padding: 0;
-            background: #f5f5f5;
-        }
 
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px 40px;
-            text-align: center;
-        }
+<style>
+    .page-header {
+        color: #76938e;
+        padding: 50px 0 40px 0;
+    }
+    .dish-card {
+        background-color: #b8b8aa;
+        border: 1px solid #988071;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+    .dish-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .dish-name {
+        color: #76938e;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .dish-price {
+        color: #7f9183;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .dish-description {
+        color: #988071;
+        margin-bottom: 15px;
+    }
+    .ingredient-badge {
+        display: inline-block;
+        background-color: #cfc0bd;
+        color: #7f9183;
+        padding: 5px 12px;
+        border-radius: 20px;
+        margin: 3px;
+        font-size: 0.85rem;
+    }
+    .back-link {
+        color: #988071;
+        text-decoration: none;
+    }
+    .back-link:hover {
+        color: #76938e;
+    }
+</style>
 
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .back-link {
-            color: #3498db;
-            text-decoration: none;
-            font-size: 1.1em;
-        }
-
-            .back-link:hover {
-                text-decoration: underline;
-            }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .price {
-            color: #27ae60;
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-
-        .ingredient {
-            color: #666;
-            margin-left: 20px;
-            padding: 5px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1 style="margin: 10px 0; color: white;">@ViewBag.Category</h1>
+<div class="container">
+    <div class="row page-header">
+        <div class="col-12">
+            <a href="@Url.Action("Index", "Menu")" class="back-link">← Back to Categories</a>
+            <h1>@ViewBag.Category</h1>
+        </div>
     </div>
-    <div class="container">
-        <a href="@Url.Action("Index")" class="back-link">← Back to Menu</a>
-        <h2 style="color: #2c3e50;">@ViewBag.Category</h2>
+
+    <div class="row">
         @foreach (var dish in Model)
         {
-            <div class="card">
-                <h2>@dish.Name <span class="price">@dish.Price.ToString("C")</span></h2>
-                <h4 style="color: #555;">Ingredients:</h4>
-                @foreach (var ingredient in dish.DishIngredients)
-                {
-                    <div class="ingredient">• @ingredient.Produs.Name - @ingredient.Quantity @ingredient.Produs.Unit</div>
-                }
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="dish-card">
+                    <div class="dish-name">@dish.Name</div>
+                    <div class="dish-price">$@dish.Price.ToString("0.00")</div>
+                    @if (!string.IsNullOrEmpty(dish.Description))
+                    {
+                        <div class="dish-description">@dish.Description</div>
+                    }
+                    @if (dish.DishIngredients != null && dish.DishIngredients.Any())
+                    {
+                        <div>
+                            <small style="color: #7f9183;">Ingredients:</small><br />
+                            @foreach (var ingredient in dish.DishIngredients)
+                            {
+                                <span class="ingredient-badge">@ingredient.Produs.Name (@ingredient.Quantity @ingredient.Produs.Unit)</span>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
         }
     </div>
-</body>
-</html>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center" style="padding: 50px;">
+            <p style="color: #7f9183;">No dishes found in this category.</p>
+        </div>
+    }
+</div>

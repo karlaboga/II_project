@@ -1,0 +1,14 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BengosMenu.Models;
+public class Dish
+{
+    [Key]
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? Description { get; set; }
+    public decimal Price { get; set; }
+    public string Category { get; set; } = "";
+    public string? ImageUrl { get; set; }
+    public List<DishIngredient> DishIngredients { get; set; } = new List<DishIngredient>();
+}

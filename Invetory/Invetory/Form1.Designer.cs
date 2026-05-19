@@ -52,17 +52,21 @@
             // 
             // button_Close
             // 
+            this.button_Close.BackColor = System.Drawing.Color.FromArgb(204, 203, 203);
+            this.button_Close.ForeColor = System.Drawing.Color.FromArgb(61, 59, 58);
             this.button_Close.Location = new System.Drawing.Point(783, 12);
             this.button_Close.Name = "button_Close";
             this.button_Close.Size = new System.Drawing.Size(29, 26);
             this.button_Close.TabIndex = 0;
             this.button_Close.Text = "X";
-            this.button_Close.UseVisualStyleBackColor = true;
+            this.button_Close.UseVisualStyleBackColor = false;
             this.button_Close.Click += new System.EventHandler(this.button_Close_Click);
             // 
             // textBox_Product
             // 
+            this.textBox_Product.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.textBox_Product.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_Product.ForeColor = System.Drawing.Color.FromArgb(61, 59, 58);
             this.textBox_Product.Location = new System.Drawing.Point(144, 120);
             this.textBox_Product.Name = "textBox_Product";
             this.textBox_Product.Size = new System.Drawing.Size(208, 31);
@@ -72,6 +76,7 @@
             // 
             this.label_Product.AutoSize = true;
             this.label_Product.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Product.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.label_Product.Location = new System.Drawing.Point(52, 123);
             this.label_Product.Name = "label_Product";
             this.label_Product.Size = new System.Drawing.Size(86, 25);
@@ -80,7 +85,9 @@
             // 
             // comboBox_Category
             // 
+            this.comboBox_Category.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.comboBox_Category.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_Category.ForeColor = System.Drawing.Color.FromArgb(61, 59, 58);
             this.comboBox_Category.FormattingEnabled = true;
             this.comboBox_Category.Items.AddRange(new object[] {
             "Meat",
@@ -107,6 +114,7 @@
             // 
             this.label_Category.AutoSize = true;
             this.label_Category.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Category.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.label_Category.Location = new System.Drawing.Point(39, 177);
             this.label_Category.Name = "label_Category";
             this.label_Category.Size = new System.Drawing.Size(99, 25);
@@ -115,8 +123,10 @@
             // 
             // button_Add
             // 
-            this.button_Add.BackColor = System.Drawing.Color.YellowGreen;
+            this.button_Add.BackColor = System.Drawing.Color.FromArgb(62, 60, 59);
+            this.button_Add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Add.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Add.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.button_Add.Location = new System.Drawing.Point(418, 138);
             this.button_Add.Name = "button_Add";
             this.button_Add.Size = new System.Drawing.Size(90, 44);
@@ -127,8 +137,10 @@
             // 
             // button_Delete
             // 
-            this.button_Delete.BackColor = System.Drawing.Color.IndianRed;
+            this.button_Delete.BackColor = System.Drawing.Color.FromArgb(70, 68, 67);
+            this.button_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Delete.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.button_Delete.Location = new System.Drawing.Point(418, 238);
             this.button_Delete.Name = "button_Delete";
             this.button_Delete.Size = new System.Drawing.Size(90, 44);
@@ -141,6 +153,7 @@
             // 
             this.label_Quantity.AutoSize = true;
             this.label_Quantity.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Quantity.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.label_Quantity.Location = new System.Drawing.Point(46, 233);
             this.label_Quantity.Name = "label_Quantity";
             this.label_Quantity.Size = new System.Drawing.Size(92, 25);
@@ -149,7 +162,12 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(62, 60, 59);
+            this.dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(204, 203, 203);
             this.dataGridView1.Location = new System.Drawing.Point(40, 384);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(643, 197);
@@ -158,8 +176,10 @@
             // 
             // button_Edit
             // 
-            this.button_Edit.BackColor = System.Drawing.Color.PowderBlue;
+            this.button_Edit.BackColor = System.Drawing.Color.FromArgb(70, 68, 67);
+            this.button_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_Edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Edit.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.button_Edit.Location = new System.Drawing.Point(418, 188);
             this.button_Edit.Name = "button_Edit";
             this.button_Edit.Size = new System.Drawing.Size(90, 44);
@@ -170,7 +190,9 @@
             // 
             // textBox_Unit
             // 
+            this.textBox_Unit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.textBox_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_Unit.ForeColor = System.Drawing.Color.FromArgb(61, 59, 58);
             this.textBox_Unit.Location = new System.Drawing.Point(144, 278);
             this.textBox_Unit.Name = "textBox_Unit";
             this.textBox_Unit.Size = new System.Drawing.Size(208, 31);
@@ -180,6 +202,7 @@
             // 
             this.label_Unit.AutoSize = true;
             this.label_Unit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Unit.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.label_Unit.Location = new System.Drawing.Point(88, 284);
             this.label_Unit.Name = "label_Unit";
             this.label_Unit.Size = new System.Drawing.Size(50, 25);
@@ -199,6 +222,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.label1.Location = new System.Drawing.Point(25, 339);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(113, 25);
@@ -207,6 +231,8 @@
             // 
             // listBox1
             // 
+            this.listBox1.BackColor = System.Drawing.Color.FromArgb(238, 237, 237);
+            this.listBox1.ForeColor = System.Drawing.Color.FromArgb(70, 68, 67);
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Items.AddRange(new object[] {
             "Add - complete all the text box(Produc, Category etc) ",
@@ -222,6 +248,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(61, 59, 58);
             this.label2.Location = new System.Drawing.Point(346, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(127, 31);
@@ -232,6 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(248, 248, 248);
             this.ClientSize = new System.Drawing.Size(824, 657);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
