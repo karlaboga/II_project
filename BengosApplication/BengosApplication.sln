@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory", "Inventory\Inve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaffManagement", "StaffManagement\StaffManagement.csproj", "{663CA15E-5122-4B08-957A-67A250D518C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillingAndPayment", "BillingAndPayment\BillingAndPayment.csproj", "{C06BA66F-E014-44F2-9FA4-078C8C4022AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{663CA15E-5122-4B08-957A-67A250D518C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{663CA15E-5122-4B08-957A-67A250D518C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{663CA15E-5122-4B08-957A-67A250D518C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06BA66F-E014-44F2-9FA4-078C8C4022AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06BA66F-E014-44F2-9FA4-078C8C4022AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06BA66F-E014-44F2-9FA4-078C8C4022AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06BA66F-E014-44F2-9FA4-078C8C4022AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
