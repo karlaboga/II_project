@@ -1,0 +1,6 @@
+﻿CREATE TABLE Dish (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Price DECIMAL(10,2) NOT NULL,
+    Category NVARCHAR(50) DEFAULT 'Main Course'
+);

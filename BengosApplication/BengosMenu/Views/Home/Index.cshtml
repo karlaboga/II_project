@@ -1,0 +1,138 @@
+﻿@model Dictionary<string, List<BengosMenu.Models.Dish>>
+@{
+    ViewData["Title"] = "Home - Bengos Restaurant";
+}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #8B5E3C 0%, #D4A574 100%);
+        padding: 80px 0 60px 0;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .hero-title {
+        color: #FAF0E6;
+        font-size: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+
+    .hero-subtitle {
+        color: #F5E6CA;
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
+    .section-title {
+        color: #5C3A21;
+        font-size: 2rem;
+        border-bottom: 3px solid #D4A574;
+        padding-bottom: 10px;
+        margin: 40px 0 20px 0;
+    }
+
+    .dish-card {
+        background: #FFF8F0;
+        border: 1px solid #E8D5B7;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 12px rgba(139, 94, 60, 0.08);
+    }
+
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(139, 94, 60, 0.15);
+        }
+
+    .dish-name {
+        color: #5C3A21;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .dish-price {
+        color: #D4A574;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .dish-desc {
+        color: #8B5E3C;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+
+    .ingredient-badge {
+        display: inline-block;
+        background: #F5E6CA;
+        color: #8B5E3C;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin: 2px 4px 2px 0;
+        font-size: 0.8rem;
+    }
+
+    .category-icon {
+        font-size: 1.5rem;
+        margin-right: 8px;
+    }
+</style>
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Welcome to Bengos Restaurant</h1>
+        <p class="hero-subtitle">Savor the taste of excellence with every dish</p>
+    </div>
+</div>
+<div class="container">
+    @foreach (var category in Model)
+    {
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">
+                    <span class="category-icon">
+                        @(category.Key switch
+                        {
+                            "Main Course" => "🥩",
+                            "Appetizers" => "🥗",
+                            "Drinks" => "☕",
+                            "Desserts" => "🍰",
+                            _ => "🍽️"
+                        })
+                </span>
+                @category.Key
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var dish in category.Value)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="dish-card">
+                        <div class="dish-name">@dish.Name</div>
+                        <div class="dish-price">$@dish.Price.ToString("0.00")</div>
+                        @if (!string.IsNullOrEmpty(dish.Description))
+                        {
+                            <div class="dish-desc">@dish.Description</div>
+                        }
+                        @if (dish.DishIngredients?.Any() == true)
+                        {
+                            <div style="margin-top: 10px;">
+                                <small style="color: #D4A574;">Ingredients:</small><br />
+                                @foreach (var ing in dish.DishIngredients)
+                                {
+                                    <span class="ingredient-badge">
+                                        @ing.Produs.Name (@ing.Quantity @ing.Produs.Unit)
+                                    </span>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
