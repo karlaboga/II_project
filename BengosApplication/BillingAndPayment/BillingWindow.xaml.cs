@@ -2,12 +2,15 @@
 using System.Windows;
 using System.Windows.Controls;
 using BillingAndPayment.Models;
+using Microsoft.Data.SqlClient;
 namespace BillingAndPayment;
 public partial class BillingWindow : Window
 {
+    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
     public ObservableCollection<OrderItem> OrderItems { get; } = new();
     private double discountPercent;
     private bool isEditing;
+    private int? tableId;
     public List<Dish> Dishes { get; } = new()
     {
         new Dish { Name = "Classic Burger",          Price = 12.99 },
@@ -19,9 +22,13 @@ public partial class BillingWindow : Window
         new Dish { Name = "Grilled Chicken Salad",   Price = 11.50 },
         new Dish { Name = "Iced Coffee",             Price = 5.50  },
     };
-    public BillingWindow()
+    public BillingWindow() : this(null) { }
+    public BillingWindow(int? tableId)
     {
         InitializeComponent();
+        this.tableId = tableId;
+        if (tableId.HasValue)
+            Title = $"Billing & Payments — Table {tableId.Value}";
         CmbDish.ItemsSource = Dishes;
         CmbDish.SelectedIndex = 0;
         DgOrder.ItemsSource = OrderItems;
@@ -87,22 +94,10 @@ public partial class BillingWindow : Window
             Owner = this
         };
         var stack = new StackPanel { Margin = new Thickness(10) };
-        stack.Children.Add(new TextBlock
-        {
-            Text = "Enter discount percentage:",
-            Margin = new Thickness(0, 0, 0, 5)
-        });
-        var txtDisc = new TextBox
-        {
-            Text = discountPercent > 0 ? discountPercent.ToString() : "",
-            Margin = new Thickness(0, 0, 0, 10)
-        };
+        stack.Children.Add(new TextBlock { Text = "Enter discount percentage:", Margin = new Thickness(0, 0, 0, 5) });
+        var txtDisc = new TextBox { Text = discountPercent > 0 ? discountPercent.ToString() : "", Margin = new Thickness(0, 0, 0, 10) };
         stack.Children.Add(txtDisc);
-        var lblCalc = new TextBlock
-        {
-            Text = "Calculated discount: 0.00",
-            Foreground = System.Windows.Media.Brushes.DarkGreen
-        };
+        var lblCalc = new TextBlock { Text = "Calculated discount: 0.00", Foreground = System.Windows.Media.Brushes.DarkGreen };
         stack.Children.Add(lblCalc);
         txtDisc.TextChanged += (s, ev) =>
         {
@@ -111,15 +106,9 @@ public partial class BillingWindow : Window
                 double sub = OrderItems.Sum(item => item.Total);
                 lblCalc.Text = $"Calculated discount: {sub * pct / 100.0:0.00}";
             }
-            else
-                lblCalc.Text = "Calculated discount: 0.00";
+            else lblCalc.Text = "Calculated discount: 0.00";
         };
-        var btnPanel = new StackPanel
-        {
-            Orientation = Orientation.Horizontal,
-            HorizontalAlignment = HorizontalAlignment.Center,
-            Margin = new Thickness(0, 10, 0, 0)
-        };
+        var btnPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(0, 10, 0, 0) };
         var btnApply = new Button { Content = "Apply", Width = 80, Height = 30, Margin = new Thickness(5), IsDefault = true };
         var btnCancel = new Button { Content = "Cancel", Width = 80, Height = 30, Margin = new Thickness(5), IsCancel = true };
         btnPanel.Children.Add(btnApply);
@@ -135,11 +124,8 @@ public partial class BillingWindow : Window
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 popup.Close();
             }
-            else
-            {
-                MessageBox.Show("Please enter a value between 0 and 100.", "Invalid",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            else MessageBox.Show("Please enter a value between 0 and 100.", "Invalid",
+                MessageBoxButton.OK, MessageBoxImage.Warning);
         };
         popup.Content = stack;
         popup.ShowDialog();
@@ -154,34 +140,68 @@ public partial class BillingWindow : Window
         }
         double subtotalVal = OrderItems.Sum(item => item.Total);
         double totalVal = subtotalVal - (subtotalVal * discountPercent / 100.0);
-        var payWindow = new PaymentWindow(totalVal, discountPercent)
-        {
-            Owner = this
-        };
-        payWindow.ShowDialog();
+        var payWindow = new PaymentWindow(totalVal, discountPercent) { Owner = this };
+        if (payWindow.ShowDialog() == true)
+            SaveOrder(totalVal);
     }
-    private void BtnClose_Click(object sender, RoutedEventArgs e)
+    private void SaveOrder(double total)
     {
-        Close();
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+            using var cmd = new SqlCommand(
+                @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
+                  OUTPUT INSERTED.Id
+                  VALUES (@total, @disc, 'Paid', @tableId)", conn);
+            cmd.Parameters.AddWithValue("@total", total);
+            cmd.Parameters.AddWithValue("@disc", discountPercent);
+            cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
+            int orderId = (int)cmd.ExecuteScalar();
+            foreach (var item in OrderItems)
+            {
+                using var itemCmd = new SqlCommand(
+                    "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, @qty, @price)", conn);
+                itemCmd.Parameters.AddWithValue("@oid", orderId);
+                itemCmd.Parameters.AddWithValue("@name", item.Name);
+                itemCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                itemCmd.Parameters.AddWithValue("@price", item.Price);
+                itemCmd.ExecuteNonQuery();
+            }
+            if (tableId.HasValue)
+            {
+                using var updCmd = new SqlCommand(
+                    "UPDATE Tables SET Status='Free' WHERE Id=@id", conn);
+                updCmd.Parameters.AddWithValue("@id", tableId.Value);
+                updCmd.ExecuteNonQuery();
+            }
+            OrderItems.Clear();
+            discountPercent = 0;
+            RefreshTotals();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error saving order: " + ex.Message, "Database Error",
+                MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
+    private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
     private void RefreshTotals()
     {
         double subtotalVal = OrderItems.Sum(item => item.Total);
         double discountAmount = subtotalVal * discountPercent / 100.0;
         double totalVal = subtotalVal - discountAmount;
         TxtSubtotal.Text = $"{subtotalVal:0.00}";
-        TxtDiscount.Text = discountPercent > 0
-            ? $"-{discountAmount:0.00} ({discountPercent}%)"
-            : "0.00";
+        TxtDiscount.Text = discountPercent > 0 ? $"-{discountAmount:0.00} ({discountPercent}%)" : "0.00";
         TxtTotal.Text = $"${totalVal:0.00}";
     }
-}
-public class OrderItem
-{
-    public string Name { get; set; } = "";
-    public int Quantity { get; set; } = 1;
-    public double Price { get; set; }
-    public double Total => Quantity * Price;
-    public string PriceDisplay => $"{Price:0.00}";
-    public string TotalDisplay => $"{Total:0.00}";
+    public class OrderItem
+    {
+        public string Name { get; set; } = "";
+        public int Quantity { get; set; } = 1;
+        public double Price { get; set; }
+        public double Total => Quantity * Price;
+        public string PriceDisplay => $"{Price:0.00}";
+        public string TotalDisplay => $"{Total:0.00}";
+    }
 }

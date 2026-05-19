@@ -1,8 +1,8 @@
 ﻿<Window x:Class="BengosApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Bengos Restaurant Management System"
-        Height="520" Width="750"
+        Title="Bengos Restaurant"
+        Height="500" Width="420"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="#FAF0E6"
@@ -15,169 +15,75 @@
         <Grid Margin="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <!-- Header -->
-            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,20,0,5">
-                <TextBlock Text="bengos" FontSize="42" FontWeight="Light"
+            <!-- Logo + Nume -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,40,0,0">
+                <Border Width="90" Height="90" Background="#5C3A21"
+                        CornerRadius="45" Margin="0,0,0,20" HorizontalAlignment="Center">
+                    <TextBlock Text="B" FontSize="44" FontWeight="Bold"
+                               Foreground="#FAF0E6" HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="bengos" FontSize="38" FontWeight="Light"
                            Foreground="#5C3A21" HorizontalAlignment="Center"/>
-                <TextBlock Text="Restaurant" FontSize="42" FontWeight="Light"
+                <TextBlock Text="Restaurant" FontSize="38" FontWeight="Light"
                            Foreground="#8B5E3C" HorizontalAlignment="Center"
-                           Margin="0,-8,0,0" />
-                <TextBlock Text="MANAGEMENT SYSTEM" FontSize="11" FontWeight="Medium"
+                           Margin="0,-6,0,0" />
+                <TextBlock Text="MANAGEMENT SYSTEM" FontSize="10" FontWeight="Medium"
                            Foreground="#D4A574" HorizontalAlignment="Center"
-                           Margin="0,6,0,0" />
+                           Margin="0,8,0,0" />
             </StackPanel>
-            <!-- Separator -->
-            <Rectangle Grid.Row="1" Height="1" Margin="40,10,40,20"
-                       Fill="#E8D5B7" HorizontalAlignment="Stretch"/>
-            <!-- Card Buttons -->
-            <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <!-- Card 1: Inventory -->
-                <Border Grid.Row="0" Grid.Column="0" x:Name="CardInventory"
-                        Width="160" Height="140" Margin="12"
-                        Background="#FFF8F0" BorderBrush="#E8D5B7"
-                        BorderThickness="1" CornerRadius="14"
-                        Cursor="Hand"
-                        MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave"
-                        MouseLeftButtonUp="BtnInventory_Click">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="#FFF8F0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#D4A574"/>
-                                    <Setter Property="BorderBrush" Value="#8B5E3C"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="📦" FontSize="36" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Inventory" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="#5C3A21" HorizontalAlignment="Center"
-                                   Margin="0,8,0,0"/>
-                        <TextBlock Text="Stock Management" FontSize="10"
-                                   Foreground="#8B5E3C" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <!-- Card 2: Staff -->
-                <Border Grid.Row="0" Grid.Column="1" x:Name="CardStaff"
-                        Width="160" Height="140" Margin="12"
-                        Background="#FFF8F0" BorderBrush="#E8D5B7"
-                        BorderThickness="1" CornerRadius="14"
-                        Cursor="Hand"
-                        MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave"
-                        MouseLeftButtonUp="BtnStaff_Click">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="#FFF8F0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#D4A574"/>
-                                    <Setter Property="BorderBrush" Value="#8B5E3C"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="👥" FontSize="36" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Staff" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="#5C3A21" HorizontalAlignment="Center"
-                                   Margin="0,8,0,0"/>
-                        <TextBlock Text="Shift Scheduling" FontSize="10"
-                                   Foreground="#8B5E3C" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <!-- Card 3: Billing -->
-                <Border Grid.Row="1" Grid.Column="0" x:Name="CardBilling"
-                        Width="160" Height="140" Margin="12"
-                        Background="#FFF8F0" BorderBrush="#E8D5B7"
-                        BorderThickness="1" CornerRadius="14"
-                        Cursor="Hand"
-                        MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave"
-                        MouseLeftButtonUp="BtnBilling_Click">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="#FFF8F0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#D4A574"/>
-                                    <Setter Property="BorderBrush" Value="#8B5E3C"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="💳" FontSize="36" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Billing" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="#5C3A21" HorizontalAlignment="Center"
-                                   Margin="0,8,0,0"/>
-                        <TextBlock Text="Payments &amp;  Orders" FontSize="10"
-                                   Foreground="#8B5E3C" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <!-- Card 4: Menu -->
-                <Border Grid.Row="1" Grid.Column="1" x:Name="CardMenu"
-                        Width="160" Height="140" Margin="12"
-                        Background="#FFF8F0" BorderBrush="#E8D5B7"
-                        BorderThickness="1" CornerRadius="14"
-                        Cursor="Hand"
-                        MouseEnter="Card_MouseEnter" MouseLeave="Card_MouseLeave"
-                        MouseLeftButtonUp="BtnMenu_Click">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="#FFF8F0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#D4A574"/>
-                                    <Setter Property="BorderBrush" Value="#8B5E3C"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="🍽️" FontSize="36" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Menu" FontSize="15" FontWeight="SemiBold"
-                                   Foreground="#5C3A21" HorizontalAlignment="Center"
-                                   Margin="0,8,0,0"/>
-                        <TextBlock Text="Digital Menu" FontSize="10"
-                                   Foreground="#8B5E3C" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-            <!-- Footer -->
-            <StackPanel Grid.Row="3" HorizontalAlignment="Center" Margin="0,10,0,15">
-                <Button Content="Exit" Width="120" Height="36"
-                        Background="#5C3A21" Foreground="White"
-                        BorderThickness="0" Cursor="Hand"
-                        FontSize="13" FontWeight="Bold"
-                        Click="BtnExit_Click">
+            <!-- Butoane -->
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="30,0">
+                <Button Content="LOG IN" Height="48" FontSize="14" FontWeight="Bold"
+                        Foreground="White" Background="#5C3A21" BorderThickness="0"
+                        Cursor="Hand" Margin="0,0,0,15"
+                        Click="BtnLogin_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}"
-                                    CornerRadius="18"
-                                    BorderThickness="0">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="24" BorderThickness="0">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"/>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#8B5E3C"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock Text="© 2026 Bengos Restaurant" FontSize="9"
-                           Foreground="#D4A574" HorizontalAlignment="Center"
-                           Margin="0,8,0,0"/>
+                <Button Content="VIEW MENU" Height="44" FontSize="13" FontWeight="SemiBold"
+                        Foreground="#5C3A21" Background="#FFF8F0" BorderBrush="#E8D5B7"
+                        BorderThickness="1" Cursor="Hand"
+                        Click="BtnViewMenu_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="22">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#D4A574"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </StackPanel>
+            <!-- Footer -->
+            <TextBlock Grid.Row="2" Text="© 2026 Bengos Restaurant"
+                       FontSize="9" Foreground="#D4A574"
+                       HorizontalAlignment="Center" Margin="0,0,0,15"/>
         </Grid>
     </Border>
 </Window>
