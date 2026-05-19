@@ -4,6 +4,8 @@ namespace BillingAndPayment;
 public partial class PaymentWindow : Window
 {
     private readonly double totalAmount;
+    private double discountPercent;
+    private bool isInitialized = false;
     public PaymentWindow(double total, double discountPercent)
     {
         InitializeComponent();
@@ -12,7 +14,8 @@ public partial class PaymentWindow : Window
     }
     private void RbPayment_Checked(object sender, RoutedEventArgs e)
     {
-        CashPanel.Visibility = RbCash.IsChecked == true
+        if (!isInitialized) return;
+        CashPanel.Visibility = RbCash?.IsChecked == true
             ? Visibility.Visible
             : Visibility.Collapsed;
     }
