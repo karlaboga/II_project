@@ -1,0 +1,32 @@
+﻿<Window x:Class="Kitchen.ActiveOrders"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kitchen"
+        mc:Ignorable="d"
+        Title="Active Kitchen Orders" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#4A2E1B">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,20">
+            <Button Content="◀ Back" Width="70" Background="#6F4E37" Foreground="White" BorderThickness="0" Cursor="Hand" Click="Button_Click"/>
+            <TextBlock Text="ACTIVE KITCHEN ORDERS" FontSize="26" FontWeight="Bold" Foreground="#FFFDF9" HorizontalAlignment="Center" Margin="0,0,70,0"/>
+        </DockPanel>
+
+        <Border Grid.Row="1" CornerRadius="8" BorderThickness="3" BorderBrush="#8B5A2B">
+            <Border.Background>
+                <SolidColorBrush Color="#FDF9F2" Opacity="0.95"/>
+            </Border.Background>
+
+            <Grid Margin="15">
+                <TextBlock Text="Waiting for incoming orders..." FontSize="16" Foreground="#4A2E1B" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
