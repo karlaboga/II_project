@@ -3,8 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Staff Management - Shift Scheduling"
         Height="650" Width="1000"
-        Background="#F3EDEE"
-        FontFamily="Segoe UI">
+WindowStartupLocation="CenterScreen"
+ResizeMode="NoResize"
+WindowStyle="None"
+AllowsTransparency="True"
+Background="#F3EDEE"
+FontFamily="Segoe UI"
+TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType">
 
     <Border Background="#F3EDEE" Padding="20">
 

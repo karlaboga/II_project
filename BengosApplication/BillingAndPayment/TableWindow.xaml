@@ -2,66 +2,125 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Table Management"
-        Height="550" Width="700"
-        WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
-        Background="#FAF0E6">
+        Height="650" Width="1000"
+WindowStartupLocation="CenterScreen"
+ResizeMode="NoResize"
+WindowStyle="None"
+AllowsTransparency="True"
+Background="#F3EDEE"
+FontFamily="Segoe UI"
+TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType">
+
     <Grid Margin="20">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="🪑 Table Management" FontSize="22" FontWeight="Bold"
-                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+
+        <!-- TITLE -->
+        <TextBlock Grid.Row="0"
+                   Text="🪑 Table Management"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Foreground="#5E3E4A"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+        <!-- LIST -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+
             <ItemsControl x:Name="TableList">
+
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        <WrapPanel Orientation="Horizontal"
+                                   HorizontalAlignment="Center"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="160" Height="150" Margin="10"
-                                Background="#FFF8F0" BorderBrush="#E8D5B7"
-                                BorderThickness="1" CornerRadius="12"
+
+                        <Border Width="160"
+                                Height="150"
+                                Margin="10"
+                                Background="#F3EDEE"
+                                BorderBrush="#C9A3B5"
+                                BorderThickness="1"
+                                CornerRadius="12"
                                 Padding="10">
+
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="#FFF8F0"/>
+                                    <Setter Property="Background" Value="#F3EDEE"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Status}" Value="Occupied">
-                                            <Setter Property="Background" Value="#F5E6D0"/>
+                                            <Setter Property="Background" Value="#E9DDE5"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                            <StackPanel VerticalAlignment="Center"
+                                        HorizontalAlignment="Center">
+
                                 <TextBlock Text="{Binding TableNumber, StringFormat='Table {0}'}"
-                                           FontSize="18" FontWeight="Bold" Foreground="#5C3A21"
+                                           FontSize="18"
+                                           FontWeight="Bold"
+                                           Foreground="#4B2F3A"
                                            HorizontalAlignment="Center"/>
+
                                 <TextBlock Text="{Binding Capacity, StringFormat='.{0} seats'}"
-                                           FontSize="11" Foreground="#8B5E3C"
-                                           HorizontalAlignment="Center" Margin="0,4,0,2"/>
+                                           FontSize="11"
+                                           Foreground="#7A5A68"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,4,0,2"/>
+
                                 <TextBlock Text="{Binding StatusDisplay}"
-                                           FontSize="11" FontWeight="SemiBold"
-                                           HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                                <Button Content="{Binding ActionText}" Width="100" Height="28"
-                                        Background="{Binding ActionColor}" Foreground="White"
-                                        BorderThickness="0" Cursor="Hand"
-                                        FontSize="11" FontWeight="Bold"
+                                           FontSize="11"
+                                           FontWeight="SemiBold"
+                                           Foreground="#5E3E4A"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,8"/>
+
+                                <Button Content="{Binding ActionText}"
+                                        Width="100"
+                                        Height="28"
+                                        Background="#5E3E4A"
+                                        Foreground="#F3EDEE"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        FontSize="11"
+                                        FontWeight="Bold"
                                         CommandParameter="{Binding Id}"
                                         Click="BtnTableAction_Click"/>
                             </StackPanel>
+
                         </Border>
+
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+
             </ItemsControl>
         </ScrollViewer>
-        <Button Grid.Row="2" Content="Close" Width="100" Height="34"
-                Background="#E8D5B7" Foreground="#5C3A21" BorderThickness="0"
-                FontWeight="Bold" Cursor="Hand" Margin="0,15,0,5"
-                HorizontalAlignment="Center" Click="BtnClose_Click"/>
+
+        <!-- CLOSE -->
+        <Button Grid.Row="2"
+                Content="Close"
+                Width="100"
+                Height="34"
+                Background="#E9DDE5"
+                Foreground="#5E3E4A"
+                BorderThickness="0"
+                FontWeight="Bold"
+                Cursor="Hand"
+                Margin="0,15,0,5"
+                HorizontalAlignment="Center"
+                Click="BtnClose_Click"/>
+
     </Grid>
 </Window>

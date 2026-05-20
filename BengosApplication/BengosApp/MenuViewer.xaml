@@ -2,71 +2,177 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Bengos Menu"
-        Height="550" Width="500"
-        WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
-        Background="#FAF0E6">
+        Height="650" Width="1000"
+WindowStartupLocation="CenterScreen"
+ResizeMode="NoResize"
+WindowStyle="None"
+AllowsTransparency="True"
+Background="#F3EDEE"
+FontFamily="Segoe UI"
+TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType">
+
     <Grid Margin="15">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="🍽️ Our Menu" FontSize="22" FontWeight="Bold"
-                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,5,0,10"/>
-        <!-- Category filter -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-            <Button Content="All" x:Name="BtnAll" Click="Filter_Click"
-                    Background="#5C3A21" Foreground="White" BorderThickness="0"
-                    FontSize="11" Padding="12,5" Margin="3" Cursor="Hand"/>
-            <Button Content="Main Course" Click="Filter_Click"
-                    Background="#D4A574" Foreground="White" BorderThickness="0"
-                    FontSize="11" Padding="12,5" Margin="3" Cursor="Hand"/>
-            <Button Content="Appetizers" Click="Filter_Click"
-                    Background="#D4A574" Foreground="White" BorderThickness="0"
-                    FontSize="11" Padding="12,5" Margin="3" Cursor="Hand"/>
-            <Button Content="Drinks" Click="Filter_Click"
-                    Background="#D4A574" Foreground="White" BorderThickness="0"
-                    FontSize="11" Padding="12,5" Margin="3" Cursor="Hand"/>
-            <Button Content="Desserts" Click="Filter_Click"
-                    Background="#D4A574" Foreground="White" BorderThickness="0"
-                    FontSize="11" Padding="12,5" Margin="3" Cursor="Hand"/>
+
+        <!-- TITLE -->
+        <TextBlock Grid.Row="0"
+                   Text="🍽️ Our Menu"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Foreground="#5E3E4A"
+                   HorizontalAlignment="Center"
+                   Margin="0,5,0,10"/>
+
+        <!-- FILTERS -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10">
+
+            <Button Content="All"
+                    x:Name="BtnAll"
+                    Click="Filter_Click"
+                    Background="#5E3E4A"
+                    Foreground="#F3EDEE"
+                    BorderThickness="0"
+                    FontSize="11"
+                    Padding="12,5"
+                    Margin="3"
+                    Cursor="Hand"/>
+
+            <Button Content="Main Course"
+                    Click="Filter_Click"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    BorderThickness="0"
+                    FontSize="11"
+                    Padding="12,5"
+                    Margin="3"
+                    Cursor="Hand"/>
+
+            <Button Content="Appetizers"
+                    Click="Filter_Click"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    BorderThickness="0"
+                    FontSize="11"
+                    Padding="12,5"
+                    Margin="3"
+                    Cursor="Hand"/>
+
+            <Button Content="Drinks"
+                    Click="Filter_Click"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    BorderThickness="0"
+                    FontSize="11"
+                    Padding="12,5"
+                    Margin="3"
+                    Cursor="Hand"/>
+
+            <Button Content="Desserts"
+                    Click="Filter_Click"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    BorderThickness="0"
+                    FontSize="11"
+                    Padding="12,5"
+                    Margin="3"
+                    Cursor="Hand"/>
+
         </StackPanel>
-        <!-- Menu list -->
-        <ListBox Grid.Row="2" x:Name="LstMenu"
-                 Background="#FFF8F0" BorderBrush="#E8D5B7"
+
+        <!-- MENU LIST -->
+        <ListBox Grid.Row="2"
+                 x:Name="LstMenu"
+                 Background="#F3EDEE"
+                 BorderBrush="#C9A3B5"
+                 Foreground="#5E3E4A"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#FAF0E6" CornerRadius="8" Padding="10" Margin="2,3"
-                            BorderBrush="#E8D5B7" BorderThickness="1">
+
+                    <Border Background="#F3EDEE"
+                            CornerRadius="10"
+                            Padding="10"
+                            Margin="2,3"
+                            BorderBrush="#C9A3B5"
+                            BorderThickness="1">
+
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold"
-                                           Foreground="#5C3A21"/>
-                                <TextBlock Text="{Binding Description}" FontSize="10"
-                                           Foreground="#8B5E3C" TextWrapping="Wrap"
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Foreground="#5E3E4A"/>
+
+                                <TextBlock Text="{Binding Description}"
+                                           FontSize="10"
+                                           Foreground="#7A5A68"
+                                           TextWrapping="Wrap"
                                            Margin="0,2,10,0"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="1" Text="{Binding PriceDisplay}"
-                                       FontSize="16" FontWeight="Bold" Foreground="#5C3A21"
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding PriceDisplay}"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="#5E3E4A"
                                        VerticalAlignment="Center"/>
+
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="3" Content="Close" Width="100" Height="32"
-                Background="#E8D5B7" Foreground="#5C3A21" BorderThickness="0"
-                FontWeight="Bold" Cursor="Hand" Margin="0,10,0,5"
-                HorizontalAlignment="Center" Click="BtnClose_Click"/>
+
+        <!-- CLOSE BUTTON -->
+        <Button Grid.Row="3"
+                Content="Close"
+                Width="110"
+                Height="34"
+                Background="#5E3E4A"
+                Foreground="#F3EDEE"
+                BorderThickness="0"
+                FontWeight="Bold"
+                Cursor="Hand"
+                Margin="0,10,0,5"
+                HorizontalAlignment="Center"
+                Click="BtnClose_Click">
+
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="12">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+
+        </Button>
+
+        <!-- WARNING -->
         <TextBlock Text="⚠️ Missing ingredients"
-           Foreground="#C94A4A" FontSize="10" FontWeight="Bold">
+                   Foreground="#8A3F4A"
+                   FontSize="10"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom">
+
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -77,6 +183,8 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
+
         </TextBlock>
+
     </Grid>
 </Window>
