@@ -8,35 +8,117 @@ public partial class BillingWindow : Window
 {
     private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
     public ObservableCollection<OrderItem> OrderItems { get; } = new();
+    public ObservableCollection<Dish> Dishes { get; } = new();
     private double discountPercent;
     private bool isEditing;
     private int? tableId;
-    public List<Dish> Dishes { get; } = new()
-    {
-        new Dish { Name = "Classic Burger",          Price = 12.99 },
-        new Dish { Name = "Chicken Pasta",           Price = 14.50 },
-        new Dish { Name = "Caesar Salad",            Price = 9.99  },
-        new Dish { Name = "Beef Burger",             Price = 15.99 },
-        new Dish { Name = "Cappuccino",              Price = 4.50  },
-        new Dish { Name = "Chocolate Sundae",        Price = 6.99  },
-        new Dish { Name = "Grilled Chicken Salad",   Price = 11.50 },
-        new Dish { Name = "Iced Coffee",             Price = 5.50  },
-    };
+    private int? currentOrderId;
+    public double CurrentDiscount => discountPercent;
     public BillingWindow() : this(null) { }
     public BillingWindow(int? tableId)
     {
         InitializeComponent();
         this.tableId = tableId;
         if (tableId.HasValue)
-            Title = $"Billing & Payments — Table {tableId.Value}";
+            Title = $"Billing — Table {tableId.Value}";
+        LoadDishes();
         CmbDish.ItemsSource = Dishes;
         CmbDish.SelectedIndex = 0;
         DgOrder.ItemsSource = OrderItems;
+        BtnEditQty.IsEnabled = false;
+        BtnDeleteItem.IsEnabled = false;
+        OrderItems.CollectionChanged += (s, e) =>
+        {
+            BtnEditQty.IsEnabled = OrderItems.Count > 0;
+            BtnDeleteItem.IsEnabled = OrderItems.Count > 0 && DgOrder.SelectedItem != null;
+        };
+        DgOrder.SelectionChanged += DgOrder_SelectionChanged;
+    }
+    public BillingWindow(int? tableId, int orderId, double discount)
+    {
+        InitializeComponent();
+        this.tableId = tableId;
+        this.currentOrderId = orderId;
+        this.discountPercent = discount;
+        if (tableId.HasValue)
+            Title = $"Billing — Table {tableId.Value}";
+        LoadDishes();
+        CmbDish.ItemsSource = Dishes;
+        CmbDish.SelectedIndex = 0;
+        DgOrder.ItemsSource = OrderItems;
+        LoadOrderItemsFromDb();
+        RefreshTotals();
+        BtnEditQty.IsEnabled = OrderItems.Count > 0;
+        BtnDeleteItem.IsEnabled = false;
+        OrderItems.CollectionChanged += (s, e) =>
+        {
+            BtnEditQty.IsEnabled = OrderItems.Count > 0;
+            BtnDeleteItem.IsEnabled = OrderItems.Count > 0 && DgOrder.SelectedItem != null;
+        };
+        DgOrder.SelectionChanged += DgOrder_SelectionChanged;
+    }
+    private void LoadDishes()
+    {
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+            using var cmd = new SqlCommand("SELECT Id, Name, Price, Category FROM Dishes ORDER BY Category, Name", conn);
+            using var rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                Dishes.Add(new Dish
+                {
+                    Name = rdr["Name"]?.ToString() ?? "",
+                    Price = Convert.ToDouble(rdr["Price"])
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error loading dishes: " + ex.Message);
+        }
+    }
+    private void LoadOrderItemsFromDb()
+    {
+        if (!currentOrderId.HasValue) return;
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+            using var cmd = new SqlCommand(
+                "SELECT Name, Quantity, Price FROM OrderItems WHERE OrderId=@oid", conn);
+            cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+            using var rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+                OrderItems.Add(new OrderItem
+                {
+                    Name = rdr["Name"]?.ToString() ?? "",
+                    Quantity = Convert.ToInt32(rdr["Quantity"]),
+                    Price = Convert.ToDouble(rdr["Price"])
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error loading order items: " + ex.Message);
+        }
+    }
+    private void DgOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        BtnDeleteItem.IsEnabled = DgOrder.SelectedItem != null;
+        if (isEditing && DgOrder.SelectedItem != null)
+        {
+            DgOrder.BeginEdit();
+            var cell = DgOrder.Columns[1].GetCellContent(DgOrder.SelectedItem);
+            cell?.Focus();
+        }
     }
     private void CmbDish_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (CmbDish.SelectedItem is Dish dish)
-            TxtUnitPrice.Text = $"Unit Price: ${dish.Price:0.00}";
+            TxtUnitPrice.Text = $"Unit Price: {dish.Price:0.00} RON";
     }
     private void BtnAddDish_Click(object sender, RoutedEventArgs e)
     {
@@ -46,41 +128,128 @@ public partial class BillingWindow : Window
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
-        if (!int.TryParse(TxtQty.Text, out int qty) || qty <= 0)
+        if (!int.TryParse(TxtQty.Text, out int qty) || qty <= 0 || qty > 100)
         {
-            MessageBox.Show("Please enter a valid quantity.", "Invalid Quantity",
+            MessageBox.Show("Please enter a valid quantity (1-100).", "Invalid Quantity",
                 MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
         var existing = OrderItems.FirstOrDefault(o => o.Name == dish.Name);
         if (existing != null)
+        {
+            if (existing.Quantity + qty > 100)
+            {
+                MessageBox.Show("Total quantity for this dish cannot exceed 100.", "Quantity Limit",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             existing.Quantity += qty;
+        }
         else
             OrderItems.Add(new OrderItem { Name = dish.Name, Quantity = qty, Price = dish.Price });
         DgOrder.Items.Refresh();
         RefreshTotals();
+        if (currentOrderId.HasValue)
+            SyncItemToDb(dish.Name, existing ?? OrderItems.Last());
+    }
+    private void SyncItemToDb(string name, OrderItem item)
+    {
+        if (!currentOrderId.HasValue) return;
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+            using var check = new SqlCommand(
+                "SELECT Id FROM OrderItems WHERE OrderId=@oid AND Name=@name", conn);
+            check.Parameters.AddWithValue("@oid", currentOrderId.Value);
+            check.Parameters.AddWithValue("@name", name);
+            var exists = check.ExecuteScalar();
+            if (exists != null)
+            {
+                using var upd = new SqlCommand(
+                    "UPDATE OrderItems SET Quantity=@qty, Price=@price WHERE Id=@id", conn);
+                upd.Parameters.AddWithValue("@qty", item.Quantity);
+                upd.Parameters.AddWithValue("@price", item.Price);
+                upd.Parameters.AddWithValue("@id", (int)exists);
+                upd.ExecuteNonQuery();
+            }
+            else
+            {
+                using var ins = new SqlCommand(
+                    "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, @qty, @price)", conn);
+                ins.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                ins.Parameters.AddWithValue("@name", name);
+                ins.Parameters.AddWithValue("@qty", item.Quantity);
+                ins.Parameters.AddWithValue("@price", item.Price);
+                ins.ExecuteNonQuery();
+            }
+        }
+        catch { }
     }
     private void DgOrder_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
     {
-        if (e.Column.Header.ToString() == "Qty" && e.EditingElement is TextBox cell)
+        try
         {
-            if (int.TryParse(cell.Text, out int qty) && qty > 0)
+            if (e.Column.Header.ToString() == "Qty" && e.EditingElement is TextBox cell)
             {
-                if (e.Row.Item is OrderItem item)
-                    item.Quantity = qty;
+                if (!int.TryParse(cell.Text, out int qty) || qty <= 0 || qty > 100)
+                {
+                    e.Cancel = true;
+                    cell.Text = (e.Row.Item as OrderItem)?.Quantity.ToString();
+                }
+                DgOrder.Items.Refresh();
+                RefreshTotals();
             }
-            DgOrder.Items.Refresh();
-            RefreshTotals();
         }
+        catch { }
     }
     private void BtnEditQty_Click(object sender, RoutedEventArgs e)
     {
-        isEditing = !isEditing;
-        DgOrder.IsReadOnly = !isEditing;
-        DgOrder.Background = isEditing
-            ? System.Windows.Media.Brushes.LightYellow
-            : System.Windows.Media.Brushes.White;
-        BtnEditQty.Content = isEditing ? "Done Editing" : "Edit Order";
+        if (isEditing)
+        {
+            DgOrder.CommitEdit(DataGridEditingUnit.Row, true);
+            isEditing = false;
+            DgOrder.IsReadOnly = true;
+            DgOrder.Background = System.Windows.Media.Brushes.White;
+            BtnEditQty.Content = "Edit Order";
+            TxtUnitPrice.Text = "";
+        }
+        else
+        {
+            isEditing = true;
+            TxtUnitPrice.Text = "Select an item to edit";
+            TxtUnitPrice.Foreground = System.Windows.Media.Brushes.Gray;
+            DgOrder.IsReadOnly = false;
+            DgOrder.Background = System.Windows.Media.Brushes.LightYellow;
+            BtnEditQty.Content = "Done Editing";
+        }
+        BtnAddDish.IsEnabled = !isEditing;
+        BtnDiscount.IsEnabled = !isEditing;
+        BtnPay.IsEnabled = !isEditing;
+        BtnDeleteItem.IsEnabled = !isEditing;
+    }
+    private void BtnDeleteItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (DgOrder.SelectedItem is OrderItem item)
+        {
+            OrderItems.Remove(item);
+            DgOrder.Items.Refresh();
+            RefreshTotals();
+            if (currentOrderId.HasValue)
+            {
+                try
+                {
+                    using var conn = new SqlConnection(connString);
+                    conn.Open();
+                    using var cmd = new SqlCommand(
+                        "DELETE FROM OrderItems WHERE OrderId=@oid AND Name=@name", conn);
+                    cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                    cmd.Parameters.AddWithValue("@name", item.Name);
+                    cmd.ExecuteNonQuery();
+                }
+                catch { }
+            }
+        }
     }
     private void BtnDiscount_Click(object sender, RoutedEventArgs e)
     {
@@ -150,23 +319,34 @@ public partial class BillingWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-            using var cmd = new SqlCommand(
-                @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
-                  OUTPUT INSERTED.Id
-                  VALUES (@total, @disc, 'Paid', @tableId)", conn);
-            cmd.Parameters.AddWithValue("@total", total);
-            cmd.Parameters.AddWithValue("@disc", discountPercent);
-            cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
-            int orderId = (int)cmd.ExecuteScalar();
-            foreach (var item in OrderItems)
+            if (currentOrderId.HasValue)
             {
-                using var itemCmd = new SqlCommand(
-                    "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, @qty, @price)", conn);
-                itemCmd.Parameters.AddWithValue("@oid", orderId);
-                itemCmd.Parameters.AddWithValue("@name", item.Name);
-                itemCmd.Parameters.AddWithValue("@qty", item.Quantity);
-                itemCmd.Parameters.AddWithValue("@price", item.Price);
-                itemCmd.ExecuteNonQuery();
+                using var cmd = new SqlCommand(
+                    "UPDATE Orders SET Total=@total, DiscountPercent=@disc, Status='Paid' WHERE Id=@oid", conn);
+                cmd.Parameters.AddWithValue("@total", total);
+                cmd.Parameters.AddWithValue("@disc", discountPercent);
+                cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                using var cmd = new SqlCommand(
+                    @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
+                      OUTPUT INSERTED.Id VALUES (@total, @disc, 'Paid', @tableId)", conn);
+                cmd.Parameters.AddWithValue("@total", total);
+                cmd.Parameters.AddWithValue("@disc", discountPercent);
+                cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
+                int orderId = (int)cmd.ExecuteScalar();
+                foreach (var item in OrderItems)
+                {
+                    using var itemCmd = new SqlCommand(
+                        "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, @qty, @price)", conn);
+                    itemCmd.Parameters.AddWithValue("@oid", orderId);
+                    itemCmd.Parameters.AddWithValue("@name", item.Name);
+                    itemCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                    itemCmd.Parameters.AddWithValue("@price", item.Price);
+                    itemCmd.ExecuteNonQuery();
+                }
             }
             if (tableId.HasValue)
             {
@@ -178,6 +358,7 @@ public partial class BillingWindow : Window
             OrderItems.Clear();
             discountPercent = 0;
             RefreshTotals();
+            DialogResult = true;
         }
         catch (Exception ex)
         {
@@ -191,9 +372,9 @@ public partial class BillingWindow : Window
         double subtotalVal = OrderItems.Sum(item => item.Total);
         double discountAmount = subtotalVal * discountPercent / 100.0;
         double totalVal = subtotalVal - discountAmount;
-        TxtSubtotal.Text = $"{subtotalVal:0.00}";
+        TxtSubtotal.Text = $"{subtotalVal:0.00} RON";
         TxtDiscount.Text = discountPercent > 0 ? $"-{discountAmount:0.00} ({discountPercent}%)" : "0.00";
-        TxtTotal.Text = $"${totalVal:0.00}";
+        TxtTotal.Text = $"{totalVal:0.00} RON";
     }
     public class OrderItem
     {
@@ -201,7 +382,7 @@ public partial class BillingWindow : Window
         public int Quantity { get; set; } = 1;
         public double Price { get; set; }
         public double Total => Quantity * Price;
-        public string PriceDisplay => $"{Price:0.00}";
-        public string TotalDisplay => $"{Total:0.00}";
+        public string PriceDisplay => $"{Price:0.00} RON";
+        public string TotalDisplay => $"{Total:0.00} RON";
     }
 }
