@@ -20,7 +20,7 @@ public partial class MainWindow : Window
             }
             else
             {
-                new EmployeeDashboard(login.LoggedInUser, login.LoggedInRole).ShowDialog();
+                new BillingAndPayment.TableWindow().ShowDialog();
             }
         }
     }
