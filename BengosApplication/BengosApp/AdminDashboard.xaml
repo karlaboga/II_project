@@ -1,0 +1,104 @@
+﻿<Window x:Class="BengosApp.AdminDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Admin Dashboard"
+        Height="560" Width="680"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#FAF0E6">
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="TxtWelcome" FontSize="20" FontWeight="Bold"
+                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,5,0,15"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Inventory column -->
+            <StackPanel Grid.Column="0" Margin="5">
+                <Border Background="#FFF8F0" BorderBrush="#E8D5B7"
+                        BorderThickness="1" CornerRadius="12" Padding="15"
+                        Cursor="Hand" MouseLeftButtonUp="BtnInventory_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="📦" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Inventory" FontSize="15" FontWeight="Bold"
+                                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,5,0,2"/>
+                        <TextBlock Text="Products" FontSize="10" Foreground="#8B5E3C"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Button Content="⚠️ Low Stock" Height="32" Margin="0,6,0,0"
+                        Background="#C94A4A" Foreground="White" BorderThickness="0"
+                        Cursor="Hand" FontSize="11" FontWeight="Bold"
+                        Click="BtnLowStock_Click"/>
+                <Button Content="💲 Prices" Height="32" Margin="0,4,0,0"
+                        Background="#D4A574" Foreground="White" BorderThickness="0"
+                        Cursor="Hand" FontSize="11" FontWeight="Bold"
+                        Click="BtnPrices_Click"/>
+            </StackPanel>
+            <!-- Staff column -->
+            <StackPanel Grid.Column="1" Margin="5">
+                <Border Background="#FFF8F0" BorderBrush="#E8D5B7"
+                        BorderThickness="1" CornerRadius="12" Padding="15"
+                        Cursor="Hand" MouseLeftButtonUp="BtnStaff_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="👥" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Staff" FontSize="15" FontWeight="Bold"
+                                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,5,0,2"/>
+                        <TextBlock Text="Add Shifts" FontSize="10" Foreground="#8B5E3C"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Button Content="⏱️ Hours" Height="32" Margin="0,6,0,0"
+                        Background="#8B5E3C" Foreground="White" BorderThickness="0"
+                        Cursor="Hand" FontSize="11" FontWeight="Bold"
+                        Click="BtnHours_Click"/>
+                <Button Content="💵 Salary" Height="32" Margin="0,4,0,0"
+                        Background="#5C3A21" Foreground="White" BorderThickness="0"
+                        Cursor="Hand" FontSize="11" FontWeight="Bold"
+                        Click="BtnSalary_Click"/>
+            </StackPanel>
+            <!-- Revenue column -->
+            <StackPanel Grid.Column="2" Margin="5">
+                <Border Background="#FFF8F0" BorderBrush="#E8D5B7"
+                        BorderThickness="1" CornerRadius="12" Padding="15"
+                        Cursor="Hand" MouseLeftButtonUp="BtnRevenue_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="💰" FontSize="28" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Revenue" FontSize="15" FontWeight="Bold"
+                                   Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,5,0,2"/>
+                        <TextBlock Text="Daily Report" FontSize="10" Foreground="#8B5E3C"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Button Grid.Row="2" Content="Logout" Width="100" Height="34"
+                Background="#E8D5B7" Foreground="#5C3A21" BorderThickness="0"
+                FontWeight="Bold" Cursor="Hand" Margin="0,15,0,5"
+                HorizontalAlignment="Center" Click="BtnLogout_Click"/>
+        <Button Content="⚠️ Low Stock" Height="30" Margin="8,2"
+        Background="#C94A4A" Foreground="White" BorderThickness="0"
+        Cursor="Hand" FontSize="11" FontWeight="Bold"
+        Click="BtnLowStock_Click"/>
+        <Button Content="💲 Prices" Height="30" Margin="8,2"
+        Background="#D4A574" Foreground="White" BorderThickness="0"
+        Cursor="Hand" FontSize="11" FontWeight="Bold"
+        Click="BtnPrices_Click"/>
+        
+        <Button Content="⏱️ Hours" Height="30" Margin="8,2"
+        Background="#8B5E3C" Foreground="White" BorderThickness="0"
+        Cursor="Hand" FontSize="11" FontWeight="Bold"
+        Click="BtnHours_Click"/>
+        <Button Content="💵 Salary" Height="30" Margin="8,2"
+        Background="#5C3A21" Foreground="White" BorderThickness="0"
+        Cursor="Hand" FontSize="11" FontWeight="Bold"
+        Click="BtnSalary_Click"/>
+    </Grid>
+</Window>
