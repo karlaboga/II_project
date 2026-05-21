@@ -28,5 +28,15 @@ namespace Kitchen
         {
             this.Close();
         }
+
+        private void BtnCompleteOrder_Click(object sender, RoutedEventArgs e)
+        {
+            // Verificăm dacă butonul a fost apăsat și dacă are un context de date
+            if (sender is Button btn && btn.DataContext != null)
+            {
+                // Aici va fi logica ta de procesare (ex: ștergerea din lista de comenzi)
+                MessageBox.Show("Comanda a fost marcată ca finalizată.");
+            }
+        }
     }
 }
