@@ -28,7 +28,7 @@ public partial class MainWindow : Window
             // 3. Anyone else ('Employee' / Waiters) goes here
             else
             {
-                new EmployeeDashboard(login.LoggedInUser, login.LoggedInRole).ShowDialog();
+                new BillingAndPayment.TableWindow().ShowDialog();
             }
         }
     }
