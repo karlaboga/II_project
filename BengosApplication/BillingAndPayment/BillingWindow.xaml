@@ -45,7 +45,7 @@
                     BorderThickness="0" Cursor="Hand"
                     FontSize="13" FontWeight="Bold"
                     Padding="15,6" Margin="12,0,0,0"
-                    Click="BtnAddDish_Click"/>
+                    Click="BtnAddDish_Click" HorizontalAlignment="Left" Width="111"/>
         </Grid>
         <!-- Unit Price Display -->
         <TextBlock Grid.Row="2" x:Name="TxtUnitPrice"

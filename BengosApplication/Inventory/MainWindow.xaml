@@ -30,9 +30,19 @@
                   BorderBrush="#E8D5B7" Background="#FFF8F0" Foreground="#5C3A21">
             <ComboBoxItem Content="Fruits"/>
             <ComboBoxItem Content="Vegetables"/>
-            <ComboBoxItem Content="Meat"/>
+            <ComboBoxItem Content="Fruits"/>
+            <ComboBoxItem Content="Herbs &amp; Aromatics"/>
+            <ComboBoxItem Content="Beef &amp; Pork"/>
+            <ComboBoxItem Content="Poultry"/>
+            <ComboBoxItem Content="Seafood &amp; Fish"/>
+            <ComboBoxItem Content="Plant Proteins"/>
             <ComboBoxItem Content="Dairy"/>
+            <ComboBoxItem Content="Eggs"/>
+            <ComboBoxItem Content="Oils &amp; Fats"/>
+            <ComboBoxItem Content="Bakery"/>
+            <ComboBoxItem Content="Dry Grains &amp; Pastas"/>
             <ComboBoxItem Content="Spices"/>
+            <ComboBoxItem Content="Canned"/>
         </ComboBox>
         <TextBlock Grid.Row="2" Text="Quantity" VerticalAlignment="Center" Margin="5"
                    Foreground="#5C3A21" FontWeight="SemiBold"/>
@@ -45,9 +55,12 @@
                   Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
                   BorderBrush="#E8D5B7" Background="#FFF8F0" Foreground="#5C3A21">
             <ComboBoxItem Content="Kilograms"/>
+            <ComboBoxItem Content="Grams"/>
             <ComboBoxItem Content="Liters"/>
+            <ComboBoxItem Content="Milliliters"/>
             <ComboBoxItem Content="Pieces"/>
-            <ComboBoxItem Content="Boxes"/>
+            <ComboBoxItem Content="Packs"/>
+            <ComboBoxItem Content="Dozens"/>
         </ComboBox>
         <TextBlock Grid.Row="4" Text="Min Stock" VerticalAlignment="Center" Margin="5"
                    Foreground="#5C3A21" FontWeight="SemiBold"/>
