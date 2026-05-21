@@ -9,4 +9,5 @@ public class Dish
     public string Description { get; set; } = "";
     public string PreparationTime { get; set; } = "--";
     public string Alergies { get; set; } = "None";
+    public string Steps { get; set; } = "No steps provided.";
 }

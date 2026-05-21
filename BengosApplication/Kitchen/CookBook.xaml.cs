@@ -37,7 +37,7 @@ namespace Kitchen
             try
             {
                 allDishes.Clear();
-                string query = "SELECT Id, Name, Category, Description, PreparationTime, Alergies FROM dbo.Dishes";
+                string query = "SELECT Id, Name, Category, PreparationTime, Alergies, Steps FROM dbo.Dishes";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
@@ -52,9 +52,10 @@ namespace Kitchen
                                 Id = Convert.ToInt32(reader["Id"]),
                                 Name = reader["Name"].ToString(),
                                 Category = reader["Category"].ToString(),
-                                Description = reader["Description"].ToString(),
                                 PreparationTime = reader["PreparationTime"] != DBNull.Value ? reader["PreparationTime"].ToString() : "--",
-                                Alergies = reader["Alergies"] != DBNull.Value ? reader["Alergies"].ToString() : "None"
+                                Alergies = reader["Alergies"] != DBNull.Value ? reader["Alergies"].ToString() : "None",
+                                Steps = reader["Steps"] != DBNull.Value ? reader["Steps"].ToString() : "No instructions provided.",
+
                             });
                         }
                     }
@@ -110,7 +111,7 @@ namespace Kitchen
                 TxtDishName.Text = selectedDish.Name;
                 TxtPrepTime.Text = $"{selectedDish.PreparationTime} min";
                 TxtAllergens.Text = selectedDish.Alergies;
-                TxtInstructions.Text = !string.IsNullOrEmpty(selectedDish.Description) ? selectedDish.Description : "No instructions provided.";
+                TxtInstructions.Text = !string.IsNullOrEmpty(selectedDish.Steps) ? selectedDish.Steps : "No instructions provided.";
 
                 // Încărcăm ingredientele din tabela junction utilizând INNER JOIN
                 LoadIngredientsForDish(selectedDish.Id);
@@ -160,6 +161,23 @@ namespace Kitchen
             {
                 TxtIngredients.Text = "Error loading ingredients.";
                 MessageBox.Show("Eroare ingrediente: " + ex.Message);
+            }
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BtnAddRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            AddRecipe addRecipeWindow = new AddRecipe();
+
+            addRecipeWindow.Owner = this;
+
+            if (addRecipeWindow.ShowDialog() == true)
+            {
+                LoadDishesFromDatabase();
             }
         }
     }
