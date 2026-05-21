@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kitchen"
         mc:Ignorable="d"
-        Title="Active Kitchen Orders" Height="500" Width="800"
+        Title="Active Kitchen Orders" Height="700" Width="1000"
         WindowStartupLocation="CenterScreen"
         Background="#4A2E1B">
     <Grid Margin="15">
@@ -25,7 +25,83 @@
             </Border.Background>
 
             <Grid Margin="15">
-                <TextBlock Text="Waiting for incoming orders..." FontSize="16" Foreground="#4A2E1B" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
+                <TextBlock x:Name="TxtWaitingMessage" Text="Waiting for incoming orders..." FontSize="16" Foreground="#4A2E1B" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Items.Count, ElementName=OrdersControl}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl x:Name="OrdersControl">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="230" Margin="10" Background="#FFFDF9" BorderBrush="#8B5A2B" BorderThickness="2.5" CornerRadius="8">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="6" ShadowDepth="4" Opacity="0.15"/>
+                                    </Border.Effect>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0" Background="#6F4E37" Padding="6,4,6,4" CornerRadius="4" Margin="0,0,0,12">
+                                            <Grid>
+                                                <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Foreground="White" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Timestamp, StringFormat=\{0:HH:mm\}}" Foreground="#FDF9F2" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Items}" MinHeight="70" Margin="0,0,0,10">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Margin="0,4,0,4" FontSize="14" Foreground="#2A1B10" TextWrapping="Wrap">
+                                                        <Run Text="• " FontWeight="Bold" Foreground="#8B5A2B"/>
+                                                        <Run Text="{Binding Quantity}" FontWeight="Bold"/>
+                                                        <Run Text="x " Foreground="#666"/>
+                                                        <Run Text="{Binding Name}"/>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,12">
+                                            <TextBlock Text="⏱ Est. Time: " FontSize="13" FontWeight="SemiBold" Foreground="#555555"/>
+                                            <TextBlock Text="{Binding TotalPrepTime}" FontSize="13" FontWeight="Bold" Foreground="#D22B2B"/>
+                                            <TextBlock Text=" mins" FontSize="13" Foreground="#555555"/>
+                                        </StackPanel>
+
+                                        <Button Grid.Row="3" Content="✔ Complete Order" Click="BtnCompleteOrder_Click" DataContext="{Binding}"
+                                                Background="#4CAF50" Foreground="White" FontWeight="Bold" Height="32" BorderThickness="0" Cursor="Hand">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="4"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
             </Grid>
         </Border>
     </Grid>
