@@ -1,22 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; // Required for [NotMapped] 
 
-namespace BengosMenu.Models
+namespace Bengos.Models
 {
     public class Dish
     {
         [Key]
         public int Id { get; set; }
 
-        public required string Name { get; set; } = string.Empty;
+        [Required]
+        public string Name { get; set; } = string.Empty;
 
         public string? Description { get; set; }
+        public double Price { get; set; }
+        public string? Category { get; set; }
 
-        public decimal Price { get; set; }
+        // Properties from BillingAndPayment's Dish.cs (additional details)
+        public string PreparationTime { get; set; } = "--";
+        public string Alergies { get; set; } = "None";
+        public string Steps { get; set; } = "No steps provided.";
 
-        public required string Category { get; set; } = string.Empty;
+        // Calculated properties for UI
+        public string DisplayText => $"{Name} — {Price:0.00} RON";
+        public string PriceDisplay => $"{Price:0.00} RON";
 
-        public string? ImageUrl { get; set; }
+        // Navigation property for ingredients
+        public virtual ICollection<DishIngredient> DishIngredients { get; set; } = new List<DishIngredient>();
 
-        public List<DishIngredient> DishIngredients { get; set; } = new List<DishIngredient>();
+        // Note: Properties like Unit, Quantity, MinStock from Produs.cs are not included here
+        // as Dish represents a menu item, not an ingredient/stock item.
     }
 }

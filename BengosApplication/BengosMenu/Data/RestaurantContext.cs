@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BengosMenu.Models;
+using Bengos.Models;
 namespace BengosMenu.Data;
 public class RestaurantContext : DbContext
 {

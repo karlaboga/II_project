@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BengosMenu.Data;
-using BengosMenu.Models;
+using Bengos.Models;
 namespace BengosMenu.Controllers;
 public class HomeController : Controller
 {
@@ -18,7 +18,7 @@ public class HomeController : Controller
             .ThenInclude(di => di.Produs)
             .ToListAsync();
         var grouped = dishes
-            .GroupBy(d => d.Category)
+            .GroupBy(d => d.Category ?? "Other")
             .ToDictionary(g => g.Key, g => g.ToList());
         return View(grouped);
     }
