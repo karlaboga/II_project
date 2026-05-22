@@ -1,0 +1,129 @@
+﻿<Window x:Class="Kitchen.CookBook"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kitchen CookBook" Height="600" Width="950"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFFDF9">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#F5EFE6" BorderThickness="0,0,2,0" BorderBrush="#E3DAC9">
+            <Grid Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Filter Category:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="CategoryFilterComboBox" Height="35" VerticalContentAlignment="Center" 
+                              SelectedIndex="0" SelectionChanged="CategoryFilterComboBox_SelectionChanged"
+                              BorderBrush="#D2B48C" Background="White">
+                        <ComboBoxItem Content="All Dishes"/>
+                        <ComboBoxItem Content="Appetizers"/>
+                        <ComboBoxItem Content="Main Course"/>
+                        <ComboBoxItem Content="Drinks"/>
+                        <ComboBoxItem Content="Desserts"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Text="Search Dish:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="2" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,15" BorderBrush="#D2B48C"/>
+
+                <ListBox Grid.Row="3" x:Name="RecipeListBox" 
+                         Background="Transparent" BorderThickness="0"
+                         DisplayMemberPath="Name">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="10"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Foreground" Value="#4A2E1B"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#8B5A2B"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="1" Margin="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock x:Name="TxtDishName" Text="Select a Recipe" FontSize="28" FontWeight="Bold" Foreground="#4A2E1B"/>
+                    <WrapPanel Margin="0,8,0,0" Height="34" RenderTransformOrigin="0.5,0.5">
+                        <WrapPanel.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="2.454"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="1.457"/>
+                            </TransformGroup>
+                        </WrapPanel.RenderTransform>
+                        <TextBlock Text="⏱️ Prep Time: " FontSize="14" Foreground="#8B5A2B" FontWeight="Bold"/>
+                        <TextBlock x:Name="TxtPrepTime" Text="--" FontSize="14" Foreground="#8B5A2B" Margin="0,0,20,0"/>
+                        <TextBlock Text="⚠️ Allergens: " FontSize="14" Foreground="#C0392B" FontWeight="Bold"/>
+                        <TextBlock x:Name="TxtAllergens" Text="--" FontSize="14" Foreground="#C0392B" FontWeight="SemiBold"/>
+                        <Label Content=""/>
+                    </WrapPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button x:Name="BtnAddRecipe" Content="➕ Add Recipe" Click="BtnAddRecipe_Click"
+                            Width="120" Height="35" Margin="0,0,10,0" FontSize="13" FontWeight="SemiBold"
+                            Background="#8B5A2B" Foreground="White" BorderThickness="0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button x:Name="BtnBack" Content="⬅️ Back" Click="BtnBack_Click"
+                            Width="80" Height="35" FontSize="13" FontWeight="SemiBold"
+                            Background="#E3DAC9" Foreground="#4A2E1B" BorderThickness="0">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Separator Grid.Row="1" Background="#E3DAC9" Height="2" Margin="0,15"/>
+
+            <StackPanel Grid.Row="2" Margin="0,0,0,20">
+                <TextBlock Text="INGREDIENTS" FontSize="16" FontWeight="Bold" Foreground="#8B5A2B" Margin="0,0,0,8"/>
+                <TextBlock x:Name="TxtIngredients" Text="No ingredients to display." FontSize="15" LineHeight="22" Foreground="#333333" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <DockPanel Grid.Row="3">
+                <TextBlock DockPanel.Dock="Top" Text="PREPARATION INSTRUCTIONS" FontSize="16" FontWeight="Bold" Foreground="#8B5A2B" Margin="0,0,0,8"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="TxtInstructions" Text="Select a dish from the sidebar menu to read instructions." FontSize="15" LineHeight="24" Foreground="#333333" TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

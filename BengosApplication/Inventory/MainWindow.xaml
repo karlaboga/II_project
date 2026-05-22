@@ -13,335 +13,90 @@
         TextOptions.TextRenderingMode="ClearType">
 
     <Window.Resources>
-
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
-
             <Setter Property="Background" Value="#5E3E4A"/>
             <Setter Property="Foreground" Value="#F3EDEE"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="12,8"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="10"
                                 SnapsToDevicePixels="True">
-
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-
                         <ControlTemplate.Triggers>
-
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#7A5A68"/>
+                                <Setter TargetName="border" Property="Background" Value="#7A5A68"/>
                             </Trigger>
-
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#B88FA1"/>
+                                <Setter TargetName="border" Property="Background" Value="#B88FA1"/>
                             </Trigger>
-
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border"
-                                        Property="Opacity"
-                                        Value="0.5"/>
-                            </Trigger>
-
                         </ControlTemplate.Triggers>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
-
     </Window.Resources>
 
     <Grid Margin="20">
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="320"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- LEFT SIDE - FORM -->
         <StackPanel Grid.Column="0">
+            <TextBlock Text="Inventory Item" FontSize="20" FontWeight="Bold" Foreground="#5E3E4A" Margin="5,0,0,15"/>
+            
+            <TextBlock Text="Product Name" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+            <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <TextBlock Text="Inventory Item"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       Foreground="#5E3E4A"
-                       Margin="5,0,0,15"/>
-
-            <TextBlock Text="Product Name"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       Margin="5"/>
-
-            <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="5"
-                     Background="#F3EDEE"
-                     Foreground="#5E3E4A"
-                     BorderBrush="#C9A3B5"/>
-
-            <TextBlock Text="Category"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       Margin="5"/>
-
-            <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5"
-                      Background="#F3EDEE"
-                      Foreground="#5E3E4A"
-                      BorderBrush="#C9A3B5">
+            <TextBlock Text="Category" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+            <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
                 <ComboBoxItem Content="Fruits"/>
                 <ComboBoxItem Content="Vegetables"/>
+                <ComboBoxItem Content="Herbs &amp; Aromatics"/>
                 <ComboBoxItem Content="Meat"/>
                 <ComboBoxItem Content="Dairy"/>
                 <ComboBoxItem Content="Spices"/>
             </ComboBox>
 
-            <TextBlock Text="Quantity"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       Margin="5"/>
+            <TextBlock Text="Quantity" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+            <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="5"
-                     Background="#F3EDEE"
-                     Foreground="#5E3E4A"
-                     BorderBrush="#C9A3B5"/>
-
-            <TextBlock Text="Unit"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       Margin="5"/>
-
-            <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5"
-                      Background="#F3EDEE"
-                      Foreground="#5E3E4A"
-                      BorderBrush="#C9A3B5">
+            <TextBlock Text="Unit" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+            <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
                 <ComboBoxItem Content="Kilograms"/>
                 <ComboBoxItem Content="Liters"/>
                 <ComboBoxItem Content="Pieces"/>
-                <ComboBoxItem Content="Boxes"/>
+                <ComboBoxItem Content="Packs"/>
             </ComboBox>
 
-            <TextBlock Text="Min Stock"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       Margin="5"/>
+            <TextBlock Text="Min Stock" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+            <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="5"
-                     Background="#F3EDEE"
-                     Foreground="#5E3E4A"
-                     BorderBrush="#C9A3B5"/>
-
-            <!-- BUTTONS -->
             <StackPanel Margin="5,15,5,0">
-
-                <Button Content="Add"
-                        Margin="5"
-                        Width="220"
-                        Height="25"
-                        Style="{StaticResource RoundedButtonStyle}"/>
-
-                <Button Content="Edit"
-        Margin="5"
-        Width="220"
-        Height="25"
-        Background="#7A5A68"
-        Foreground="#F3EDEE"
-        BorderThickness="0">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#7A5A68"/>
-                            <Setter Property="Foreground" Value="#F3EDEE"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="10"
-                                SnapsToDevicePixels="True">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                        </Border>
-
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#9A7A87"/>
-                                            </Trigger>
-
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#B896A3"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
-
-                <Button Content="Delete"
-        Margin="5"
-        Width="220"
-        Height="25"
-        Background="#C94A4A"
-        Foreground="#F3EDEE"
-        BorderThickness="0">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#C94A4A"/>
-                            <Setter Property="Foreground" Value="#F3EDEE"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="10"
-                                SnapsToDevicePixels="True">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                        </Border>
-
-                                        <ControlTemplate.Triggers>
-
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#E06B6B"/>
-                                            </Trigger>
-
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#F08A8A"/>
-                                            </Trigger>
-
-                                        </ControlTemplate.Triggers>
-
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
-
-                <Button Content="Clear Filter"
-        Margin="5"
-        Width="220"
-        Height="25"
-        Background="#C9A3B5"
-        Foreground="#5E3E4A"
-        BorderThickness="0">
-
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="#C9A3B5"/>
-                            <Setter Property="Foreground" Value="#5E3E4A"/>
-                            <Setter Property="BorderThickness" Value="0"/>
-                            <Setter Property="Cursor" Value="Hand"/>
-
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="10"
-                                SnapsToDevicePixels="True">
-                                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                        </Border>
-
-                                        <ControlTemplate.Triggers>
-
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#D8B8C7"/>
-                                            </Trigger>
-
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#E7C9D6"/>
-                                            </Trigger>
-
-                                        </ControlTemplate.Triggers>
-
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-
-                </Button>
-
+                <Button Content="Add" Style="{StaticResource RoundedButtonStyle}" Margin="5" Command="{Binding AddCommand}"/>
+                <Button Content="Edit" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#7A5A68" Command="{Binding EditCommand}"/>
+                <Button Content="Delete" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C94A4A" Command="{Binding DeleteCommand}"/>
+                <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C9A3B5" Foreground="#5E3E4A" Command="{Binding ClearFilterCommand}"/>
             </StackPanel>
-
         </StackPanel>
 
-        <!-- RIGHT SIDE - TABLE -->
-        <DataGrid Grid.Column="1"
-                  Margin="10,0,0,0"
-                  ItemsSource="{Binding Products}"
-                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Background="#F3EDEE"
-                  BorderBrush="#C9A3B5"
-                  Foreground="#5E3E4A"
-                  RowBackground="#F3EDEE"
-                  AlternatingRowBackground="#E9DDE5"
-                  HeadersVisibility="Column">
-
+        <DataGrid Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" IsReadOnly="True" Background="#F3EDEE" BorderBrush="#C9A3B5" Foreground="#5E3E4A"
+                  RowBackground="#F3EDEE" AlternatingRowBackground="#E9DDE5" HeadersVisibility="Column">
             <DataGrid.Resources>
-
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="Background" Value="#5E3E4A"/>
                     <Setter Property="Foreground" Value="#F3EDEE"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                 </Style>
-
-                <Style TargetType="DataGridRow">
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="#C9A3B5"/>
-                            <Setter Property="Foreground" Value="#2F1E18"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-
             </DataGrid.Resources>
-
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
                 <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
@@ -349,8 +104,6 @@
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
                 <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
             </DataGrid.Columns>
-
         </DataGrid>
-
     </Grid>
 </Window>

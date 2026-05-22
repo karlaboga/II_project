@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BillingAndPayment\BillingAndPayment.csproj" />
     <ProjectReference Include="..\Inventory\Inventory.csproj" />
+    <ProjectReference Include="..\Kitchen\Kitchen.csproj" />
     <ProjectReference Include="..\StaffManagement\StaffManagement.csproj" />
   </ItemGroup>
 
