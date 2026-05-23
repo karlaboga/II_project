@@ -6,10 +6,11 @@ public partial class PaymentWindow : Window
     private readonly double totalAmount;
     private double discountPercent;
     private bool isInitialized = false;
-    public PaymentWindow(double total, double discountPercent)
+    public PaymentWindow(double total, double discount)
     {
         InitializeComponent();
         totalAmount = total;
+        discountPercent = discount;
         TxtAmount.Text = $"${totalAmount:0.00}";
         isInitialized = true;
     }

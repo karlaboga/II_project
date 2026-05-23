@@ -1,4 +1,4 @@
-namespace BengosMenu.Models
+namespace Bengos.Models
 {
     public class ErrorViewModel
     {

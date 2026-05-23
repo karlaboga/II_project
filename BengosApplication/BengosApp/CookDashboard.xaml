@@ -7,14 +7,38 @@
         mc:Ignorable="d"
         Title="Kitchen Dashboard" Height="500" Width="850"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
         Background="#FFFDF9">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Background="#FFFDF9" CornerRadius="20" BorderBrush="#8B5A2B" BorderThickness="2">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,30" HorizontalAlignment="Center">
+            <!-- CLOSE BUTTON (X) -->
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Margin="0,0,0,0" Width="30" Height="30" 
+                    Background="#D2B48C" Foreground="#4A2E1B" 
+                    FontWeight="Bold" Click="BtnClose_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
+                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#8B5A2B"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,30" HorizontalAlignment="Center">
             <TextBlock Text="KITCHEN DASHBOARD" 
                        FontSize="32" 
                        FontWeight="Bold" 
@@ -69,5 +93,23 @@
             </Button>
         </Grid>
 
+        <!-- BOTTOM CLOSE BUTTON -->
+        <Button Grid.Row="2" Content="Close Dashboard" Width="150" Height="35" 
+                Background="#8B5A2B" Foreground="White" FontWeight="Bold" 
+                Cursor="Hand" Click="BtnClose_Click" Margin="0,20,0,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#A06A3B"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
+    </Border>
 </Window>

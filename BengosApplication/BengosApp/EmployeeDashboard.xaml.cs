@@ -9,7 +9,7 @@ public partial class EmployeeDashboard : Window
         InitializeComponent();
         user = username;
         role = roleName;
-        TxtWelcome.Text = $"Welcome, {username}";
+       
     }
     private void BtnStaff_Click(object sender, RoutedEventArgs e)
     {

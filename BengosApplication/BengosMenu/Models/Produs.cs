@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BengosMenu.Models
+namespace Bengos.Models
 {
     public class Produs
     {
@@ -17,6 +17,6 @@ namespace BengosMenu.Models
 
         public int MinStock { get; set; }
 
-        public List<DishIngredient> DishIngredients { get; set; } = new List<DishIngredient>();
+        public virtual ICollection<DishIngredient> DishIngredients { get; set; } = new List<DishIngredient>();
     }
 }

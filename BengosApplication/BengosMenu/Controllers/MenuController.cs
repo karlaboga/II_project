@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BengosMenu.Data;
+using Bengos.Models;
 namespace BengosMenu.Controllers;
 public class MenuController : Controller
 {

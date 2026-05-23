@@ -37,5 +37,10 @@ namespace BengosApp
             ActiveOrders activeOrdersWindow = new ActiveOrders();
             activeOrdersWindow.Show();
         }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
