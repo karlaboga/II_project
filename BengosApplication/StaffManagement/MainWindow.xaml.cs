@@ -7,4 +7,5 @@ public partial class MainWindow : Window
         InitializeComponent();
         DataContext = viewModel;
     }
+    private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
 }

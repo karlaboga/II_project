@@ -28,6 +28,26 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
+            <!-- CLOSE BUTTON -->
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Margin="0,-35,-35,0" Width="30" Height="30" 
+                    Background="#C9A3B5" Foreground="#5E3E4A" 
+                    FontWeight="Bold" Click="BtnExit_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
+                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#5E3E4A"/>
+                                <Setter Property="Foreground" Value="#F3EDEE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <!-- HEADER -->
             <StackPanel Grid.Row="0"
                         HorizontalAlignment="Center"

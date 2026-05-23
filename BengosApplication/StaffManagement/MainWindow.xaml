@@ -221,6 +221,37 @@ TextOptions.TextRenderingMode="ClearType">
                     </Button.Template>
                 </Button>
 
+                <!-- CLOSE -->
+                <Button Content="Close"
+                        Click="BtnClose_Click"
+                        Foreground="#F3EDEE"
+                        FontWeight="SemiBold"
+                        Padding="30,10"
+                        Margin="5"
+                        BorderThickness="0"
+                        Cursor="Hand">
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="#8A6B7A"
+                                    CornerRadius="6"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="#7A5A68"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
             </StackPanel>
 
             <!-- DATA GRID -->

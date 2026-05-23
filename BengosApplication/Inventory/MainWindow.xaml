@@ -84,6 +84,7 @@
                 <Button Content="Edit" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#7A5A68" Command="{Binding EditCommand}"/>
                 <Button Content="Delete" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C94A4A" Command="{Binding DeleteCommand}"/>
                 <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C9A3B5" Foreground="#5E3E4A" Command="{Binding ClearFilterCommand}"/>
+                <Button Content="Close" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#8A6B7A" Click="BtnClose_Click"/>
             </StackPanel>
         </StackPanel>
 

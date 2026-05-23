@@ -1,7 +1,5 @@
 ﻿using System.Windows;
-
 using System.Diagnostics;
-using System.Windows;
 namespace BengosApp;
 public partial class MainWindow : Window
 {
@@ -35,5 +33,9 @@ public partial class MainWindow : Window
     private void BtnViewMenu_Click(object sender, RoutedEventArgs e)
     {
         new MenuViewer().ShowDialog();
+    }
+    private void BtnExit_Click(object sender, RoutedEventArgs e)
+    {
+        Application.Current.Shutdown();
     }
 }

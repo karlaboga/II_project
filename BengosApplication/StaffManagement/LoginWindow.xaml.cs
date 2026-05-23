@@ -65,4 +65,9 @@ public partial class LoginWindow : Window
             txtPassword.Password = "";
         }
     }
+    private void BtnClose_Click(object sender, RoutedEventArgs e)
+    {
+        DialogResult = false;
+        Close();
+    }
 }
