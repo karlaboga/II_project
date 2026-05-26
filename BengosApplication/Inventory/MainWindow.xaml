@@ -11,6 +11,7 @@
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
         TextOptions.TextRenderingMode="ClearType">
+    
 
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
@@ -42,69 +43,71 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
+        
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Inventory Item" FontSize="20" FontWeight="Bold" Foreground="#5E3E4A" Margin="5,0,0,15"/>
 
-        <StackPanel Grid.Column="0">
-            <TextBlock Text="Inventory Item" FontSize="20" FontWeight="Bold" Foreground="#5E3E4A" Margin="5,0,0,15"/>
-            
-            <TextBlock Text="Product Name" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
-            <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
+                <TextBlock Text="Product Name" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+                <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <TextBlock Text="Category" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
-            <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
-                <ComboBoxItem Content="Fruits"/>
-                <ComboBoxItem Content="Vegetables"/>
-                <ComboBoxItem Content="Herbs &amp; Aromatics"/>
-                <ComboBoxItem Content="Meat"/>
-                <ComboBoxItem Content="Dairy"/>
-                <ComboBoxItem Content="Spices"/>
-            </ComboBox>
+                <TextBlock Text="Category" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+                <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
+                    <ComboBoxItem Content="Fruits"/>
+                    <ComboBoxItem Content="Vegetables"/>
+                    <ComboBoxItem Content="Herbs &amp; Aromatics"/>
+                    <ComboBoxItem Content="Meat"/>
+                    <ComboBoxItem Content="Dairy"/>
+                    <ComboBoxItem Content="Spices"/>
+                </ComboBox>
 
-            <TextBlock Text="Quantity" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
-            <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
+                <TextBlock Text="Quantity" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+                <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <TextBlock Text="Unit" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
-            <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
-                <ComboBoxItem Content="Kilograms"/>
-                <ComboBoxItem Content="Liters"/>
-                <ComboBoxItem Content="Pieces"/>
-                <ComboBoxItem Content="Packs"/>
-            </ComboBox>
+                <TextBlock Text="Unit" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+                <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
+                    <ComboBoxItem Content="Kilograms"/>
+                    <ComboBoxItem Content="Liters"/>
+                    <ComboBoxItem Content="Pieces"/>
+                    <ComboBoxItem Content="Packs"/>
+                </ComboBox>
 
-            <TextBlock Text="Min Stock" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
-            <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
+                <TextBlock Text="Min Stock" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
+                <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5"/>
 
-            <StackPanel Margin="5,15,5,0">
-                <Button Content="Add" Style="{StaticResource RoundedButtonStyle}" Margin="5" Command="{Binding AddCommand}"/>
-                <Button Content="Edit" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#7A5A68" Command="{Binding EditCommand}"/>
-                <Button Content="Delete" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C94A4A" Command="{Binding DeleteCommand}"/>
-                <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C9A3B5" Foreground="#5E3E4A" Command="{Binding ClearFilterCommand}"/>
-                <Button Content="Close" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#8A6B7A" Click="BtnClose_Click"/>
+                <StackPanel Margin="5,15,5,0">
+                    <Button Content="Add" Style="{StaticResource RoundedButtonStyle}" Margin="5" Command="{Binding AddCommand}" Height="35"/>
+                    <Button Content="Edit" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#7A5A68" Command="{Binding EditCommand}" Height="35"/>
+                    <Button Content="Delete" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C94A4A" Command="{Binding DeleteCommand}" Height="35"/>
+                    <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="5" Background="#C9A3B5" Foreground="#5E3E4A" Command="{Binding ClearFilterCommand}" Height="35"/>
+                    <Button Content="Close" Style="{StaticResource RoundedButtonStyle}" Margin="5,40,5,0" Background="#8A6B7A" Click="BtnClose_Click" Height="35" Width="95"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
 
-        <DataGrid Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True" Background="#F3EDEE" BorderBrush="#C9A3B5" Foreground="#5E3E4A"
                   RowBackground="#F3EDEE" AlternatingRowBackground="#E9DDE5" HeadersVisibility="Column">
-            <DataGrid.Resources>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#5E3E4A"/>
-                    <Setter Property="Foreground" Value="#F3EDEE"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="*"/>
-                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
-                <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#5E3E4A"/>
+                        <Setter Property="Foreground" Value="#F3EDEE"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
+                    <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="*"/>
+                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
+                    <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
 </Window>

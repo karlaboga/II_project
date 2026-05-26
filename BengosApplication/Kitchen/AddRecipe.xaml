@@ -1,148 +1,165 @@
 ﻿<Window x:Class="Kitchen.AddRecipe"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Add New Recipe &amp; Ingredients" Height="800" Width="1150"
-        WindowStartupLocation="CenterOwner"
-        Background="#FFFDF9">
-    <Grid Margin="25">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="Add New Recipe &amp; Ingredients" MinHeight="650" MinWidth="1000"
+WindowStartupLocation="CenterScreen"
+ResizeMode="NoResize"
+Background="#F3EDEE"
+WindowStyle="None"
+AllowsTransparency="True"
+>
+    
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,15">
-            <TextBlock Text="➕ Add New Recipe &amp; Ingredients" FontSize="28" FontWeight="Bold" Foreground="#4A2E1B"/>
-            <Separator Background="#E3DAC9" Height="2" Margin="0,10,0,0"/>
-        </StackPanel>
+        <Grid Margin="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="450"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                <TextBlock Text="➕ Add New Recipe &amp; Ingredients" FontSize="28" FontWeight="Bold" Foreground="#5E3E4A"/>
+                <Separator Background="#C9A3B5" Height="2" Margin="0,10,0,0"/>
+            </StackPanel>
 
-            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
-                <StackPanel>
-                    <TextBlock Text="Dish Name:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                    <TextBox x:Name="TxtName" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#D2B48C"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="Price ($):" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                            <TextBox x:Name="TxtPrice" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#D2B48C"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Text="Prep Time (min):" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                            <TextBox x:Name="TxtPrepTime" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#D2B48C"/>
-                        </StackPanel>
-                    </Grid>
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+                    <StackPanel>
 
-                    <TextBlock Text="Category:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="ComboCategory" Height="35" VerticalContentAlignment="Center" Margin="0,0,0,12" BorderBrush="#D2B48C" Background="White">
-                        <ComboBoxItem Content="Appetizers"/>
-                        <ComboBoxItem Content="Main Course"/>
-                        <ComboBoxItem Content="Drinks"/>
-                        <ComboBoxItem Content="Desserts"/>
-                    </ComboBox>
+                        <TextBlock Text="Dish Name:" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtName" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5"/>
 
-                    <TextBlock Text="Allergens:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                    <TextBox x:Name="TxtAllergens" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#D2B48C" Text="None"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Short Description (Summary):" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                    <TextBox x:Name="TxtDescription" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Padding="5" Margin="0,0,0,12" BorderBrush="#D2B48C"/>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Price ($):" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtPrice" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5"/>
+                            </StackPanel>
 
-                    <TextBlock Text="Preparation Steps:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2E1B" Margin="0,0,0,5"/>
-                    <TextBox x:Name="TxtSteps" Height="200" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="5" BorderBrush="#D2B48C"/>
-                </StackPanel>
-            </ScrollViewer>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Prep Time (min):" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtPrepTime" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5"/>
+                            </StackPanel>
+                        </Grid>
 
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                        <TextBlock Text="Category:" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="ComboCategory" Height="35" VerticalContentAlignment="Center" Margin="0,0,0,12" BorderBrush="#C9A3B5" Background="#F3EDEE">
+                            <ComboBoxItem Content="Appetizers"/>
+                            <ComboBoxItem Content="Main Course"/>
+                            <ComboBoxItem Content="Drinks"/>
+                            <ComboBoxItem Content="Desserts"/>
+                        </ComboBox>
 
-                <Border Grid.Row="0" Background="#F5EFE6" Padding="15" CornerRadius="5" Margin="0,0,0,15">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Allergens:" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtAllergens" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5" Text="None"/>
 
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="Select Product:" FontSize="12" FontWeight="Bold" Foreground="#4A2E1B" Margin="0,0,0,4"/>
-                            <ComboBox x:Name="ComboInventoryProducts" Height="35" VerticalContentAlignment="Center" Background="White" BorderBrush="#D2B48C"/>
-                        </StackPanel>
+                        <TextBlock Text="Short Description (Summary):" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtDescription" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5"/>
 
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Text="Qty:" FontSize="12" FontWeight="Bold" Foreground="#4A2E1B" Margin="0,0,0,4"/>
-                            <TextBox x:Name="TxtIngredientQty" Height="35" VerticalContentAlignment="Center" Padding="5" BorderBrush="#D2B48C"/>
-                        </StackPanel>
+                        <TextBlock Text="Preparation Steps:" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtSteps" Height="200" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="5" BorderBrush="#C9A3B5"/>
 
-                        <StackPanel Grid.Column="4">
-                            <TextBlock Text="Unit Needed:" FontSize="12" FontWeight="Bold" Foreground="#4A2E1B" Margin="0,0,0,4"/>
-                            <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Background="White" BorderBrush="#D2B48C" >
-                            </ComboBox>
-                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
 
-                        <Button Grid.Column="6" x:Name="BtnAddIngredientRow" Content="➕ Add Ingredient" Click="BtnAddIngredientRow_Click"
-                                Width="130" Height="35" VerticalAlignment="Bottom" FontWeight="Bold" Background="#8B5A2B" Foreground="White" BorderThickness="0">
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="4"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </Grid>
-                </Border>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <DataGrid Grid.Row="1" x:Name="GridRecipeIngredients" AutoGenerateColumns="False" CanUserAddRows="False"
-                          Background="White" BorderBrush="#E3DAC9" RowHeight="35" GridLinesVisibility="Horizontal" FontSize="14">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="2*" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Qty Required" Binding="{Binding Quantity}" Width="1*"/>
-                        <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="1*" IsReadOnly="True"/>
-                        <DataGridTemplateColumn Width="60">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="❌" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand" Click="BtnRemoveIngredientRow_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    <Border Grid.Row="0" Background="#F3EDEE" Padding="15" CornerRadius="5" Margin="0,0,0,15">
+                        <Grid>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Select Product:" FontSize="12" FontWeight="Bold" Foreground="#5E3E4A" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboInventoryProducts" Height="35" VerticalContentAlignment="Center" Background="#F3EDEE" BorderBrush="#C9A3B5"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Qty:" FontSize="12" FontWeight="Bold" Foreground="#5E3E4A" Margin="0,0,0,4"/>
+                                <TextBox x:Name="TxtIngredientQty" Height="35" VerticalContentAlignment="Center" Padding="5" BorderBrush="#C9A3B5"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="Unit Needed:" FontSize="12" FontWeight="Bold" Foreground="#5E3E4A" Margin="0,0,0,4"/>
+                                <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Background="#F3EDEE" BorderBrush="#C9A3B5"/>
+                            </StackPanel>
+
+                            <Button Grid.Column="6" x:Name="BtnAddIngredientRow"
+                                Content="➕ Add Ingredient"
+                                Click="BtnAddIngredientRow_Click"
+                                Width="130" Height="35"
+                                VerticalAlignment="Bottom"
+                                FontWeight="Bold"
+                                Background="#7A5A68"
+                                Foreground="#F3EDEE"
+                                BorderThickness="0"/>
+
+                        </Grid>
+                    </Border>
+
+                    <DataGrid Grid.Row="1" x:Name="GridRecipeIngredients"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          Background="#F3EDEE"
+                          BorderBrush="#C9A3B5"
+                          RowHeight="35"
+                          GridLinesVisibility="Horizontal"
+                          FontSize="14">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="2*" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Qty Required" Binding="{Binding Quantity}" Width="1*"/>
+                            <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="1*" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Width="60">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="❌" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Grid>
-        </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button x:Name="BtnSave" Content="💾 Save Recipe" Click="BtnSave_Click"
-                    Width="160" Height="45" Margin="0,0,12,0" FontSize="15" FontWeight="Bold" Background="#8B5A2B" Foreground="White" BorderThickness="0">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="BtnCancel" Content="❌ Cancel" Click="BtnCancel_Click"
-                    Width="110" Height="45" FontSize="15" FontWeight="SemiBold" Background="#E3DAC9" Foreground="#4A2E1B" BorderThickness="0">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+
+                <Button x:Name="BtnSave"
+                    Content="💾 Save Recipe"
+                    Click="BtnSave_Click"
+                    Width="160" Height="45"
+                    Margin="0,0,12,0"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Background="#7A5A68"
+                    Foreground="#F3EDEE"
+                    BorderThickness="0"/>
+
+                <Button x:Name="BtnCancel"
+                    Content="❌ Cancel"
+                    Click="BtnCancel_Click"
+                    Width="110" Height="45"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    BorderThickness="0"/>
+
+            </StackPanel>
+
+        </Grid>
+    
 </Window>
