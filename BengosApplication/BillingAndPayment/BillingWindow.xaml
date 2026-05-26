@@ -9,124 +9,129 @@
         AllowsTransparency="True"
         Background="#F3EDEE"
         FontFamily="Segoe UI">
+    
 
-    <Grid Margin="15">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+     
 
-        <TextBlock Grid.Row="0" Text="Billing &amp; Payments" FontSize="22" FontWeight="Bold" Foreground="#5E3E4A" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+        <Grid Margin="55">
 
-        <Grid Grid.Row="1" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Text="Dish:" Foreground="#7A5A68" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
-            <ComboBox Grid.Column="1" x:Name="CmbDish" DisplayMemberPath="DisplayText" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5" FontSize="13" Padding="4" SelectionChanged="CmbDish_SelectionChanged"/>
-            <TextBlock Grid.Column="2" Text="Qty:" Foreground="#7A5A68" FontWeight="SemiBold" VerticalAlignment="Center" Margin="12,0,8,0"/>
-            <TextBox Grid.Column="3" x:Name="TxtQty" Text="1" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5" FontSize="13" Padding="4" TextAlignment="Center"/>
+            <TextBlock Grid.Row="0" Text="Billing &amp; Payments" FontSize="22" FontWeight="Bold" Foreground="#5E3E4A" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
-            <Button Grid.Column="4" Content="Add to Order" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Cursor="Hand" FontSize="13" FontWeight="Bold" Padding="15,6" Margin="12,0,0,0" Click="BtnAddDish_Click" Width="160">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Grid Grid.Row="1" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Dish:" Foreground="#7A5A68" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <ComboBox Grid.Column="1" x:Name="CmbDish" DisplayMemberPath="DisplayText" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5" FontSize="13" Padding="4" SelectionChanged="CmbDish_SelectionChanged"/>
+                <TextBlock Grid.Column="2" Text="Qty:" Foreground="#7A5A68" FontWeight="SemiBold" VerticalAlignment="Center" Margin="12,0,8,0"/>
+                <TextBox Grid.Column="3" x:Name="TxtQty" Text="1" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5" FontSize="13" Padding="4" TextAlignment="Center"/>
+
+                <Button Grid.Column="4" Content="Add to Order" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Cursor="Hand" FontSize="13" FontWeight="Bold" Padding="15,6" Margin="12,0,0,0" Click="BtnAddDish_Click" Width="160">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <TextBlock Grid.Row="2" x:Name="TxtUnitPrice" Foreground="#7A5A68" FontStyle="Italic" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <DataGrid Grid.Row="3" x:Name="DgOrder" AutoGenerateColumns="False" Background="#F3EDEE" BorderBrush="#C9A3B5" Foreground="#4B2F3A" RowBackground="#F3EDEE" AlternatingRowBackground="#E9DDE5" HeadersVisibility="Column" GridLinesVisibility="Horizontal" CellEditEnding="DgOrder_CellEditEnding">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#5E3E4A"/>
+                        <Setter Property="Foreground" Value="#F3EDEE"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Height" Value="35"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Item" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="80"/>
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding PriceDisplay}" IsReadOnly="True" Width="100"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" IsReadOnly="True" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="4" Margin="0,10,10,10" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
+                    <TextBlock Text="Subtotal:" FontWeight="Bold" Width="100" Foreground="#7A5A68"/>
+                    <TextBlock x:Name="TxtSubtotal" Text="0.00" Width="100" Foreground="#5E3E4A" TextAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
+                    <TextBlock Text="Discount:" FontWeight="Bold" Width="100" Foreground="#7A5A68"/>
+                    <TextBlock x:Name="TxtDiscount" Text="0.00" Width="100" Foreground="#5E3E4A" TextAlignment="Right"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
+                    <TextBlock Text="Total:" FontWeight="Bold" Width="100" FontSize="14" Foreground="#7A5A68"/>
+                    <TextBlock x:Name="TxtTotal" Text="$0.00" Width="100" FontSize="14" Foreground="#5E3E4A" TextAlignment="Right"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Button x:Name="BtnEditQty" Content="Edit Order" Width="100" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnEditQty_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnDeleteItem" Content="Delete Item" Width="100" Height="35" Background="#C9A3B5" Foreground="#5E3E4A" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnDeleteItem_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnDiscount" Content="Add Discount" Width="120" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnDiscount_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnPay" Content="Pay Now" Width="100" Height="35" Background="#C9A3B5" Foreground="#5E3E4A" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnPay_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="BtnClose" Content="Close" Width="100" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnClose_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
         </Grid>
-
-        <TextBlock Grid.Row="2" x:Name="TxtUnitPrice" Foreground="#7A5A68" FontStyle="Italic" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-
-        <DataGrid Grid.Row="3" x:Name="DgOrder" AutoGenerateColumns="False" Background="#F3EDEE" BorderBrush="#C9A3B5" Foreground="#4B2F3A" RowBackground="#F3EDEE" AlternatingRowBackground="#E9DDE5" HeadersVisibility="Column" GridLinesVisibility="Horizontal" CellEditEnding="DgOrder_CellEditEnding">
-            <DataGrid.Resources>
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#5E3E4A"/>
-                    <Setter Property="Foreground" Value="#F3EDEE"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="Height" Value="35"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Item" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="80"/>
-                <DataGridTextColumn Header="Unit Price" Binding="{Binding PriceDisplay}" IsReadOnly="True" Width="100"/>
-                <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" IsReadOnly="True" Width="100"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <StackPanel Grid.Row="4" Margin="0,10,10,10" HorizontalAlignment="Right">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
-                <TextBlock Text="Subtotal:" FontWeight="Bold" Width="100" Foreground="#7A5A68"/>
-                <TextBlock x:Name="TxtSubtotal" Text="0.00" Width="100" Foreground="#5E3E4A" TextAlignment="Right"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
-                <TextBlock Text="Discount:" FontWeight="Bold" Width="100" Foreground="#7A5A68"/>
-                <TextBlock x:Name="TxtDiscount" Text="0.00" Width="100" Foreground="#5E3E4A" TextAlignment="Right"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
-                <TextBlock Text="Total:" FontWeight="Bold" Width="100" FontSize="14" Foreground="#7A5A68"/>
-                <TextBlock x:Name="TxtTotal" Text="$0.00" Width="100" FontSize="14" Foreground="#5E3E4A" TextAlignment="Right"/>
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
-            <Button x:Name="BtnEditQty" Content="Edit Order" Width="100" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnEditQty_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button x:Name="BtnDeleteItem" Content="Delete Item" Width="100" Height="35" Background="#C9A3B5" Foreground="#5E3E4A" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnDeleteItem_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button x:Name="BtnDiscount" Content="Add Discount" Width="120" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnDiscount_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button x:Name="BtnPay" Content="Pay Now" Width="100" Height="35" Background="#C9A3B5" Foreground="#5E3E4A" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnPay_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Button x:Name="BtnClose" Content="Close" Width="100" Height="35" Background="#5E3E4A" Foreground="#F3EDEE" BorderThickness="0" Margin="5" Cursor="Hand" FontWeight="Bold" Click="BtnClose_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </StackPanel>
-    </Grid>
+    
 </Window>

@@ -5,111 +5,199 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BengosApp"
         mc:Ignorable="d"
-        Title="Kitchen Dashboard" Height="500" Width="850"
+        Title="Kitchen Dashboard"
+        Height="650"
+        Width="1000"
+        MinHeight="650"
+        MinWidth="1000"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         WindowStyle="None"
-        AllowsTransparency="True"
-        Background="#FFFDF9">
-    <Border Background="#FFFDF9" CornerRadius="20" BorderBrush="#8B5A2B" BorderThickness="2">
-        <Grid Margin="20">
+        Background="#F3EDEE"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
+
+    <!-- BORDER pentru colțuri rotunjite + shadow (FĂRĂ AllowsTransparency) -->
+    <Border Background="#F3EDEE"
+            CornerRadius="22"
+            Margin="10">
+
+        
+
+        <Grid Margin="55">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- CLOSE BUTTON (X) -->
-            <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Margin="0,0,0,0" Width="30" Height="30" 
-                    Background="#D2B48C" Foreground="#4A2E1B" 
-                    FontWeight="Bold" Click="BtnClose_Click">
+            <!-- CLOSE BUTTON -->
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,-25,10,0"
+                    Width="30"
+                    Height="30"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
+                    FontWeight="Bold"
+                    Cursor="Hand"
+                    Click="BtnClose_Click">
+
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
-                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="15">
+
+                            <TextBlock Text="✕"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </Border>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#8B5A2B"/>
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#5E3E4A"/>
+                                <Setter Property="Foreground"
+                                        Value="#F3EDEE"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <StackPanel Grid.Row="0" Margin="0,0,0,30" HorizontalAlignment="Center">
-            <TextBlock Text="KITCHEN DASHBOARD" 
-                       FontSize="32" 
-                       FontWeight="Bold" 
-                       Foreground="#4A2E1B" 
-                      />
-            <Separator Background="#8B5A2B" Height="3" Margin="0,5,0,0" Width="200"/>
-        </StackPanel>
+            <!-- HEADER -->
+            <StackPanel Grid.Row="0"
+                        Margin="0,0,0,35"
+                        HorizontalAlignment="Center">
 
-        <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
+                <TextBlock Text="KITCHEN DASHBOARD"
+                           FontSize="30"
+                           FontWeight="SemiBold"
+                           Foreground="#5E3E4A"
+                           HorizontalAlignment="Center"/>
 
-            <Button Grid.Column="0" 
-                    Height="180"
-                    Background="#8B5A2B" 
-                    Foreground="White"
+                <TextBlock Text="Kitchen orders and recipe management"
+                           FontSize="12"
+                           Foreground="#7A5A68"
+                           Margin="0,5,0,0"
+                           HorizontalAlignment="Center"/>
+
+            </StackPanel>
+
+            <!-- MAIN CARDS -->
+            <Grid Grid.Row="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="320"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- ACTIVE ORDERS -->
+                <Border Grid.Column="0"
+                        Background="#5E3E4A"
+                        CornerRadius="18"
+                        Padding="24"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="OrdersButton_Click">
+
+                    <StackPanel VerticalAlignment="Center">
+
+                        <TextBlock Text="📋"
+                                   FontSize="50"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="Active Orders"
+                                   FontSize="24"
+                                   FontWeight="SemiBold"
+                                   Foreground="#F3EDEE"
+                                   HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="View and manage incoming dish orders"
+                                   FontSize="12"
+                                   Foreground="#E9DDE5"
+                                   TextAlignment="Center"
+                                   Margin="0,8,0,0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+                <!-- COOKBOOK -->
+                <Border Grid.Column="2"
+                        Background="#C9A3B5"
+                        CornerRadius="18"
+                        Padding="24"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="CookBookButton_Click">
+
+                    <StackPanel VerticalAlignment="Center">
+
+                        <TextBlock Text="📖"
+                                   FontSize="50"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,12"/>
+
+                        <TextBlock Text="CookBook"
+                                   FontSize="24"
+                                   FontWeight="SemiBold"
+                                   Foreground="#5E3E4A"
+                                   HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="Browse dishes and instructions"
+                                   FontSize="12"
+                                   Foreground="#7A5A68"
+                                   TextAlignment="Center"
+                                   Margin="0,8,0,0"/>
+
+                    </StackPanel>
+
+                </Border>
+
+            </Grid>
+
+            <!-- BOTTOM BUTTON -->
+            <Button Grid.Row="2"
+                    Content="Close Dashboard"
+                    Width="180"
+                    Height="42"
+                    Margin="0,30,0,0"
+                    Background="#7A5A68"
+                    Foreground="#F3EDEE"
                     BorderThickness="0"
+                    FontWeight="SemiBold"
                     Cursor="Hand"
-                    Click="OrdersButton_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="📋" FontSize="48" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Active Orders" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    <TextBlock Text="View and manage incoming dish orders" FontSize="12" Margin="0,5,0,0" Opacity="0.8" HorizontalAlignment="Center"/>
-                </StackPanel>
+                    HorizontalAlignment="Center"
+                    Click="BtnClose_Click">
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="14">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#8A6B7A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+
             </Button>
 
-            <Button Grid.Column="2" 
-                    Height="180"
-                    Background="#D2B48C" 
-                    Foreground="#4A2E1B"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="CookBookButton_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="15"/>
-                    </Style>
-                </Button.Resources>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="📖" FontSize="48" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-                    <TextBlock Text="CookBook" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Browse dishes and instructions" FontSize="12" Margin="0,5,0,0" Opacity="0.8" HorizontalAlignment="Center"/>
-                </StackPanel>
-            </Button>
         </Grid>
-
-        <!-- BOTTOM CLOSE BUTTON -->
-        <Button Grid.Row="2" Content="Close Dashboard" Width="150" Height="35" 
-                Background="#8B5A2B" Foreground="White" FontWeight="Bold" 
-                Cursor="Hand" Click="BtnClose_Click" Margin="0,20,0,0">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#A06A3B"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-    </Grid>
     </Border>
 </Window>

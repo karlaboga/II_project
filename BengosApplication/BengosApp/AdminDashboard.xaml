@@ -12,16 +12,20 @@ AllowsTransparency="True"
         >
 
 
-    <Border Background="#F3EDEE" CornerRadius="22" Padding="0,35,0,0">
+    <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
 
-        <Grid>
+       
 
-            <Grid.RowDefinitions>
+                <Grid Margin="55">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+                    
 
             <!-- CLOSE BUTTON -->
             <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
@@ -163,8 +167,8 @@ AllowsTransparency="True"
                 <!-- HOURS -->
                 <Button Content="⏱ Hours"
                         Width="260"
-                        Height="38"
-                        Margin="0,0,0,8"
+                        Height="42"
+                        Margin="0,0,0,10"
                         FontWeight="SemiBold"
                         Foreground="#F3EDEE"
                         Background="#7A5A68"
@@ -195,7 +199,7 @@ AllowsTransparency="True"
                 <!-- SALARY -->
                 <Button Content="💵 Salary"
                         Width="260"
-                        Height="38"
+                        Height="42"
                         FontWeight="SemiBold"
                         Foreground="#F3EDEE"
                         Background="#5E3E4A"
@@ -226,10 +230,10 @@ AllowsTransparency="True"
             </StackPanel>
 
             <!-- LOGOUT -->
-            <Button Grid.Row="3"
+            <Button Grid.Row="4"
                     Content="Logout"
                     Width="140"
-                    Height="38"
+                    Height="42"
                     Background="#E9DDE5"
                     Foreground="#4B2F3A"
                     BorderThickness="0"

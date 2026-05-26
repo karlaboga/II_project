@@ -2,220 +2,435 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Table Management"
-        Height="650" Width="1100"
-        WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="#FAF0E6">
-    <Border Background="#FAF0E6" CornerRadius="20" BorderBrush="#E8D5B7" BorderThickness="2">
-        <Grid Margin="15">
+        Height="650" Width="1000"
+WindowStartupLocation="CenterScreen"
+ResizeMode="NoResize"
+WindowStyle="None"
+AllowsTransparency="False"
+Background="#F3EDEE"
+FontFamily="Segoe UI"
+TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType">
+
+    <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
+
+        
+
+        <Grid Margin="55">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="420"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!-- CLOSE BUTTON (X) -->
+
+            <!-- CLOSE BUTTON -->
             <Button HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"
-                    Margin="0,0,0,0" Width="30" Height="30" 
-                    Background="#E8D5B7" Foreground="#5C3A21" 
+                    Margin="0,0,0,0" Width="30" Height="30"
+                    Background="#C9A3B5"
+                    Foreground="#5E3E4A"
                     FontWeight="Bold" Click="BtnExit_Click">
+
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
                             <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#D4A574"/>
-                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="border" Property="Background" Value="#E9DDE5"/>
+                                <Setter Property="Foreground" Value="#5E3E4A"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-        <!-- ========== STANGA: MESE ========== -->
-        <Grid Grid.Column="0" Margin="0,0,10,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="🪑 Tables" FontSize="20" FontWeight="Bold"
-                       Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <ItemsControl x:Name="TableList">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
+
+            <!-- LEFT -->
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="🪑 Tables"
+                           FontSize="20" FontWeight="Bold"
+                           Foreground="#5E3E4A"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="TableList">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"
+                                           HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="110" Height="110"
+                                        Margin="8"
+                                        BorderThickness="2"
+                                        CornerRadius="12"
+                                        Cursor="Hand"
+                                        Tag="{Binding Id}"
+                                        MouseLeftButtonUp="TableCard_Click">
+
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="#F3EDEE"/>
+                                            <Setter Property="BorderBrush" Value="#7A5A68"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Occupied">
+                                                    <Setter Property="Background" Value="#E9DDE5"/>
+                                                    <Setter Property="BorderBrush" Value="#8A6B7A"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding Status}" Value="Selected">
+                                                    <Setter Property="Background" Value="#C9A3B5"/>
+                                                    <Setter Property="BorderBrush" Value="#5E3E4A"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <StackPanel VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
+
+                                        <TextBlock Text="{Binding TableNumber, StringFormat='{}Table {0}'}"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#5E3E4A"
+                                                   HorizontalAlignment="Center"/>
+
+                                        <TextBlock Text="{Binding Capacity, StringFormat='{},{0} seats'}"
+                                                   FontSize="10"
+                                                   Foreground="#5E3E4A"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,2,0,2"/>
+
+                                        <TextBlock Text="{Binding StatusDisplay}"
+                                                   FontSize="10"
+                                                   FontWeight="SemiBold"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#5E3E4A"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- RIGHT -->
+            <Grid Grid.Column="1" x:Name="OrderPanel" IsEnabled="False" Opacity="0.4">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- HEADER -->
+                <TextBlock Grid.Row="0" x:Name="TxtTableHeader"
+                           FontSize="18" FontWeight="Bold"
+                           Foreground="#5E3E4A"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <!-- SEARCH -->
+                <StackPanel Grid.Row="1" Margin="0,0,0,8">
+                    <TextBox x:Name="TxtSearch" Height="30"
+                             Background="#F3EDEE"
+                             BorderBrush="#7A5A68"
+                             Foreground="#5E3E4A"
+                             FontSize="13"
+                             Padding="6"
+                             TextChanged="TxtSearch_TextChanged">
+                        <TextBox.Template>
+                            <ControlTemplate TargetType="TextBox">
+                                <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="#7A5A68"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                                    <ScrollViewer x:Name="PART_ContentHost"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+
+                                    <!-- HOVER -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border"
+                            Property="Background"
+                            Value="#E9DDE5"/>
+                                    </Trigger>
+
+                                    <!-- FOCUS (când scrii în el) -->
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter TargetName="border"
+                            Property="BorderBrush"
+                            Value="#5E3E4A"/>
+                                        <Setter TargetName="border"
+                            Property="Background"
+                            Value="#E9DDE5"/>
+                                    </Trigger>
+
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </TextBox.Template>
+
+                    </TextBox>
+                </StackPanel>
+
+                <!-- SEARCH RESULTS -->
+                <ListBox Grid.Row="2"
+                         x:Name="LstSearchResults"
+                         Background="#F3EDEE"
+                         BorderBrush="#7A5A68"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Margin="0,0,0,8">
+
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Width="110" Height="110" Margin="8"
-                                    BorderThickness="2" CornerRadius="12"
-                                    Cursor="Hand" Tag="{Binding Id}"
-                                    MouseLeftButtonUp="TableCard_Click">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Background" Value="#FFF8F0"/>
-                                        <Setter Property="BorderBrush" Value="#E8D5B7"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Status}" Value="Occupied">
-                                                <Setter Property="Background" Value="#F5E6D0"/>
-                                                <Setter Property="BorderBrush" Value="#D4A574"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Status}" Value="Selected">
-                                                <Setter Property="Background" Value="#D4A574"/>
-                                                <Setter Property="BorderBrush" Value="#5C3A21"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding TableNumber, StringFormat='{}Table {0}'}"
-                                               FontSize="16" FontWeight="Bold" Foreground="#5C3A21"
-                                               HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Capacity, StringFormat='{},{0} seats'}"
-                                               FontSize="10" Foreground="#8B5E3C"
-                                               HorizontalAlignment="Center" Margin="0,2,0,2"/>
-                                    <TextBlock Text="{Binding StatusDisplay}" FontSize="10"
-                                               FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                                </StackPanel>
+                            <Border Background="#E9DDE5"
+                                    CornerRadius="6"
+                                    BorderBrush="#7A5A68"
+                                    BorderThickness="1"
+                                    Padding="8,4"
+                                    Margin="1,2">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontSize="13"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="#5E3E4A"/>
+
+                                        <TextBlock Text="{Binding Price, StringFormat='{}{0:0.00} RON'}"
+                                                   FontSize="11"
+                                                   Foreground="#5E3E4A"/>
+                                    </StackPanel>
+
+                                    <Button Grid.Column="1"
+                                            Content="+ Add"
+                                            Width="60"
+                                            Height="24"
+                                            Background="#8A6B7A"
+                                            Foreground="#F3EDEE"
+                                            BorderThickness="0"
+                                            FontSize="10"
+                                            FontWeight="Bold"
+                                            Cursor="Hand"
+                                            CommandParameter="{Binding}"
+                                            Click="BtnAddDish_Click"/>
+                                </Grid>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
-        <!-- ========== DREAPTA: ORDER PANEL ========== -->
-        <Grid Grid.Column="1" x:Name="OrderPanel" IsEnabled="False" Opacity="0.4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <!-- Table header -->
-            <TextBlock Grid.Row="0" x:Name="TxtTableHeader" FontSize="18" FontWeight="Bold"
-                       Foreground="#5C3A21" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-            <!-- Search box -->
-            <StackPanel Grid.Row="1" Margin="0,0,0,8">
-                <TextBox x:Name="TxtSearch" Height="30"
-                         Background="#FFF8F0" BorderBrush="#E8D5B7"
-                         Foreground="#5C3A21" FontSize="13" Padding="6"
-                         TextChanged="TxtSearch_TextChanged">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox">
-                            <Setter Property="Text" Value=""/>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="">
-                                    <Setter Property="Background" Value="#FFF8F0"/>
-                                </Trigger>
-                            </Style.Triggers>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- DATA GRID -->
+                <DataGrid Grid.Row="3"
+                          x:Name="DgOrder"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          MaxHeight="150"
+                          Background="#F3EDEE"
+                          BorderBrush="#7A5A68"
+                          Foreground="#5E3E4A"
+                          RowBackground="#F3EDEE"
+                          AlternatingRowBackground="#E9DDE5"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal">
+
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#3E2630"/>
+                            <Setter Property="Foreground" Value="#F3EDEE"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Height" Value="28"/>
                         </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </StackPanel>
-            <!-- Search results -->
-            <ListBox Grid.Row="2" x:Name="LstSearchResults"
-                     Background="#FFF8F0" BorderBrush="#E8D5B7"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     Margin="0,0,0,8">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="#FAF0E6" CornerRadius="6"
-                                BorderBrush="#E8D5B7" BorderThickness="1"
-                                Padding="8,4" Margin="1,2">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <TextBlock Text="{Binding Name}" FontSize="13" FontWeight="SemiBold"
-                                               Foreground="#5C3A21"/>
-                                    <TextBlock Text="{Binding Price, StringFormat='{}{0:0.00} RON'}"
-                                               FontSize="11" Foreground="#8B5E3C"/>
-                                </StackPanel>
-                                <Button Grid.Column="1" Content="+ Add" Width="60" Height="24"
-                                        Background="#D4A574" Foreground="White" BorderThickness="0"
-                                        FontSize="10" FontWeight="Bold" Cursor="Hand"
-                                        CommandParameter="{Binding}"
-                                        Click="BtnAddDish_Click"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <!-- Current order items -->
-            <DataGrid Grid.Row="3" x:Name="DgOrder" AutoGenerateColumns="False"
-                      CanUserAddRows="False" IsReadOnly="True"
-                      MaxHeight="150"
-                      Background="#FFF8F0" BorderBrush="#E8D5B7"
-                      Foreground="#5C3A21" RowBackground="#FFF8F0"
-                      AlternatingRowBackground="#FAF0E6"
-                      HeadersVisibility="Column" GridLinesVisibility="Horizontal">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#5C3A21"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Height" Value="28"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*"/>
-                    <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="60"/>
-                    <DataGridTextColumn Header="Price" Binding="{Binding PriceDisplay}" Width="80"/>
-                    <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" Width="80"/>
-                    <DataGridTemplateColumn Header="" Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="✕" Width="30" Height="22"
-                                        Background="#C94A4A" Foreground="White" BorderThickness="0"
-                                        FontSize="10" FontWeight="Bold" Cursor="Hand"
-                                        CommandParameter="{Binding}"
-                                        Click="BtnRemoveItem_Click"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <!-- Totals -->
-            <StackPanel Grid.Row="4" Margin="0,8,0,8" HorizontalAlignment="Right">
-                <StackPanel Orientation="Horizontal" Margin="0,2">
-                    <TextBlock Text="Subtotal: " FontWeight="Bold" Width="80" Foreground="#8B5E3C"/>
-                    <TextBlock x:Name="TxtSubtotal" Text="0.00 RON" Width="100"
-                               Foreground="#5C3A21" TextAlignment="Right"/>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="60"/>
+                        <DataGridTextColumn Header="Price" Binding="{Binding PriceDisplay}" Width="80"/>
+                        <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" Width="80"/>
+
+                        <DataGridTemplateColumn Header="" Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="✕"
+                                            Width="30"
+                                            Height="22"
+                                            Background="#8A6B7A"
+                                            Foreground="#F3EDEE"
+                                            BorderThickness="0"
+                                            FontSize="10"
+                                            FontWeight="Bold"
+                                            Cursor="Hand"
+                                            CommandParameter="{Binding}"
+                                            Click="BtnRemoveItem_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="border"
+Background="{TemplateBinding Background}"
+CornerRadius="0">
+
+                                                    <ContentPresenter HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="border"
+        Property="Background"
+        Value="#7A5A68"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- TOTALS -->
+                <StackPanel Grid.Row="4" Margin="0,8,0,8" HorizontalAlignment="Right">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                        <TextBlock Text="Subtotal: " FontWeight="Bold" Width="80" Foreground="#3E2630"/>
+                        <TextBlock x:Name="TxtSubtotal" Text="0.00 RON" Width="100"
+                                   Foreground="#3E2630" TextAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                        <TextBlock Text="Discount: " FontWeight="Bold" Width="80" Foreground="#3E2630"/>
+                        <TextBlock x:Name="TxtDiscount" Text="0.00 RON" Width="100"
+                                   Foreground="#3E2630" TextAlignment="Right"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                        <TextBlock Text="Total: " FontWeight="Bold" Width="80" FontSize="14" Foreground="#3E2630"/>
+                        <TextBlock x:Name="TxtTotal" Text="0.00 RON" Width="100" FontSize="14"
+                                   Foreground="#3E2630" TextAlignment="Right"/>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,2">
-                    <TextBlock Text="Discount: " FontWeight="Bold" Width="80" Foreground="#8B5E3C"/>
-                    <TextBlock x:Name="TxtDiscount" Text="0.00 RON" Width="100"
-                               Foreground="#5C3A21" TextAlignment="Right"/>
+
+                <!-- BUTTONS -->
+                <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+
+                    <Button x:Name="BtnDiscount" Content="Add Discount"
+                            Width="110" Height="32"
+                            Background="#8A6B7A"
+                            Foreground="#4A2F39"
+                            BorderThickness="0"
+                            Margin="4"
+                            Cursor="Hand"
+                            FontWeight="Bold"
+                            Click="BtnDiscount_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="0">
+
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border"
+                            Property="Background"
+                            Value="#7A5A68"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+
+                    <Button x:Name="BtnBilling" Content="📋 Billing"
+                            Width="110" Height="32"
+                            Background="#8A6B7A"
+                            Foreground="#4A2F39"
+                            BorderThickness="0"
+                            Margin="4"
+                            Cursor="Hand"
+                            FontWeight="Bold"
+                            Click="BtnBilling_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border"
+Background="{TemplateBinding Background}"
+CornerRadius="0">
+
+                                    <ContentPresenter HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border"
+        Property="Background"
+        Value="#7A5A68"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button x:Name="BtnClose" Content="Close"
+                            Width="100" Height="32"
+                            Background="#8A6B7A"
+ Foreground="#4A2F39"
+                            BorderThickness="0"
+                            Margin="4"
+                            Cursor="Hand"
+                            FontWeight="Bold"
+
+                            Click="BtnExit_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border"
+Background="{TemplateBinding Background}"
+CornerRadius="0">
+
+                                    <ContentPresenter HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border"
+        Property="Background"
+        Value="#7A5A68"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,2">
-                    <TextBlock Text="Total: " FontWeight="Bold" Width="80" FontSize="14" Foreground="#8B5E3C"/>
-                    <TextBlock x:Name="TxtTotal" Text="0.00 RON" Width="100" FontSize="14"
-                               Foreground="#5C3A21" TextAlignment="Right"/>
-                </StackPanel>
-            </StackPanel>
-            <!-- Buttons -->
-            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="BtnDiscount" Content="Add Discount" Width="110" Height="32"
-                        Background="#D4A574" Foreground="White" BorderThickness="0"
-                        Margin="4" Cursor="Hand" FontWeight="Bold"
-                        Click="BtnDiscount_Click"/>
-                <Button x:Name="BtnBilling" Content="📋 Billing" Width="110" Height="32"
-        Background="#8B5E3C" Foreground="White" BorderThickness="0"
-        Margin="4" Cursor="Hand" FontWeight="Bold"
-        Click="BtnBilling_Click"/>
-                <Button x:Name="BtnClose" Content="Close" Width="100" Height="32"
-                        Background="#E8D5B7" Foreground="#5C3A21" BorderThickness="0"
-                        Margin="4" Cursor="Hand" FontWeight="Bold"
-                        Click="BtnExit_Click"/>
-            </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
-</Border>
+    </Border>
 </Window>
