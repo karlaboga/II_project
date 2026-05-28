@@ -103,7 +103,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
                     <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                    <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
                     <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
                     <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
                 </DataGrid.Columns>
