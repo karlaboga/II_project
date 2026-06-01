@@ -59,6 +59,6 @@ public class DishItem
     public string Description { get; set; } = "";
     public double Price { get; set; }
     public string Category { get; set; } = "";
-    public string PriceDisplay => $"${Price:0.00}";
+    public string PriceDisplay => $"{Price:0.00} RON";
 
 }

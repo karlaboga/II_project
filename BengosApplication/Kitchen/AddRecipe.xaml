@@ -37,7 +37,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="Price ($):" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
+                            <TextBlock Text="Price (RON):" FontSize="14" FontWeight="SemiBold" Foreground="#5E3E4A" Margin="0,0,0,5"/>
                             <TextBox x:Name="TxtPrice" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,12" BorderBrush="#C9A3B5"/>
                         </StackPanel>
 
