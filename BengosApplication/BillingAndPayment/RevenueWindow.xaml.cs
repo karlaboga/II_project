@@ -57,7 +57,7 @@ public partial class RevenueWindow : Window
         }
         DgOrders.ItemsSource = orders;
         TxtOrderCount.Text = orders.Count.ToString();
-        TxtTotalRevenue.Text = $"${totalRevenue:0.00}";
+        TxtTotalRevenue.Text = $"{totalRevenue:0.00} RON";
         TxtAvgDiscount.Text = orders.Count > 0
             ? $"{(totalDiscount / orders.Count):0.0}%"
             : "0%";
@@ -73,5 +73,5 @@ public class OrderSummary
     public double DiscountPercent { get; set; }
     public double Total { get; set; }
     public string DiscountDisplay => DiscountPercent > 0 ? $"-{Subtotal * DiscountPercent / 100:0.00} ({DiscountPercent}%)" : "0.00";
-    public string TotalDisplay => $"${Total:0.00}";
+    public string TotalDisplay => $"{Total:0.00} RON";
 }
