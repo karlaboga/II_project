@@ -11,7 +11,7 @@ public partial class PaymentWindow : Window
         InitializeComponent();
         totalAmount = total;
         discountPercent = discount;
-        TxtAmount.Text = $"${totalAmount:0.00}";
+        TxtAmount.Text = $"{totalAmount:0.00} RON";
         isInitialized = true;
     }
     private void RbPayment_Checked(object sender, RoutedEventArgs e)
@@ -26,7 +26,7 @@ public partial class PaymentWindow : Window
         if (double.TryParse(TxtCashGiven.Text, out double given))
         {
             double changeAmount = given - totalAmount;
-            TxtChange.Text = changeAmount >= 0 ? $"${changeAmount:0.00}" : "Not enough cash";
+            TxtChange.Text = changeAmount >= 0 ? $"{changeAmount:0.00} RON" : "Not enough cash";
             TxtChange.Foreground = changeAmount >= 0
                 ? System.Windows.Media.Brushes.DarkGreen
                 : System.Windows.Media.Brushes.Red;
@@ -49,14 +49,14 @@ public partial class PaymentWindow : Window
             }
             double changeAmount = given - totalAmount;
             MessageBox.Show(
-                $"Payment confirmed!\n\nTotal: ${totalAmount:0.00}\n" +
-                $"Cash Given: ${given:0.00}\nChange: ${changeAmount:0.00}",
+                $"Payment confirmed!\n\nTotal: {totalAmount:0.00} RON\n" +
+                $"Cash Given: {given:0.00} RON\nChange: {changeAmount:0.00} RON",
                 "Receipt", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         else
         {
             MessageBox.Show(
-                $"Card payment of ${totalAmount:0.00} confirmed!\nThank you!",
+                $"Card payment of {totalAmount:0.00} RON confirmed!\nThank you!",
                 "Receipt", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         DialogResult = true;

@@ -3,7 +3,7 @@ using Bengos.Models;
 using Microsoft.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using static BillingAndPayment.BillingWindow;
+
 namespace BillingAndPayment;
 public partial class TableWindow : Window
 {
