@@ -113,6 +113,11 @@ public class InventoryViewModel
     private void AddProduct()
     {
         if (string.IsNullOrWhiteSpace(ProductName)) return;
+        if (ProductName.Any(char.IsDigit))
+        {
+            System.Windows.MessageBox.Show("Product name must contain only letters.", "Validation Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            return;
+        }
         try
         {
             using var conn = new SqlConnection(connString);
@@ -137,6 +142,11 @@ public class InventoryViewModel
     private void EditProduct()
     {
         if (SelectedProduct == null || string.IsNullOrWhiteSpace(ProductName)) return;
+        if (ProductName.Any(char.IsDigit))
+        {
+            System.Windows.MessageBox.Show("Product name must contain only letters.", "Validation Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            return;
+        }
         try
         {
             using var conn = new SqlConnection(connString);
