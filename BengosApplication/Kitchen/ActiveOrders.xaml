@@ -133,18 +133,13 @@ CornerRadius="0">
                                                 Margin="0,0,0,12">
 
                                             <Grid>
-                                                <TextBlock Text="{Binding OrderId}"
-                                                           FontWeight="Bold"
-                                                           Foreground="#F3EDEE"
-                                                           FontSize="15"
-                                                           HorizontalAlignment="Left"
-                                                           VerticalAlignment="Center"/>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Foreground="#F3EDEE" FontSize="15"/>
+                                                    <TextBlock Text=" — " FontWeight="Bold" Foreground="#D8C6CF" FontSize="15"/>
+                                                    <TextBlock Text="{Binding TableNumber, StringFormat='Table {0}'}" FontWeight="Bold" Foreground="#FFFDF9" FontSize="15"/>
+                                                </StackPanel>
 
-                                                <TextBlock Text="{Binding Timestamp, StringFormat=\{0:HH:mm\}}"
-                                                           Foreground="#D8C6CF"
-                                                           FontSize="11"
-                                                           HorizontalAlignment="Right"
-                                                           VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Timestamp, StringFormat=\{0:HH:mm\}}" Foreground="#D8C6CF" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                             </Grid>
                                         </Border>
 

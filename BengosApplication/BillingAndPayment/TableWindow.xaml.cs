@@ -404,4 +404,48 @@ public partial class TableWindow : Window
         }
         Close();
     }
+
+    private void BtnToKitchen_Click(object sender, RoutedEventArgs e)
+    {
+        // 1. Verificăm dacă avem o comandă selectată
+        if (!currentOrderId.HasValue)
+        {
+            MessageBox.Show("Nu există o comandă activă pentru a fi trimisă la bucătărie!", "Atenție", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        // 2. Verificăm dacă sunt produse adăugate în DataGrid-ul comenzii
+        var items = DgOrder.ItemsSource as System.Collections.ObjectModel.ObservableCollection<OrderItem>;
+        if (items == null || items.Count == 0)
+        {
+            MessageBox.Show("Comanda este goală! Adăugați produse înainte de a o trimite la bucătărie.", "Atenție", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+
+            // 3. Actualizăm comanda: îi punem statusul 'ToKitchen' și salvăm ora curentă (GETDATE())
+            // Folosim o singură interogare pentru a seta ambele câmpuri
+            using var cmd = new SqlCommand(
+                "UPDATE Orders SET Status = 'ToKitchen', OrderDate = GETDATE() WHERE Id = @oid", conn);
+            cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+
+            cmd.ExecuteNonQuery();
+
+            // 4. Afișăm un mesaj de succes pentru ospătar
+            MessageBox.Show($"Comanda #{currentOrderId.Value} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // 5. Curățăm interfața din dreapta și reîncărcăm mesele (masa va rămâne Occupied în baza de date)
+            ResetOrderPanel();
+            LoadTables();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Eroare la trimiterea comenzii către bucătărie: " + ex.Message, "Eroare SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
 }
