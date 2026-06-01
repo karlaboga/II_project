@@ -76,7 +76,8 @@
                      Padding="10"
                      Margin="0,0,0,18"
                      BorderThickness="1"
-                     BorderBrush="#C9A3B5">
+                     BorderBrush="#C9A3B5"
+                     KeyDown="PasswordField_KeyDown">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -124,7 +125,8 @@
                              FontSize="14"
                              Padding="10"
                              BorderThickness="1"
-                             BorderBrush="#C9A3B5">
+                             BorderBrush="#C9A3B5"
+                             KeyDown="PasswordField_KeyDown">
                     <PasswordBox.Style>
                         <Style TargetType="PasswordBox">
                             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -163,7 +165,8 @@
                          BorderThickness="1"
                          BorderBrush="#C9A3B5"
                          Visibility="Collapsed"
-                         VerticalContentAlignment="Center">
+                         VerticalContentAlignment="Center"
+                         KeyDown="PasswordField_KeyDown">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
