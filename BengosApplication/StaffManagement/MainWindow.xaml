@@ -69,16 +69,14 @@ TextOptions.TextRenderingMode="ClearType">
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Margin="5">
-                        <TextBlock Text="Day"
+                        <TextBlock Text="Date"
                                    Foreground="#7A5A68"
                                    FontWeight="SemiBold"
                                    Margin="0,0,0,5"/>
-                        <ComboBox ItemsSource="{Binding DayList}"
-                                  SelectedItem="{Binding SelectedDay}"
-                                  Background="#F3EDEE"
-                                  BorderBrush="#C9A3B5"
-                                  Foreground="#4B2F3A"
-                                  Padding="5"/>
+                        <DatePicker SelectedDate="{Binding SelectedDate}"
+                                    Background="#F3EDEE"
+                                    BorderBrush="#C9A3B5"
+                                    Foreground="#4B2F3A"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2" Margin="5">
@@ -296,7 +294,7 @@ TextOptions.TextRenderingMode="ClearType">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="*"/>
-                        <DataGridTextColumn Header="Day" Binding="{Binding Day}" Width="*"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding DateDisplay}" Width="*"/>
                         <DataGridTextColumn Header="Shift Type" Binding="{Binding ShiftType}" Width="*"/>
                         <DataGridTextColumn Header="Overtime" Binding="{Binding OvertimeText}" Width="*"/>
                     </DataGrid.Columns>
