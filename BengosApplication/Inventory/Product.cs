@@ -44,4 +44,5 @@ public class Product : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
+    public bool IsLowStock => Quantity < MinStock;
 }
