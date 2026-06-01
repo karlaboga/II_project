@@ -36,8 +36,6 @@ private void BtnRevenue_Click(object sender, RoutedEventArgs e)
         new Inventory.PriceWindow().ShowDialog();
     }
     
-    private void BtnHours_Click(object sender, RoutedEventArgs e)
-        => new StaffManagement.HoursWindow().ShowDialog();
     private void BtnSalary_Click(object sender, RoutedEventArgs e)
         => new StaffManagement.SalaryWindow().ShowDialog();
 }
