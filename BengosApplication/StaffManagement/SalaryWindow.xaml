@@ -54,9 +54,13 @@ TextOptions.TextRenderingMode="ClearType">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Employee" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="Total Shifts" Binding="{Binding TotalShifts}" Width="85"/>
+                <DataGridTextColumn Header="Morning" Binding="{Binding MorningShifts}" Width="70"/>
+                <DataGridTextColumn Header="Evening" Binding="{Binding EveningShifts}" Width="70"/>
+                <DataGridTextColumn Header="Night" Binding="{Binding NightShifts}" Width="70"/>
+                <DataGridTextColumn Header="Total Hours" Binding="{Binding TotalHours}" Width="85"/>
                 <DataGridTextColumn Header="Hourly Rate" Binding="{Binding HourlyRateDisplay}" Width="100"/>
-                <DataGridTextColumn Header="Total Hours" Binding="{Binding TotalHours}" Width="100"/>
-                <DataGridTextColumn Header="Total Salary" Binding="{Binding TotalSalaryDisplay}" Width="120"/>
+                <DataGridTextColumn Header="Total Salary" Binding="{Binding TotalSalaryDisplay}" Width="110"/>
             </DataGrid.Columns>
 
         </DataGrid>
