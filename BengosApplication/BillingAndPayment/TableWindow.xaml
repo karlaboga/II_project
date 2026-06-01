@@ -278,11 +278,10 @@
                                             Click="BtnRemoveItem_Click">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border x:Name="border"
-                                                        Background="{TemplateBinding Background}"
-                                                        CornerRadius="0">
-                                                    <ContentPresenter HorizontalAlignment="Center"
-                                                                      VerticalAlignment="Center"/>
+
+                                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
                                                 </Border>
 
                                                 <ControlTemplate.Triggers>
@@ -335,11 +334,8 @@
                             Click="BtnDiscount_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="0">
-                                    <ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
+                                <Border x:Name="border" Background="#8A6B7A" CornerRadius="6">
+                                    <TextBlock Text="{TemplateBinding Content}" Foreground="#4A2F39" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
@@ -351,49 +347,30 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="BtnBilling" Content="📋 Billing"
-                            Width="110" Height="32"
-                            Background="#8A6B7A"
-                            Foreground="#4A2F39"
-                            BorderThickness="0"
-                            Margin="4"
-                            Cursor="Hand"
-                            FontWeight="Bold"
-                            Click="BtnBilling_Click">
+
+                    <Button x:Name="BtnToKitchen" Content="🍳To Kitchen" Height="40" Margin="6" Cursor="Hand" FontSize="14" FontWeight="Bold" Click="BtnToKitchen_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="0">
-                                    <ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
+                                <Border x:Name="border" Background="#6AA66E" CornerRadius="6">
+                                    <TextBlock Text="{TemplateBinding Content}" Foreground="#F3EDEE" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#7A5A68"/>
+
+                                        <Setter TargetName="border" Property="Background" Value="#5E3E4A"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="BtnClose" Content="Close"
-                            Width="100" Height="32"
-                            Background="#8A6B7A"
-                            Foreground="#4A2F39"
-                            BorderThickness="0"
-                            Margin="4"
-                            Cursor="Hand"
-                            FontWeight="Bold"
-                            Click="BtnExit_Click">
+
+                    <Button x:Name="BtnBilling" Content="📋 Billing" Height="40" Margin="6" Cursor="Hand" FontSize="14" FontWeight="Bold" Click="BtnBilling_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}"
-                                        CornerRadius="0">
-                                    <ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
+                                <Border x:Name="border" Background="#8A6B7A" CornerRadius="6">
+                                    <TextBlock Text="{TemplateBinding Content}" Foreground="#4A2F39" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
