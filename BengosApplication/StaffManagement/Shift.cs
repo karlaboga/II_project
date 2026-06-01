@@ -5,7 +5,7 @@ public class Shift : INotifyPropertyChanged
 {
     private int _id;
     private string _staff = "";
-    private string _day = "";
+    private DateTime _date = DateTime.Today;
     private string _shiftType = "";
     private bool _overtime;
     public int Id
@@ -18,11 +18,12 @@ public class Shift : INotifyPropertyChanged
         get => _staff;
         set { _staff = value; OnPropertyChanged(); }
     }
-    public string Day
+    public DateTime Date
     {
-        get => _day;
-        set { _day = value; OnPropertyChanged(); }
+        get => _date;
+        set { _date = value; OnPropertyChanged(); OnPropertyChanged(nameof(DateDisplay)); }
     }
+    public string DateDisplay => Date.ToString("yyyy-MM-dd");
     public string ShiftType
     {
         get => _shiftType;
