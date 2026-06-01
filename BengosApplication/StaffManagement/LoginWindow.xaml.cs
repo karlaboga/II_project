@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace StaffManagement;
 
@@ -43,13 +44,20 @@ public partial class LoginWindow : Window
         }
     }
 
+    private void PasswordField_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            BtnLogin_Click(sender, e);
+        }
+    }
+
     private void BtnShowPassword_Click(object sender, RoutedEventArgs e)
     {
         _passwordVisible = !_passwordVisible;
 
         if (_passwordVisible)
         {
-            // copiaza parola din PasswordBox in TextBox vizibil
             txtPasswordVisible.Text = txtPassword.Password;
             txtPassword.Visibility = Visibility.Collapsed;
             txtPasswordVisible.Visibility = Visibility.Visible;
@@ -58,7 +66,6 @@ public partial class LoginWindow : Window
         }
         else
         {
-            // copiaza parola inapoi in PasswordBox
             txtPassword.Password = txtPasswordVisible.Text;
             txtPasswordVisible.Visibility = Visibility.Collapsed;
             txtPassword.Visibility = Visibility.Visible;
@@ -70,7 +77,6 @@ public partial class LoginWindow : Window
     {
         string username = txtUsername.Text.Trim();
 
-        // ia parola din oricare dintre cele doua campuri
         string password = _passwordVisible
             ? txtPasswordVisible.Text
             : txtPassword.Password;
