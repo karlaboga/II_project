@@ -99,7 +99,7 @@
                                                    FontWeight="Bold"
                                                    Foreground="#5E3E4A"
                                                    HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{Binding Capacity, StringFormat='{},{0} seats'}"
+                                        <TextBlock Text="{Binding Capacity, StringFormat='{}{0} seats'}"
                                                    FontSize="10"
                                                    Foreground="#5E3E4A"
                                                    HorizontalAlignment="Center"
