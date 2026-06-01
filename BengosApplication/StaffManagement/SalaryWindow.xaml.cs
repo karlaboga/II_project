@@ -54,6 +54,6 @@ public class EmployeeSalary
     public double HourlyRate { get; set; }
     public int TotalHours { get; set; }
     public double TotalSalary { get; set; }
-    public string HourlyRateDisplay => $"${HourlyRate:0.00}/h";
-    public string TotalSalaryDisplay => $"${TotalSalary:0.00}";
+    public string HourlyRateDisplay => $"{HourlyRate:0.00} RON/h";
+    public string TotalSalaryDisplay => $"{TotalSalary:0.00} RON";
 }
