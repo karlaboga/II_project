@@ -16,6 +16,7 @@ TextOptions.TextRenderingMode="ClearType">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -27,10 +28,32 @@ TextOptions.TextRenderingMode="ClearType">
                    FontWeight="Bold"
                    Foreground="#5E3E4A"
                    HorizontalAlignment="Center"
-                   Margin="0,5,0,15"/>
+                   Margin="0,5,0,10"/>
+
+        <!-- MONTH/YEAR SELECTOR -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+            <TextBlock Text="Month:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#5E3E4A" FontWeight="SemiBold"/>
+            <ComboBox x:Name="CmbMonth" Width="110" Height="30" Margin="0,0,15,0" 
+                      Background="#F3EDEE" BorderBrush="#C9A3B5" VerticalContentAlignment="Center"/>
+            
+            <TextBlock Text="Year:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#5E3E4A" FontWeight="SemiBold"/>
+            <ComboBox x:Name="CmbYear" Width="80" Height="30" Margin="0,0,15,0" 
+                      Background="#F3EDEE" BorderBrush="#C9A3B5" VerticalContentAlignment="Center"/>
+
+            <Button Content="Generate Report" Click="BtnLoad_Click" Width="120" Height="30" 
+                    Background="#5E3E4A" Foreground="#F3EDEE" FontWeight="Bold" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
 
         <!-- DATA GRID -->
-        <DataGrid Grid.Row="1"
+        <DataGrid Grid.Row="2"
                   x:Name="DgSalary"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -66,7 +89,7 @@ TextOptions.TextRenderingMode="ClearType">
         </DataGrid>
 
         <!-- BUTTON -->
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
         Content="Close"
         Width="110"
         Height="38"

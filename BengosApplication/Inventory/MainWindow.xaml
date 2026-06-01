@@ -11,7 +11,6 @@
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
         TextOptions.TextRenderingMode="ClearType">
-    
 
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
@@ -43,8 +42,8 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
-        
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="320"/>
@@ -59,12 +58,20 @@
 
                 <TextBlock Text="Category" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
                 <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Margin="5" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5">
-                    <ComboBoxItem Content="Fruits"/>
                     <ComboBoxItem Content="Vegetables"/>
+                    <ComboBoxItem Content="Fruits"/>
                     <ComboBoxItem Content="Herbs &amp; Aromatics"/>
-                    <ComboBoxItem Content="Meat"/>
+                    <ComboBoxItem Content="Beef &amp; Pork"/>
+                    <ComboBoxItem Content="Poultry"/>
+                    <ComboBoxItem Content="Seafood &amp; Fish"/>
+                    <ComboBoxItem Content="Plant Proteins"/>
                     <ComboBoxItem Content="Dairy"/>
+                    <ComboBoxItem Content="Eggs"/>
+                    <ComboBoxItem Content="Oils &amp; Fats"/>
+                    <ComboBoxItem Content="Bakery"/>
+                    <ComboBoxItem Content="Dry Grains &amp; Pastas"/>
                     <ComboBoxItem Content="Spices"/>
+                    <ComboBoxItem Content="Canned"/>
                 </ComboBox>
 
                 <TextBlock Text="Quantity" Foreground="#7A5A68" FontWeight="SemiBold" Margin="5"/>
@@ -90,24 +97,88 @@
                 </StackPanel>
             </StackPanel>
 
-            <DataGrid Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Background="#F3EDEE" BorderBrush="#C9A3B5" Foreground="#5E3E4A"
-                  RowBackground="#F3EDEE" AlternatingRowBackground="#E9DDE5" HeadersVisibility="Column">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#5E3E4A"/>
-                        <Setter Property="Foreground" Value="#F3EDEE"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                    </Style>
-                </DataGrid.Resources>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
-                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
-                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
-                    <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid Grid.Column="1" Margin="15,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,15">
+                    <TextBlock Text="Filter by Category:" 
+                               Foreground="#5E3E4A" 
+                               FontWeight="Bold" 
+                               FontSize="14" 
+                               VerticalAlignment="Center" 
+                               Margin="0,0,10,0"/>
+
+                    <ComboBox SelectedValue="{Binding FilterCategory, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectedValuePath="Content"
+                              Width="180" Height="28" Background="#F3EDEE" Foreground="#5E3E4A" BorderBrush="#C9A3B5" VerticalContentAlignment="Center">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="Vegetables"/>
+                        <ComboBoxItem Content="Fruits"/>
+                        <ComboBoxItem Content="Herbs &amp; Aromatics"/>
+                        <ComboBoxItem Content="Beef &amp; Pork"/>
+                        <ComboBoxItem Content="Poultry"/>
+                        <ComboBoxItem Content="Seafood &amp; Fish"/>
+                        <ComboBoxItem Content="Plant Proteins"/>
+                        <ComboBoxItem Content="Dairy"/>
+                        <ComboBoxItem Content="Eggs"/>
+                        <ComboBoxItem Content="Oils &amp; Fats"/>
+                        <ComboBoxItem Content="Bakery"/>
+                        <ComboBoxItem Content="Dry Grains &amp; Pastas"/>
+                        <ComboBoxItem Content="Spices"/>
+                        <ComboBoxItem Content="Canned"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <DataGrid Grid.Row="1" 
+                          ItemsSource="{Binding Products}" 
+                          SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}"
+                          AlternationCount="2"
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True" 
+                          Background="#F3EDEE" 
+                          BorderBrush="#C9A3B5" 
+                          Foreground="#5E3E4A"
+                          HeadersVisibility="Column">
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="#F3EDEE"/>
+                            <Setter Property="Foreground" Value="#5E3E4A"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                    <Setter Property="Background" Value="#E9DDE5"/>
+                                </Trigger>
+
+                                <DataTrigger Binding="{Binding IsLowStock}" Value="True">
+                                    <Setter Property="Background" Value="#f54949"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#5E3E4A"/>
+                            <Setter Property="Foreground" Value="#F3EDEE"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*"/>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                        <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
+                        <DataGridTextColumn Header="Min" Binding="{Binding MinStock}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
         </Grid>
     </Border>
 </Window>

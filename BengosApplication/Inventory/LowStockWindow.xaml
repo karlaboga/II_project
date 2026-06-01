@@ -2,37 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Low Stock Alert"
-       Height="650" Width="1000"
-WindowStartupLocation="CenterScreen"
-ResizeMode="NoResize"
-WindowStyle="None"
-AllowsTransparency="True"
-Background="#F3EDEE"
-FontFamily="Segoe UI"
-TextOptions.TextFormattingMode="Display"
-TextOptions.TextRenderingMode="ClearType">
+        Height="650" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="#F3EDEE"
+        FontFamily="Segoe UI"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType">
 
     <Border Background="#F3EDEE"
             CornerRadius="20"
             Margin="10">
 
-        
-
         <Grid Margin="35">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- TITLE -->
             <Border Grid.Row="0"
                     Background="#5E3E4A"
                     CornerRadius="12"
                     Padding="15"
                     Margin="0,0,0,20">
-
                 <TextBlock Text="⚠ LOW STOCK ALERT"
                            FontSize="22"
                            FontWeight="SemiBold"
@@ -40,7 +35,6 @@ TextOptions.TextRenderingMode="ClearType">
                            HorizontalAlignment="Center"/>
             </Border>
 
-            <!-- DATA GRID -->
             <Border Grid.Row="1"
                     Background="#F3EDEE"
                     BorderBrush="#C9A3B5"
@@ -50,7 +44,6 @@ TextOptions.TextRenderingMode="ClearType">
 
                 <DataGrid x:Name="DgLowStock"
                           AutoGenerateColumns="False"
-                          IsReadOnly="True"
                           Background="#F3EDEE"
                           BorderThickness="0"
                           Foreground="#4B2F3A"
@@ -60,7 +53,6 @@ TextOptions.TextRenderingMode="ClearType">
                           GridLinesVisibility="Horizontal">
 
                     <DataGrid.Resources>
-
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Background" Value="#5E3E4A"/>
                             <Setter Property="Foreground" Value="#F3EDEE"/>
@@ -76,7 +68,6 @@ TextOptions.TextRenderingMode="ClearType">
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-
                     </DataGrid.Resources>
 
                     <DataGrid.Columns>
@@ -85,17 +76,51 @@ TextOptions.TextRenderingMode="ClearType">
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="90"/>
                         <DataGridTextColumn Header="Min Stock" Binding="{Binding MinStock}" Width="90"/>
                         <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+
+                        <DataGridTemplateColumn Header="Qty to Add" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding AddQuantity, UpdateSourceTrigger=PropertyChanged}" 
+                                             Background="White" 
+                                             Foreground="#4B2F3A" 
+                                             BorderBrush="#C9A3B5" 
+                                             TextAlignment="Center" 
+                                             VerticalContentAlignment="Center"
+                                             Padding="2"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Action" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="➕ Restock" 
+                                            Click="BtnRestock_Click"
+                                            Background="#5E3E4A" 
+                                            Foreground="#F3EDEE" 
+                                            FontWeight="SemiBold" 
+                                            FontSize="12" 
+                                            Height="26" 
+                                            Cursor="Hand">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
 
                 </DataGrid>
-
             </Border>
 
-            <!-- CLOSE BUTTON -->
             <StackPanel Grid.Row="2"
                         HorizontalAlignment="Center"
                         Margin="0,20,0,0">
-
                 <Button Content="Close"
                         Width="140"
                         Height="38"
@@ -105,7 +130,6 @@ TextOptions.TextRenderingMode="ClearType">
                         BorderThickness="0"
                         Cursor="Hand"
                         Click="BtnClose_Click">
-
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="{TemplateBinding Background}"
@@ -113,18 +137,14 @@ TextOptions.TextRenderingMode="ClearType">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"/>
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background"
-                                            Value="#7A5A68"/>
+                                    <Setter Property="Background" Value="#7A5A68"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
-
                 </Button>
-
             </StackPanel>
 
         </Grid>

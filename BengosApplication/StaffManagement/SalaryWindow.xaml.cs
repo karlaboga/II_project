@@ -7,9 +7,35 @@ public partial class SalaryWindow : Window
     public SalaryWindow()
     {
         InitializeComponent();
-        LoadData();
+        InitializeSelectors();
+        LoadData(DateTime.Today.Month, DateTime.Today.Year);
     }
-    private void LoadData()
+    private void InitializeSelectors()
+    {
+        // Months
+        for (int i = 1; i <= 12; i++)
+        {
+            CmbMonth.Items.Add(new { Name = new DateTime(2000, i, 1).ToString("MMMM"), Value = i });
+        }
+        CmbMonth.DisplayMemberPath = "Name";
+        CmbMonth.SelectedValuePath = "Value";
+        CmbMonth.SelectedIndex = DateTime.Today.Month - 1;
+
+        // Years
+        for (int y = DateTime.Today.Year - 2; y <= DateTime.Today.Year + 2; y++)
+        {
+            CmbYear.Items.Add(y);
+        }
+        CmbYear.SelectedItem = DateTime.Today.Year;
+    }
+    private void BtnLoad_Click(object sender, RoutedEventArgs e)
+    {
+        if (CmbMonth.SelectedValue is int month && CmbYear.SelectedItem is int year)
+        {
+            LoadData(month, year);
+        }
+    }
+    private void LoadData(int month, int year)
     {
         var list = new List<EmployeeSalary>();
         try
@@ -26,10 +52,15 @@ public partial class SalaryWindow : Window
                                 WHEN s.ShiftType='evening' THEN 8
                                 WHEN s.ShiftType='night' THEN 6 ELSE 0 END) AS TotalHours
                 FROM Users u
-                LEFT JOIN Shifts s ON u.Id = s.StaffId
+                LEFT JOIN Shifts s ON u.Id = s.StaffId 
+                     AND TRY_CAST(s.Day AS DATE) IS NOT NULL 
+                     AND MONTH(TRY_CAST(s.Day AS DATE)) = @month 
+                     AND YEAR(TRY_CAST(s.Day AS DATE)) = @year
                 LEFT JOIN Salaries sa ON u.Id = sa.UserId
                 GROUP BY u.Username, sa.HourlyRate
                 ORDER BY u.Username", conn);
+            cmd.Parameters.AddWithValue("@month", month);
+            cmd.Parameters.AddWithValue("@year", year);
             using var rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
