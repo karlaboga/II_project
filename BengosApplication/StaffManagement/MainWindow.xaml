@@ -3,19 +3,199 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Staff Management - Shift Scheduling"
         Height="650" Width="1000"
-WindowStartupLocation="CenterScreen"
-ResizeMode="NoResize"
-WindowStyle="None"
-AllowsTransparency="True"
-Background="#F3EDEE"
-FontFamily="Segoe UI"
-TextOptions.TextFormattingMode="Display"
-TextOptions.TextRenderingMode="ClearType">
+        MinHeight="650" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="Transparent" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        FontFamily="Segoe UI"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Border Background="#F3EDEE" Padding="20">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
 
-        <Grid>
+    <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4A2D1C"/>
+            <Setter Property="Foreground" Value="#F2F1F0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="32,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#5F3B26"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+        <Style x:Key="ClearButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E5DFD9"/>
+            <Setter Property="Foreground" Value="#4A2D1C"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="32,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                SnapsToDevicePixels="True"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F2F1F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PremiumCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#4A2D1C"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="checkBoxBorder" 
+                                        Width="16" Height="16" 
+                                        CornerRadius="4" 
+                                        BorderThickness="1.5" 
+                                        BorderBrush="#4A2D1C" 
+                                        Background="#FFFFFF">
+                                    <Grid>
+                                        <Path x:Name="checkmark" 
+                                              Data="M 2 5 L 5 8 L 11 2" 
+                                              Stroke="#4A2D1C" 
+                                              StrokeThickness="2" 
+                                              Visibility="Collapsed"/>
+                                    </Grid>
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="checkmark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="#8B7365"/>
+                                <Setter TargetName="checkBoxBorder" Property="Background" Value="#F2F1F0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PremiumComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#4A2D1C"/>
+            <Setter Property="BorderBrush" Value="#E5DFD9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="Foreground" Value="#4A2D1C"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border x:Name="ItemBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="4" Margin="1">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#F2F1F0"/>
+                                            <Setter Property="Foreground" Value="#8B7365"/>
+                                        </Trigger>
+                                        <Trigger Property="IsHighlighted" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
+                                            <Setter Property="Foreground" Value="#F2F1F0"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
+                                            <Setter Property="Foreground" Value="#F2F1F0"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B7365"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Path x:Name="Arrow" Fill="#4A2D1C" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                            <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#FFFFFF" BorderThickness="1" BorderBrush="#E5DFD9" CornerRadius="0,0,6,6"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
+
+        <Grid Margin="25">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -23,28 +203,36 @@ TextOptions.TextRenderingMode="ClearType">
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- HEADER -->
-            <Border Grid.Row="0"
-                    Background="#5E3E4A"
-                    CornerRadius="12"
-                    Padding="15"
-                    Margin="0,0,0,15">
+            <Grid Grid.Row="0" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Staff Management"
-                           FontSize="20"
-                           FontWeight="SemiBold"
-                           Foreground="#F3EDEE"
-                           HorizontalAlignment="Center"/>
-            </Border>
+                <Border Grid.Column="0" Background="#4A2D1C" CornerRadius="12" Padding="12" Margin="0,0,10,0">
+                    <TextBlock Text="Staff Management System" FontSize="20" FontWeight="SemiBold" Foreground="#F2F1F0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
 
-            <!-- FILTER BAR -->
-            <Border Grid.Row="1"
-                    Background="#F3EDEE"
-                    CornerRadius="12"
-                    Padding="15"
-                    Margin="0,0,0,15"
-                    BorderBrush="#C9A3B5"
-                    BorderThickness="1">
+                <Button Grid.Column="1" Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C" FontWeight="Normal" FontSize="13" Cursor="Hand" Click="BtnClose_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="14" Padding="15" Margin="0,0,0,15">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
+                </Border.Effect>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -54,292 +242,39 @@ TextOptions.TextRenderingMode="ClearType">
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="5">
-                        <TextBlock Text="Staff"
-                                   Foreground="#7A5A68"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,5"/>
-                        <ComboBox ItemsSource="{Binding StaffList}"
-                                  SelectedItem="{Binding SelectedStaff}"
-                                  IsEnabled="{Binding IsAdmin}"
-                                  Background="#F3EDEE"
-                                  BorderBrush="#C9A3B5"
-                                  Foreground="#4B2F3A"
-                                  Padding="5"/>
-                        <TextBlock Text="{Binding SelectedStaffRole}"
-                                   Foreground="#5E3E4A"
-                                   FontStyle="Italic"
-                                   FontSize="11"
-                                   Margin="0,3,0,0"
-                                   HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="0" Margin="5,0">
+                        <TextBlock Text="Staff Member" Foreground="#8B7365" FontWeight="SemiBold" Margin="0,0,0,5" FontSize="12"/>
+                        <ComboBox ItemsSource="{Binding StaffList}" SelectedItem="{Binding SelectedStaff}" IsEnabled="{Binding IsAdmin}" Style="{StaticResource PremiumComboBoxStyle}" Height="32" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedStaffRole}" Foreground="#4A2D1C" FontWeight="SemiBold" FontSize="11" Margin="2,4,0,0" HorizontalAlignment="Left"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" Margin="5">
-                        <TextBlock Text="Date"
-                                   Foreground="#7A5A68"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,5"/>
-                        <DatePicker SelectedDate="{Binding SelectedDate}"
-                                     Background="#F3EDEE"
-                                     BorderBrush="#C9A3B5"
-                                     Foreground="#4B2F3A"
-                                     Validation.ErrorTemplate="{x:Null}"/>
+                    <StackPanel Grid.Column="1" Margin="10,0">
+                        <TextBlock Text="Working Date" Foreground="#8B7365" FontWeight="SemiBold" Margin="0,0,0,5" FontSize="12"/>
+                        <DatePicker SelectedDate="{Binding SelectedDate}" Height="32" VerticalContentAlignment="Center" BorderBrush="#E5DFD9"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="2" Margin="5">
-                        <TextBlock Text="Shift"
-                                   Foreground="#7A5A68"
-                                   FontWeight="SemiBold"
-                                   Margin="0,0,0,5"/>
-                        <ComboBox ItemsSource="{Binding ShiftTypeList}"
-                                  SelectedItem="{Binding SelectedShiftType}"
-                                  Background="#F3EDEE"
-                                  BorderBrush="#C9A3B5"
-                                  Foreground="#4B2F3A"
-                                  Padding="5"/>
+                    <StackPanel Grid.Column="2" Margin="5,0">
+                        <TextBlock Text="Shift Allocation" Foreground="#8B7365" FontWeight="SemiBold" Margin="0,0,0,5" FontSize="12"/>
+                        <ComboBox ItemsSource="{Binding ShiftTypeList}" SelectedItem="{Binding SelectedShiftType}" Style="{StaticResource PremiumComboBoxStyle}" Height="32" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
-                    <CheckBox Grid.Column="3"
-                              Content="Overtime"
-                              IsChecked="{Binding Overtime}"
-                              Foreground="#7A5A68"
-                              FontWeight="SemiBold"
-                              VerticalAlignment="Center"
-                              Margin="15,0,0,0"/>
+                    <CheckBox Grid.Column="3" Content="Overtime Shift" IsChecked="{Binding Overtime}" Style="{StaticResource PremiumCheckBoxStyle}" Margin="20,16,10,0"/>
                 </Grid>
             </Border>
 
-            <!-- BUTTONS -->
-            <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        Margin="0,0,0,15">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <Button Content="🔍 Search" Style="{StaticResource RoundedButtonStyle}" Command="{Binding SearchCommand}" Margin="5" Height="36"/>
+                <Button Content="🔄 Refresh" Style="{StaticResource RoundedButtonStyle}" Command="{Binding RefreshCommand}" Background="#8B7365" Margin="5" Height="36"/>
+                <Button Content="➕ Add Shift" Style="{StaticResource RoundedButtonStyle}" Command="{Binding AddCommand}"  Margin="5" Height="36"/>
+                <Button Content="🗑 Delete" Style="{StaticResource RoundedButtonStyle}" Command="{Binding DeleteCommand}" Background="#8A3F4A" Margin="5" Height="36"/>
 
-                <!-- SEARCH -->
-                <Button Content="Search"
-                        Command="{Binding SearchCommand}"
-                        Foreground="#F3EDEE"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#4B6A7A"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#6A8A9A"/>
-                                </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#3A5A6A"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- REFRESH -->
-                <Button Content="Refresh"
-                        Command="{Binding RefreshCommand}"
-                        Foreground="#F3EDEE"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#6B8A6A"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#8AAA8A"/>
-                                </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#4B6A4A"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- ADD -->
-                <Button Content="Add Shift"
-                        Command="{Binding AddCommand}"
-                        Foreground="#F3EDEE"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#5E3E4A"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#7A5A68"/>
-                                </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#4B2F3A"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- DELETE -->
-                <Button Content="Delete"
-                        Command="{Binding DeleteCommand}"
-                        Foreground="#F3EDEE"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#8A3F4A"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#6E2F38"/>
-                                </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#4A1F25"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- CLEAR -->
-                <Button Content="Clear All"
-                        Command="{Binding ClearAllCommand}"
-                        Foreground="#4B2F3A"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#E9DDE5"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#D6C2CE"/>
-                                </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#BFA9B6"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- CLOSE -->
-                <Button Content="Close"
-                        Click="BtnClose_Click"
-                        Foreground="#F3EDEE"
-                        FontWeight="SemiBold"
-                        Padding="30,10"
-                        Margin="5"
-                        BorderThickness="0"
-                        Cursor="Hand">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="#8A6B7A"
-                                    CornerRadius="6"
-                                    Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#7A5A68"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
+                <Button Content="🧹 Clear All" Style="{StaticResource ClearButtonStyle}" Command="{Binding ClearAllCommand}" Margin="5" Height="36"/>
             </StackPanel>
 
-            <!-- DATA GRIDS -->
-            <Border Grid.Row="3"
-                    Background="#F3EDEE"
-                    CornerRadius="12"
-                    BorderBrush="#C9A3B5"
-                    BorderThickness="1"
-                    Padding="10">
+            <Border Grid.Row="3" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5DFD9" BorderThickness="1" Padding="12">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
+                </Border.Effect>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -348,40 +283,53 @@ TextOptions.TextRenderingMode="ClearType">
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Admin Grid -->
-                    <Grid Grid.Column="0" Margin="3">
+                    <Grid.Resources>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#8B7365"/>
+                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="#FFFFFF"/>
+                            <Setter Property="Foreground" Value="#4A2D1C"/>
+                            <Style.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                    <Setter Property="Background" Value="#F2F1F0"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#8B7365"/>
+                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid Grid.Column="0" Margin="4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Background="#5E3E4A" CornerRadius="6" Padding="8" Margin="0,0,0,8">
-                            <TextBlock Text="Admin" Foreground="#F3EDEE" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <Border Grid.Row="0" Background="#4A2D1C" CornerRadius="6" Padding="6" Margin="0,0,0,6">
+                            <TextBlock Text="🛡️ Admin" Foreground="#F2F1F0" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13"/>
                         </Border>
-                        <DataGrid Grid.Row="1" ItemsSource="{Binding AdminShifts}"
-                                  SelectedItem="{Binding SelectedShift}"
-                                  AutoGenerateColumns="False" IsReadOnly="True"
-                                  Background="#F3EDEE" BorderThickness="0"
-                                  Foreground="#4B2F3A" RowBackground="#F3EDEE"
-                                  AlternatingRowBackground="#E9DDE5"
-                                  GridLinesVisibility="Horizontal" HeadersVisibility="Column">
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding AdminShifts}" SelectedItem="{Binding SelectedShift}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                                  AlternationCount="2" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E5DFD9" HeadersVisibility="Column" RowHeight="38">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="Background" Value="#5E3E4A"/>
-                                    <Setter Property="Foreground" Value="#F3EDEE"/>
+                                    <Setter Property="Background" Value="#4A2D1C"/>
+                                    <Setter Property="Foreground" Value="#F2F1F0"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
-                                    <Setter Property="Padding" Value="5"/>
-                                </Style>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#C9A3B5"/>
-                                            <Setter Property="Foreground" Value="#2F1E18"/>
-                                        </Trigger>
-                                    </Style.Triggers>
+                                    <Setter Property="Padding" Value="4"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="*"/>
+                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="1.2*"/>
                                 <DataGridTextColumn Header="Date" Binding="{Binding DateDisplay}" Width="*"/>
                                 <DataGridTextColumn Header="Shift" Binding="{Binding ShiftType}" Width="*"/>
                                 <DataGridTextColumn Header="OT" Binding="{Binding OvertimeText}" Width="Auto"/>
@@ -389,40 +337,27 @@ TextOptions.TextRenderingMode="ClearType">
                         </DataGrid>
                     </Grid>
 
-                    <!-- Employee Grid -->
-                    <Grid Grid.Column="1" Margin="3">
+                    <Grid Grid.Column="1" Margin="4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Background="#7A5A68" CornerRadius="6" Padding="8" Margin="0,0,0,8">
-                            <TextBlock Text="Employee" Foreground="#F3EDEE" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <Border Grid.Row="0" Background="#4A2D1C" CornerRadius="6" Padding="6" Margin="0,0,0,6">
+                            <TextBlock Text="👥 Waiter" Foreground="#F2F1F0" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13"/>
                         </Border>
-                        <DataGrid Grid.Row="1" ItemsSource="{Binding EmployeeShifts}"
-                                  SelectedItem="{Binding SelectedShift}"
-                                  AutoGenerateColumns="False" IsReadOnly="True"
-                                  Background="#F3EDEE" BorderThickness="0"
-                                  Foreground="#4B2F3A" RowBackground="#F3EDEE"
-                                  AlternatingRowBackground="#E9DDE5"
-                                  GridLinesVisibility="Horizontal" HeadersVisibility="Column">
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding WaiterShifts}" SelectedItem="{Binding SelectedShift}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                                  AlternationCount="2" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E5DFD9" HeadersVisibility="Column" RowHeight="38">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="Background" Value="#7A5A68"/>
-                                    <Setter Property="Foreground" Value="#F3EDEE"/>
+                                    <Setter Property="Background" Value="#4A2D1C"/>
+                                    <Setter Property="Foreground" Value="#F2F1F0"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
-                                    <Setter Property="Padding" Value="5"/>
-                                </Style>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#C9A3B5"/>
-                                            <Setter Property="Foreground" Value="#2F1E18"/>
-                                        </Trigger>
-                                    </Style.Triggers>
+                                    <Setter Property="Padding" Value="4"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="*"/>
+                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="1.2*"/>
                                 <DataGridTextColumn Header="Date" Binding="{Binding DateDisplay}" Width="*"/>
                                 <DataGridTextColumn Header="Shift" Binding="{Binding ShiftType}" Width="*"/>
                                 <DataGridTextColumn Header="OT" Binding="{Binding OvertimeText}" Width="Auto"/>
@@ -430,50 +365,35 @@ TextOptions.TextRenderingMode="ClearType">
                         </DataGrid>
                     </Grid>
 
-                    <!-- Cook Grid -->
-                    <Grid Grid.Column="2" Margin="3">
+                    <Grid Grid.Column="2" Margin="4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Background="#8A6B7A" CornerRadius="6" Padding="8" Margin="0,0,0,8">
-                            <TextBlock Text="Cook" Foreground="#F3EDEE" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <Border Grid.Row="0" Background="#4A2D1C" CornerRadius="6" Padding="6" Margin="0,0,0,6">
+                            <TextBlock Text="🍳 Cook" Foreground="#F2F1F0" FontWeight="SemiBold" HorizontalAlignment="Center" FontSize="13"/>
                         </Border>
-                        <DataGrid Grid.Row="1" ItemsSource="{Binding CookShifts}"
-                                  SelectedItem="{Binding SelectedShift}"
-                                  AutoGenerateColumns="False" IsReadOnly="True"
-                                  Background="#F3EDEE" BorderThickness="0"
-                                  Foreground="#4B2F3A" RowBackground="#F3EDEE"
-                                  AlternatingRowBackground="#E9DDE5"
-                                  GridLinesVisibility="Horizontal" HeadersVisibility="Column">
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding CookShifts}" SelectedItem="{Binding SelectedShift}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" Background="Transparent" BorderThickness="0"
+                                  AlternationCount="2" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E5DFD9" HeadersVisibility="Column" RowHeight="38">
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="Background" Value="#8A6B7A"/>
-                                    <Setter Property="Foreground" Value="#F3EDEE"/>
+                                    <Setter Property="Background" Value="#4A2D1C"/>
+                                    <Setter Property="Foreground" Value="#F2F1F0"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
-                                    <Setter Property="Padding" Value="5"/>
-                                </Style>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#C9A3B5"/>
-                                            <Setter Property="Foreground" Value="#2F1E18"/>
-                                        </Trigger>
-                                    </Style.Triggers>
+                                    <Setter Property="Padding" Value="4"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="*"/>
+                                <DataGridTextColumn Header="Staff" Binding="{Binding Staff}" Width="1.2*"/>
                                 <DataGridTextColumn Header="Date" Binding="{Binding DateDisplay}" Width="*"/>
                                 <DataGridTextColumn Header="Shift" Binding="{Binding ShiftType}" Width="*"/>
                                 <DataGridTextColumn Header="OT" Binding="{Binding OvertimeText}" Width="Auto"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
-
                 </Grid>
             </Border>
-
         </Grid>
     </Border>
 </Window>

@@ -193,9 +193,7 @@ UseLayoutRounding="True"
                                 <TextBlock Text="SYSTEM NOTIFICATIONS" FontSize="11" FontWeight="Bold" Foreground="#4A2D1C" Opacity="0.4" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <TextBlock Grid.Row="1" Text="Automated tracking of kitchen and central warehouse stock. Click the button below to generate a complete diagnostics report of ingredients currently below the optimal safety threshold." FontSize="12" Foreground="#4A2D1C" TextWrapping="Wrap" Opacity="0.85" VerticalAlignment="Top" LineHeight="18"/>
-
-                            <Button Grid.Row="2" Content="⚠  Launch Low Stock Warning Diagnostics"
+                            <Button Grid.Row="1" Content="⚠  Launch Low Stock Warning Diagnostics"
                                     Height="48"
                                     FontWeight="SemiBold"
                                     FontSize="13"
@@ -239,9 +237,7 @@ UseLayoutRounding="True"
                                 <TextBlock Text="FINANCIAL OPERATIONS &amp; LEDGER" FontSize="11" FontWeight="Bold" Foreground="#4A2D1C" Opacity="0.4" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <TextBlock Grid.Row="1" Text="Secure access to the restaurant's financial ledgers. You can manage employee payroll or view real-time revenue breakdowns from POS terminals, online orders, and deliveries." FontSize="12" Foreground="#4A2D1C" TextWrapping="Wrap" Opacity="0.85" VerticalAlignment="Top" LineHeight="18"/>
-
-                            <UniformGrid Grid.Row="2" Columns="2" HorizontalAlignment="Stretch">
+                            <UniformGrid Grid.Row="1" Columns="2" HorizontalAlignment="Stretch">
                                 <Button Content="💵  Payroll &amp; Salary"
                                         Height="50"
                                         Margin="0,0,8,0"
