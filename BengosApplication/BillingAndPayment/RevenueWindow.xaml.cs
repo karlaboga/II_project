@@ -1,11 +1,9 @@
-﻿using LiveChartsCore;
+﻿using System.Windows;
+using Microsoft.Data.SqlClient;
+using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.Data.SqlClient;
 using SkiaSharp;
-using System.Security.AccessControl;
-using System.Windows;
 
 namespace BillingAndPayment;
 
@@ -15,12 +13,12 @@ public partial class RevenueWindow : Window
 
     private static readonly SKColor[] Palette =
     {
-        SKColor.Parse("#5E3E4A"),
-        SKColor.Parse("#C9A3B5"),
-        SKColor.Parse("#8A6B7A"),
-        SKColor.Parse("#7A5A68"),
-        SKColor.Parse("#4B2F3A"),
-        SKColor.Parse("#B3957D"),
+        SKColor.Parse("#4A2D1C"),
+        SKColor.Parse("#905327"),
+        SKColor.Parse("#FFE6A7"),
+        SKColor.Parse("#DED1C4"),
+        SKColor.Parse("#E5DFD9"),
+        SKColor.Parse("#DDD7D1"),
     };
 
     public RevenueWindow()
@@ -44,7 +42,6 @@ public partial class RevenueWindow : Window
         LoadCategoryChart(from, to);
         LoadDailyTrend(from, to);
         LoadTopDishes(from, to);
-        LoadTypeChart(from, to);
     }
 
     private void LoadOrders(DateTime from, DateTime to)
@@ -76,7 +73,7 @@ public partial class RevenueWindow : Window
                 {
                     OrderId = id,
                     Time = time,
-                    TableDisplay = tableNum > 0 ? $"Table {tableNum}" : "Takeaway",
+                    TableDisplay = tableNum > 0 ? $"Table {tableNum}" : "No Table",
                     Subtotal = total,
                     DiscountPercent = disc,
                     Total = total,
@@ -107,12 +104,12 @@ public partial class RevenueWindow : Window
             conn.Open();
             using var cmd = new SqlCommand(
                 @"SELECT d.Category, SUM(oi.Quantity * oi.Price) AS Revenue
-                FROM OrderItems oi
-                JOIN Dishes d ON oi.Name = d.Name
-                JOIN Orders o ON oi.OrderId = o.Id
-                WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
-                GROUP BY d.Category
-                ORDER BY Revenue DESC", conn);
+                  FROM OrderItems oi
+                  JOIN Dishes d ON oi.Name = d.Name
+                  JOIN Orders o ON oi.OrderId = o.Id
+                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
+                  GROUP BY d.Category
+                  ORDER BY Revenue DESC", conn);
             cmd.Parameters.AddWithValue("@from", from);
             cmd.Parameters.AddWithValue("@to", to);
             using var rdr = cmd.ExecuteReader();
@@ -152,7 +149,7 @@ public partial class RevenueWindow : Window
             conn.Open();
             using var cmd = new SqlCommand(
                 @"SELECT CAST(o.OrderDate AS DATE) AS OrderDay,
-                  SUM(o.Total) AS Revenue
+                         SUM(o.Total) AS Revenue
                   FROM Orders o
                   WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
                   GROUP BY CAST(o.OrderDate AS DATE)
@@ -181,24 +178,26 @@ public partial class RevenueWindow : Window
                 Stroke = null,
             }
         };
+
         ChartDailyTrend.XAxes = new Axis[]
         {
             new Axis
             {
                 Labels = dates,
-                LabelsRotation = 45
+                LabelsRotation = 45,
             }
         };
-        ChartDailyTrend.YAxes = new Axis[]
-{
-    new Axis
-    {
-        Name = "RON",
-        NameTextSize = 12,
-        Labeler = value => value.ToString("N0")
-    }
 
-};}
+        ChartDailyTrend.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                Name = "RON",
+                NameTextSize = 12,
+                Labeler = value => value.ToString("N0"),
+            }
+        };
+    }
 
     private void LoadTopDishes(DateTime from, DateTime to)
     {
@@ -210,12 +209,12 @@ public partial class RevenueWindow : Window
             using var cmd = new SqlCommand(
                 @"SELECT TOP 10 d.Name, SUM(oi.Quantity) AS Quantity,
                          SUM(oi.Quantity * oi.Price) AS Revenue
-                 FROM OrderItems oi
-                JOIN Dishes d ON oi.Name = d.Name
-                JOIN Orders o ON oi.OrderId = o.Id
-                 WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
-                GROUP BY d.Name
-                ORDER BY Revenue DESC", conn);
+                  FROM OrderItems oi
+                  JOIN Dishes d ON oi.Name = d.Name
+                  JOIN Orders o ON oi.OrderId = o.Id
+                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
+                  GROUP BY d.Name
+                  ORDER BY Revenue DESC", conn);
             cmd.Parameters.AddWithValue("@from", from);
             cmd.Parameters.AddWithValue("@to", to);
             using var rdr = cmd.ExecuteReader();
@@ -234,56 +233,6 @@ public partial class RevenueWindow : Window
             MessageBox.Show("Error loading top dishes: " + ex.Message);
         }
         DgTopDishes.ItemsSource = dishes;
-    }
-
-    private void LoadTypeChart(DateTime from, DateTime to)
-    {
-        double dineIn = 0, takeaway = 0;
-        try
-        {
-            using var conn = new SqlConnection(connString);
-            conn.Open();
-            using var cmd = new SqlCommand(
-                @"SELECT CASE WHEN o.TableId IS NOT NULL THEN 'Dine-in' ELSE 'Takeaway' END AS OrderType,
-                         SUM(o.Total) AS Revenue
-                  FROM Orders o
-                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
-                  GROUP BY CASE WHEN o.TableId IS NOT NULL THEN 'Dine-in' ELSE 'Takeaway' END", conn);
-            cmd.Parameters.AddWithValue("@from", from);
-            cmd.Parameters.AddWithValue("@to", to);
-            using var rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                string type = Convert.ToString(rdr["OrderType"])!;
-                double rev = Convert.ToDouble(rdr["Revenue"]);
-                if (type == "Dine-in") dineIn = rev;
-                else takeaway = rev;
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Error loading order type breakdown: " + ex.Message);
-        }
-
-        PieType.Series = new ISeries[]
-        {
-            new PieSeries<double>
-            {
-                Values = new double[] { dineIn },
-                Name = "Dine-in",
-                Fill = new SolidColorPaint(Palette[0]),
-                DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Outer,
-                DataLabelsSize = 13,
-            },
-            new PieSeries<double>
-            {
-                Values = new double[] { takeaway },
-                Name = "Takeaway",
-                Fill = new SolidColorPaint(Palette[1]),
-                DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Outer,
-                DataLabelsSize = 13,
-            }
-        };
     }
 }
 
