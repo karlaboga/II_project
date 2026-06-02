@@ -30,7 +30,7 @@ UseLayoutRounding="True"
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Margin="5,0,0,50">
@@ -106,29 +106,7 @@ UseLayoutRounding="True"
 
                     </StackPanel>
 
-                    <Button Grid.Row="2"
-                            Content="Exit System"
-                            Height="44"
-                            Background="#8B7365"
-                            Foreground="#F2F1F0"
-                            BorderThickness="0"
-                            FontWeight="SemiBold"
-                            FontSize="13"
-                            Cursor="Hand"
-                            Click="BtnLogout_Click">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#735E52"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    
                 </Grid>
             </Border>
 
