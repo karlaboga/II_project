@@ -198,29 +198,62 @@
     </Window.Resources>
 
     <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        
         <Border.Effect>
             <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
         </Border.Effect>
 
         <Grid Margin="25,25,25,22">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="320"/>
                 <ColumnDefinition Width="*"/>
+                
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Margin="5,5,15,5">
+            <Button HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Width="32"
+            Height="32"
+            Margin="0,5,5,0"
+            Background="Transparent"
+            Foreground="#B39A8C"
+            FontWeight="Normal"
+            FontSize="13"
+            Click="BtnClose_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="16">
+                            <TextBlock Text="✕"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border"
+                                Property="Background"
+                                Value="#E5DFD9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Grid Grid.Column="0" Margin="5,5,15,5" Background="#4A2D1C">
                 <Grid.RowDefinitions>
+                    
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" VerticalAlignment="Top">
-                    <TextBlock Text="Inventory Item Manager" FontSize="20" FontWeight="Bold" Foreground="#4A2D1C" Margin="5,0,0,15"/>
+                    <TextBlock Text="Inventory Item Manager" FontSize="20" FontWeight="Bold" Foreground="#F2F1F0" Margin="5,0,0,15"/>
 
-                    <TextBlock Text="Product Name" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                    <TextBlock Text="Product Name" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
                     <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
 
-                    <TextBlock Text="Category" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                    <TextBlock Text="Category" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
                     <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
                         <ComboBoxItem Content="Vegetables"/>
                         <ComboBoxItem Content="Fruits"/>
@@ -238,10 +271,10 @@
                         <ComboBoxItem Content="Canned"/>
                     </ComboBox>
 
-                    <TextBlock Text="Quantity" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                    <TextBlock Text="Quantity" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
                     <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
 
-                    <TextBlock Text="Unit" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                    <TextBlock Text="Unit" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
                     <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
                         <ComboBoxItem Content="Kilograms"/>
                         <ComboBoxItem Content="Liters"/>
@@ -253,14 +286,28 @@
                     <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,10,0,0">
-                    <UniformGrid Columns="2">
-                        <Button Content="Add Item" Style="{StaticResource RoundedButtonStyle}" Margin="4" Height="34" Command="{Binding AddCommand}"/>
-                        <Button Content="Edit Item" Style="{StaticResource RoundedButtonStyle}" Margin="4" Background="#5F3B26" Height="34" Command="{Binding EditCommand}"/>
-                    </UniformGrid>
+                <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,0">
+                    <StackPanel>
+                        <Button Content="Add Item"
+            Style="{StaticResource RoundedButtonStyle}"
+            Margin="4"
+            Background="#B39A8C"
+            Height="34"
+            Command="{Binding AddCommand}"/>
 
-                    <UniformGrid Columns="2" Margin="0,2,0,0">
-                        <Button Content="Delete" Style="{StaticResource RoundedButtonStyle}" Margin="4" Background="#8A3F4A" Height="34" Command="{Binding DeleteCommand}">
+                        <Button Content="Edit Item"
+            Style="{StaticResource RoundedButtonStyle}"
+            Margin="4"
+            Background="#B39A8C"
+            Height="34"
+            Command="{Binding EditCommand}"/>
+
+                        <Button Content="Delete"
+            Style="{StaticResource RoundedButtonStyle}"
+            Margin="4"
+            Background="#8A3F4A"
+            Height="34"
+            Command="{Binding DeleteCommand}">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
@@ -274,43 +321,10 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="4" Background="#8B7365" Height="34" Command="{Binding ClearFilterCommand}">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#735E52"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </UniformGrid>
+                    </StackPanel>
 
-                    <Button Content="Close Manager" 
-                            Style="{StaticResource RoundedButtonStyle}" 
-                            Margin="4,10,4,4" 
-                            Background="#8B7365" 
-                            Click="BtnClose_Click" 
-                            Height="34" 
-                            Width="140" 
-                            HorizontalAlignment="Center">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#735E52"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    
+
                 </StackPanel>
             </Grid>
 
@@ -348,6 +362,50 @@
                         <ComboBoxItem Content="Spices"/>
                         <ComboBoxItem Content="Canned"/>
                     </ComboBox>
+
+                    <Button Content="Clear Filter" Style="{StaticResource RoundedButtonStyle}" Margin="12,0,0,0" Background="#8B7365" Height="30" Width="100" Command="{Binding ClearFilterCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#735E52"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Width="32"
+        Height="32"
+        Margin="75,0,0,0"
+        Background="Transparent"
+        Foreground="#4A2D1C"
+        FontWeight="Normal"
+        FontSize="13"
+        Click="BtnClose_Click">
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="16">
+                                    <TextBlock Text="✕"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border"
+                            Property="Background"
+                            Value="#E5DFD9"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </StackPanel>
 
                 <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="16" Padding="12">
