@@ -18,6 +18,7 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
         LoadUsers();
+        Loaded += (_, _) => txtUsername.Focus();
     }
 
     private void LoadUsers()
