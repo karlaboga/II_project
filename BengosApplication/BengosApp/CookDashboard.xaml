@@ -29,7 +29,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!-- CLOSE BUTTON -->
@@ -162,42 +161,7 @@
 
             </Grid>
 
-            <!-- BOTTOM BUTTON -->
-            <Button Grid.Row="2"
-                    Content="Close Dashboard"
-                    Width="180"
-                    Height="42"
-                    Margin="0,30,0,0"
-                    Background="#7A5A68"
-                    Foreground="#F3EDEE"
-                    BorderThickness="0"
-                    FontWeight="SemiBold"
-                    Cursor="Hand"
-                    HorizontalAlignment="Center"
-                    Click="BtnClose_Click">
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="14">
-
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#8A6B7A"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-
-            </Button>
-
+         
         </Grid>
     </Border>
 </Window>
