@@ -8,14 +8,25 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#F3EDEE"
+        Background="Transparent"
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Border Background="#F3EDEE"
-            CornerRadius="22"
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="#F2F1F0"
+            CornerRadius="24"
             Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
         <Grid Margin="55">
 
@@ -26,13 +37,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- CLOSE BUTTON -->
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Width="30"
-                    Height="30"
-                    Background="#C9A3B5"
-                    Foreground="#5E3E4A"
+                    Width="32" Height="32"
+                    Background="Transparent" 
+                    Foreground="#4A2D1C"
                     FontWeight="Bold"
                     Cursor="Hand"
                     Click="BtnClose_Click">
@@ -42,11 +51,12 @@
 
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="15">
+                                CornerRadius="16">
 
                             <TextBlock Text="✕"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                                       VerticalAlignment="Center"
+                                       FontSize="12"/>
 
                         </Border>
 
@@ -57,10 +67,7 @@
 
                                 <Setter TargetName="border"
                                         Property="Background"
-                                        Value="#5E3E4A"/>
-
-                                <Setter Property="Foreground"
-                                        Value="#F3EDEE"/>
+                                        Value="#E5DFD9"/>
 
                             </Trigger>
 
@@ -71,16 +78,14 @@
 
             </Button>
 
-            <!-- TITLE -->
             <TextBlock Grid.Row="0"
                        Text="🍽️ Our Menu"
                        FontSize="22"
                        FontWeight="Bold"
-                       Foreground="#5E3E4A"
+                       Foreground="#4A2D1C"
                        HorizontalAlignment="Center"
                        Margin="0,5,0,10"/>
 
-            <!-- FILTERS -->
             <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
@@ -88,15 +93,14 @@
 
                 <StackPanel.Resources>
 
-                    <!-- FILTER BUTTON STYLE -->
                     <Style x:Key="FilterButtonStyle"
                            TargetType="Button">
 
                         <Setter Property="Background"
-                                Value="#C9A3B5"/>
+                                Value="#8B7365"/>
 
                         <Setter Property="Foreground"
-                                Value="#5E3E4A"/>
+                                Value="#F2F1F0"/>
 
                         <Setter Property="BorderThickness"
                                 Value="0"/>
@@ -122,7 +126,6 @@
 
                                 <ControlTemplate TargetType="Button">
 
-                                    <!-- PATRATE BUTTON -->
                                     <Border x:Name="border"
                                             Background="{TemplateBinding Background}"
                                             Padding="{TemplateBinding Padding}">
@@ -134,26 +137,24 @@
 
                                     <ControlTemplate.Triggers>
 
-                                        <!-- HOVER: doar culoare -->
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
 
                                             <Setter TargetName="border"
                                                     Property="Background"
-                                                    Value="#B68DA0"/>
+                                                    Value="#735E52"/>
 
                                         </Trigger>
 
-                                        <!-- ACTIVE TAB -->
                                         <Trigger Property="Tag"
                                                  Value="Active">
 
                                             <Setter TargetName="border"
                                                     Property="Background"
-                                                    Value="#5E3E4A"/>
+                                                    Value="#4A2D1C"/>
 
                                             <Setter Property="Foreground"
-                                                    Value="#F3EDEE"/>
+                                                    Value="#F2F1F0"/>
 
                                         </Trigger>
 
@@ -168,8 +169,6 @@
                     </Style>
 
                 </StackPanel.Resources>
-
-                <!-- BUTTONS (fără All permanent activ în XAML) -->
 
                 <Button Content="All"
                         x:Name="BtnAll"
@@ -194,17 +193,15 @@
 
             </StackPanel>
 
-            <!-- MENU LIST -->
             <ListBox Grid.Row="2"
                      x:Name="LstMenu"
-                     Background="#F3EDEE"
-                     BorderBrush="#C9A3B5"
-                     Foreground="#5E3E4A"
+                     Background="#F2F1F0"
+                     BorderBrush="#E5DFD9"
+                     Foreground="#4A2D1C"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                 <ListBox.ItemContainerStyle>
 
-                    <!-- REMOVE BLUE HOVER/SELECTION -->
                     <Style TargetType="ListBoxItem">
 
                         <Setter Property="Background"
@@ -231,21 +228,19 @@
 
                                     <ControlTemplate.Triggers>
 
-                                        <!-- HOVER CU PALETA TA -->
                                         <Trigger Property="IsMouseOver"
                                                  Value="True">
 
                                             <Setter TargetName="Bd"
                                                     Property="Background"
-                                                    Value="#E7D6DC"/>
+                                                    Value="#E5DFD9"/>
 
                                         </Trigger>
 
-                                        <!-- SELECTED -->
-                                        <Trigger Property="IsMouseOver" Value="True">
+                                        <Trigger Property="IsSelected" Value="True">
                                             <Setter TargetName="Bd"
-            Property="Background"
-            Value="#E7D6DC"/>
+                                                    Property="Background"
+                                                    Value="#E5DFD9"/>
                                         </Trigger>
 
                                     </ControlTemplate.Triggers>
@@ -264,11 +259,11 @@
 
                     <DataTemplate>
 
-                        <Border Background="#F3EDEE"
+                        <Border Background="#FFFFFF"
                                 CornerRadius="10"
                                 Padding="10"
                                 Margin="2,3"
-                                BorderBrush="#C9A3B5"
+                                BorderBrush="#E5DFD9"
                                 BorderThickness="1">
 
                             <Grid>
@@ -283,13 +278,11 @@
                                     <TextBlock Text="{Binding Name}"
                                                FontSize="14"
                                                FontWeight="Bold"
-                                               Foreground="#5E3E4A"/>
+                                               Foreground="#4A2D1C"/>
 
                                     <TextBlock Text="{Binding Description}"
                                                FontSize="10"
-                                               Foreground="#7A5A68"
-                                               TextWrapping="Wrap"
-                                               Margin="0,2,10,0"/>
+                                               Foreground="#8B7365"/>
 
                                 </StackPanel>
 
@@ -297,7 +290,7 @@
                                            Text="{Binding PriceDisplay}"
                                            FontSize="16"
                                            FontWeight="Bold"
-                                           Foreground="#5E3E4A"
+                                           Foreground="#4A2D1C"
                                            VerticalAlignment="Center"/>
 
                             </Grid>
@@ -310,53 +303,8 @@
 
             </ListBox>
 
-            <!-- CLOSE BUTTON -->
-            <Button Grid.Row="3"
-                    Content="Close"
-                    Width="110"
-                    Height="34"
-                    Background="#5E3E4A"
-                    Foreground="#F3EDEE"
-                    BorderThickness="0"
-                    FontWeight="Bold"
-                    Cursor="Hand"
-                    Margin="0,10,0,5"
-                    HorizontalAlignment="Center"
-                    Click="BtnClose_Click">
+            
 
-                <Button.Template>
-
-                    <ControlTemplate TargetType="Button">
-
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="12">
-
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#7A5A68"/>
-
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-
-                </Button.Template>
-
-            </Button>
-
-            <!-- WARNING -->
             <TextBlock Text="⚠️ Missing ingredients"
                        Foreground="#8A3F4A"
                        FontSize="10"
