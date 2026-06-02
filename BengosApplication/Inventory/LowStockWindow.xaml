@@ -29,44 +29,56 @@
         <Grid Margin="35">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="0,0,0,20">
-                <Border Background="#8A3F4A"
-                        CornerRadius="12"
-                        Padding="15"
-                        HorizontalAlignment="Stretch">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
-                    </Border.Effect>
-                    <TextBlock Text="⚠ LOW STOCK ALERT SYSTEM"
-                               FontSize="22"
-                               FontWeight="SemiBold"
-                               Foreground="#F2F1F0"
-                               HorizontalAlignment="Center"/>
-                </Border>
+            <!-- CLOSE BUTTON -->
+            <Button Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,0,8"
+                    Width="32" Height="32"
+                    Background="Transparent"
+                    Foreground="#4A2D1C"
+                    Cursor="Hand"
+                    Click="BtnClose_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="16">
+                            <TextBlock Text="✕"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
-                        Margin="0,12,15,0" Width="32" Height="32"
-                        Background="Transparent" Foreground="#F2F1F0"
-                        FontWeight="Bold" Click="BtnClose_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
-                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#A05563"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </Grid>
-
+            <!-- HEADER -->
             <Border Grid.Row="1"
+                    Background="#8A3F4A"
+                    CornerRadius="12"
+                    Padding="15"
+                    Margin="0,0,0,20">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
+                </Border.Effect>
+                <TextBlock Text="⚠ LOW STOCK ALERT SYSTEM"
+                           FontSize="22"
+                           FontWeight="SemiBold"
+                           Foreground="#F2F1F0"
+                           HorizontalAlignment="Center"/>
+            </Border>
+
+            <!-- DATA GRID -->
+            <Border Grid.Row="2"
                     Background="#FFFFFF"
                     BorderBrush="#E5DFD9"
                     BorderThickness="1"
