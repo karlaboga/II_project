@@ -384,9 +384,60 @@ namespace BillingAndPayment
             double subtotalVal = OrderItems.Sum(i => i.Total);
             double totalVal = subtotalVal - (subtotalVal * discountPercent / 100.0);
 
-            var payWindow = new PaymentWindow(totalVal, discountPercent) { Owner = this };
+            // Pasul 1: Dacă este o masă nouă și nu avem încă un Id de comandă în baza de date, 
+            // creăm comanda ca fiind 'Pending' ca să avem un ID valid de trimis către PaymentWindow
+            if (!currentOrderId.HasValue)
+            {
+                try
+                {
+                    using var conn = new SqlConnection(connString);
+                    conn.Open();
+                    using var cmd = new SqlCommand(
+                        @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
+                          OUTPUT INSERTED.Id VALUES (@total, @disc, 'Pending', @tableId)", conn);
+                    cmd.Parameters.AddWithValue("@total", totalVal);
+                    cmd.Parameters.AddWithValue("@disc", discountPercent);
+                    cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
+                    currentOrderId = (int)cmd.ExecuteScalar();
+
+                    // Salvăm și itemele pentru această comandă nouă
+                    foreach (var item in OrderItems)
+                    {
+                        using var itemCmd = new SqlCommand(
+                            "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, @qty, @price)", conn);
+                        itemCmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                        itemCmd.Parameters.AddWithValue("@name", item.Name);
+                        itemCmd.Parameters.AddWithValue("@qty", item.Quantity);
+                        itemCmd.Parameters.AddWithValue("@price", item.Price);
+                        itemCmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error initializing order for payment: " + ex.Message);
+                    return;
+                }
+            }
+
+            // Pasul 2: Deschidem fereastra de plată trimițând TableId și CurrentOrderId
+            var payWindow = new PaymentWindow(
+                totalVal,
+                discountPercent,
+                tableId ?? 0,
+                currentOrderId.Value
+            )
+            { Owner = this };
+
             if (payWindow.ShowDialog() == true)
-                SaveOrder(totalVal);
+            {
+                // Pasul 3: Curățăm interfața din BillingWindow deoarece plata și statusul mesei au fost deja rezolvate cu succes în PaymentWindow
+                OrderItems.Clear();
+                discountPercent = 0;
+                currentOrderId = null;
+                RefreshTotals();
+                DialogResult = true;
+                Close();
+            }
         }
 
         private void SaveOrder(double total)
