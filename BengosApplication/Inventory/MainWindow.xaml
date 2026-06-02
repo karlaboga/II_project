@@ -206,48 +206,20 @@
         <Grid Margin="25,25,25,22">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="340"/>
                 <ColumnDefinition Width="*"/>
                 
             </Grid.ColumnDefinitions>
 
-            <Button HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Width="32"
-            Height="32"
-            Margin="0,5,5,0"
-            Background="Transparent"
-            Foreground="#B39A8C"
-            FontWeight="Normal"
-            FontSize="13"
-            Click="BtnClose_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="16">
-                            <TextBlock Text="✕"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-                                Property="Background"
-                                Value="#E5DFD9"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-            <Grid Grid.Column="0" Margin="5,5,15,5" Background="#4A2D1C">
+            <Border Grid.Column="0" Margin="5,5,37,5" Background="#4A2D1C" CornerRadius="16,0,0,16" Padding="15,40,15,0">
+                <Grid>
                 <Grid.RowDefinitions>
                     
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" VerticalAlignment="Top">
+                <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="400" Margin="0,0,10,0">
                     <TextBlock Text="Inventory Item Manager" FontSize="20" FontWeight="Bold" Foreground="#F2F1F0" Margin="5,0,0,15"/>
 
                     <TextBlock Text="Product Name" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
@@ -284,49 +256,49 @@
 
                     <TextBlock Text="Min Stock Threshold" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
                     <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
+
+                    <Border Height="15"/>
+
+                    <Button Content="Add Item"
+        Style="{StaticResource RoundedButtonStyle}"
+        Margin="4"
+        Background="#B39A8C"
+        Height="38"
+        Command="{Binding AddCommand}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,0">
-                    <StackPanel>
-                        <Button Content="Add Item"
-            Style="{StaticResource RoundedButtonStyle}"
-            Margin="4"
-            Background="#B39A8C"
-            Height="34"
-            Command="{Binding AddCommand}"/>
+                <StackPanel VerticalAlignment="Top" Margin="-5,439,5,0" Grid.RowSpan="2">
 
-                        <Button Content="Edit Item"
-            Style="{StaticResource RoundedButtonStyle}"
-            Margin="4"
-            Background="#B39A8C"
-            Height="34"
-            Command="{Binding EditCommand}"/>
+                    <Button Content="Edit Item"
+        Style="{StaticResource RoundedButtonStyle}"
+        Background="#B39A8C"
+        Height="34"
+        Margin="4"
+        Command="{Binding EditCommand}" Width="260"/>
 
-                        <Button Content="Delete"
-            Style="{StaticResource RoundedButtonStyle}"
-            Margin="4"
-            Background="#8A3F4A"
-            Height="34"
-            Command="{Binding DeleteCommand}">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#A05563"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
-
-                    
+                    <Button Content="Delete"
+        Style="{StaticResource RoundedButtonStyle}"
+        Margin="4"
+        Background="#8A3F4A"
+        Height="34"
+        Command="{Binding DeleteCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#A05563"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
 
                 </StackPanel>
             </Grid>
+            </Border>
 
             <Grid Grid.Column="1" Margin="15,5,5,5">
                 <Grid.RowDefinitions>
