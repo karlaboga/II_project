@@ -5,183 +5,220 @@
         Height="650" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
-        Background="#F3EDEE"
+        Background="Transparent" 
         WindowStyle="None"
         AllowsTransparency="True"
-        TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="ClearType"
+        FontFamily="Georgia">
 
-    <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 
-      
+        <!-- BACKGROUND — contrast bun -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#F2F1F0" Offset="0.0"/>
+                <GradientStop Color="#E5DFD9" Offset="0.3"/>
+                <GradientStop Color="#D6C8BA" Offset="0.6"/>
+                <GradientStop Color="#BFA58F" Offset="0.85"/>
+                <GradientStop Color="#8C7A6A" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
-        <Grid Margin="55">
+        <!-- B (bulă) + RESTAURANT -->
+        <Grid Grid.Column="0" VerticalAlignment="Stretch">
 
+            <Viewbox Stretch="UniformToFill"
+                     VerticalAlignment="Bottom"
+                     HorizontalAlignment="Stretch"
+                     Margin="-470,-400,-430,-260">
+                <Border Width="600" Height="600" CornerRadius="300"
+                        Background="#B3957D"
+                        BorderBrush="#8C7A6A" BorderThickness="5">
+                    <Grid>
+                        <TextBlock Text="B" FontSize="470" FontWeight="Normal"
+                                   Foreground="#4A2E1B"
+                                   HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                   Margin="0,130,0,0">
+                            <TextBlock.Effect>
+                                <DropShadowEffect BlurRadius="25" Color="#150802" Opacity="0.65" ShadowDepth="10" Direction="315"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <Rectangle Width="90" Height="12" Fill="#A27B5C" RadiusX="6" RadiusY="6"
+                                   HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                   Margin="0,0,75,85"/>
+                    </Grid>
+                </Border>
+            </Viewbox>
+
+            <!-- RESTAURANT — aceeași culoare ca bula -->
+            <Viewbox Stretch="Uniform"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="-15,0,0,0">
+                <TextBlock Text="Restaurant" 
+                           FontFamily="Zapfino" 
+                           FontWeight="Bold" 
+                           FontStyle="Normal"
+                           Foreground="#B3957D">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="-90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Viewbox>
+        </Grid>
+
+        <!-- BENGOS — maro închis -->
+        <Viewbox Grid.Column="2"
+                 Stretch="Uniform"
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Right"
+                 Margin="0,-20,-45,-20">
+            <TextBlock Text="Bengos" 
+                       FontFamily="Zapfino" 
+                       FontWeight="Bold" 
+                       FontStyle="Normal"
+                       Foreground="#4A2E1B">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+        </Viewbox>
+
+        <!-- BUTOANE + FOOTER — coloana din mijloc -->
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- CLOSE BUTTON -->
-            <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Margin="0,-35,-35,0" Width="30" Height="30" 
-                    Background="#C9A3B5" Foreground="#5E3E4A" 
-                    FontWeight="Bold" Click="BtnExit_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
-                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#5E3E4A"/>
-                                <Setter Property="Foreground" Value="#F3EDEE"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <!-- HEADER -->
             <StackPanel Grid.Row="0"
-                        HorizontalAlignment="Center"
-                        Margin="0,40,0,55">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Right"
+                        Margin="120,15,5,0">
 
-                <!-- LOGO -->
-                <Border Width="110"
-                        Height="110"
-                        Background="#5E3E4A"
-                        CornerRadius="55"
-                        Margin="0,0,0,25">
-
-                    <Grid HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-
-                        <TextBlock Text="B"
-                                   FontSize="50"
-                                   FontWeight="Bold"
-                                   Foreground="#F3EDEE"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>
-
-                        <Rectangle Width="22"
-                                   Height="3"
-                                   Fill="#C9A3B5"
-                                   RadiusX="2"
-                                   RadiusY="2"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Bottom"
-                                   Margin="0,0,18,20"/>
-                    </Grid>
-                </Border>
-
-                <!-- TITLU -->
-                <TextBlock Text="BENGOS"
-                           FontSize="46"
-                           FontWeight="SemiBold"
-                           FontStyle="Italic"
-                           FontFamily="Georgia"
-                           Foreground="#4B2F3A"
-                           HorizontalAlignment="Center"/>
-
-                <TextBlock Text="Restaurant"
-                           FontSize="32"
-                           FontWeight="Light"
-                           Foreground="#7A5A68"
-                           HorizontalAlignment="Center"
-                           Margin="0,-6,0,0"/>
-
-                <TextBlock Text="MANAGEMENT SYSTEM"
-                           FontSize="11"
-                           FontWeight="SemiBold"
-                           Foreground="#8A6B7A"
-                           HorizontalAlignment="Center"
-                           Margin="0,10,0,0"/>
-            </StackPanel>
-
-            <!-- BUTTONS -->
-            <StackPanel Grid.Row="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Width="360">
-
-                <!-- LOGIN -->
-                <Button Content="LOG IN"
-                        Height="54"
-                        FontSize="15"
-                        FontWeight="SemiBold"
-                        Foreground="#F3EDEE"
-                        Background="#5E3E4A"
+                <Button VerticalAlignment="Stretch" Width="66"
+                        FontWeight="Bold"
+                        Foreground="#FFFFFF"
+                        Background="#4A2E1B"
                         BorderThickness="0"
                         Cursor="Hand"
-                        Margin="0,0,0,18"
+                        Margin="0,0,16,0"
                         Click="BtnLogin_Click">
-
+                    <TextBlock FontSize="16" FontWeight="Bold"
+                               TextAlignment="Center"
+                               LineHeight="22"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+                        L<LineBreak/>O<LineBreak/>G<LineBreak/><LineBreak/>I<LineBreak/>N
+                    </TextBlock>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border"
                                     Background="{TemplateBinding Background}"
-                                    CornerRadius="28">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
+                                    CornerRadius="14">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#7A5A68"/>
+                                    <Setter TargetName="border" Property="Background" Value="#6D452B"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#2A1508"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
 
-                <!-- VIEW MENU -->
-                <Button Content="VIEW MENU"
-                        Height="48"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="#4B2F3A"
-                        Background="#F3EDEE"
-                        BorderBrush="#C9A3B5"
-                        BorderThickness="1"
+                <Button VerticalAlignment="Stretch" Width="66"
+                        FontWeight="Bold"
+                        Foreground="#3F2314"
+                        Background="#CBB5A1"
+                        BorderBrush="#8C5C36"
+                        BorderThickness="2"
                         Cursor="Hand"
                         Click="BtnViewMenu_Click">
-
+                    <TextBlock FontSize="16" FontWeight="Bold"
+                               TextAlignment="Center"
+                               LineHeight="22"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+                        V<LineBreak/>I<LineBreak/>E<LineBreak/>W<LineBreak/><LineBreak/>M<LineBreak/>E<LineBreak/>N<LineBreak/>U
+                    </TextBlock>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="24">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
+                                    CornerRadius="14">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#E9DDE5"/>
+                                    <Setter TargetName="border" Property="Background" Value="#E0CEBD"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="#6D452B"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#A6856B"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
             </StackPanel>
 
-            <!-- FOOTER -->
-            <TextBlock Grid.Row="2"
-                       Text="© 2026 Bengos Restaurant"
-                       FontSize="10"
-                       Foreground="#8A6B7A"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,20"/>
+            <StackPanel Grid.Row="1" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,15,35,15"
+                        Opacity="0.8">
 
+                <TextBlock Text="© 2026 Bengos Restaurant"
+                           FontSize="11"
+                           Foreground="#4A2E1B"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,8"/>
+
+                <Button Content="CLOSE"
+                        Width="110" Height="32"
+                        FontSize="11"
+                        FontWeight="Bold"
+                        Foreground="#4A2E1B"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="BtnExit_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" 
+                                    Background="{TemplateBinding Background}" 
+                                    CornerRadius="16"
+                                    BorderBrush="#6D5645"
+                                    BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#A27B5C"/>
+                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#5C3A21"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
         </Grid>
-    </Border>
+    </Grid>
 </Window>
