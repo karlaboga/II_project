@@ -1,5 +1,0 @@
-admin,admin123,Admin
-waiter1,waiter123,Waiter
-waiter2,waiter123,Waiter
-chef1,chef123,Chef
-chef2,chef123,Chef
