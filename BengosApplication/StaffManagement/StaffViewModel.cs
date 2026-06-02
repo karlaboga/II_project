@@ -8,7 +8,7 @@ public class StaffViewModel : INotifyPropertyChanged
 {
     private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
     public ObservableCollection<Shift> AdminShifts { get; } = new();
-    public ObservableCollection<Shift> EmployeeShifts { get; } = new();
+    public ObservableCollection<Shift> WaiterShifts { get; } = new();
     public ObservableCollection<Shift> CookShifts { get; } = new();
     public ObservableCollection<string> StaffList { get; } = new();
     public Dictionary<string, int> UserMap { get; } = new();
@@ -118,7 +118,7 @@ public class StaffViewModel : INotifyPropertyChanged
     public void LoadShifts()
     {
         AdminShifts.Clear();
-        EmployeeShifts.Clear();
+        WaiterShifts.Clear();
         CookShifts.Clear();
         try
         {
@@ -157,13 +157,13 @@ public class StaffViewModel : INotifyPropertyChanged
                         AdminShifts.Add(shift);
                         break;
                     case "Employee":
-                        EmployeeShifts.Add(shift);
+                        WaiterShifts.Add(shift);
                         break;
                     case "Cook":
                         CookShifts.Add(shift);
                         break;
                     default:
-                        EmployeeShifts.Add(shift);
+                        WaiterShifts.Add(shift);
                         break;
                 }
             }
@@ -176,7 +176,7 @@ public class StaffViewModel : INotifyPropertyChanged
     public void SearchShifts()
     {
         AdminShifts.Clear();
-        EmployeeShifts.Clear();
+        WaiterShifts.Clear();
         CookShifts.Clear();
         try
         {
@@ -245,13 +245,13 @@ public class StaffViewModel : INotifyPropertyChanged
                         AdminShifts.Add(shift);
                         break;
                     case "Employee":
-                        EmployeeShifts.Add(shift);
+                        WaiterShifts.Add(shift);
                         break;
                     case "Cook":
                         CookShifts.Add(shift);
                         break;
                     default:
-                        EmployeeShifts.Add(shift);
+                        WaiterShifts.Add(shift);
                         break;
                 }
             }
