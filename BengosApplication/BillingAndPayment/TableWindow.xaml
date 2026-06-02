@@ -79,12 +79,16 @@
                                             <Setter Property="Background" Value="#F3EDEE"/>
                                             <Setter Property="BorderBrush" Value="#7A5A68"/>
                                             <Style.Triggers>
+                                                <!-- Trigger-ul tău existent pentru masă Ocupată -->
                                                 <DataTrigger Binding="{Binding Status}" Value="Occupied">
                                                     <Setter Property="Background" Value="#E9DDE5"/>
                                                     <Setter Property="BorderBrush" Value="#8A6B7A"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Status}" Value="Selected">
-                                                    <Setter Property="Background" Value="#C9A3B5"/>
+
+                                                <!-- >>> MODIFICAREA ADĂUGATĂ AICI: <<< -->
+                                                <!-- Când IsSelected e True, schimbăm DOAR culoarea pătratului în mai închis -->
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="Background" Value="#de287e"/>
                                                     <Setter Property="BorderBrush" Value="#5E3E4A"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
