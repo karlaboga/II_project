@@ -5,6 +5,7 @@ public class Shift : INotifyPropertyChanged
 {
     private int _id;
     private string _staff = "";
+    private string _role = "";
     private DateTime _date = DateTime.Today;
     private string _shiftType = "";
     private bool _overtime;
@@ -17,6 +18,11 @@ public class Shift : INotifyPropertyChanged
     {
         get => _staff;
         set { _staff = value; OnPropertyChanged(); }
+    }
+    public string Role
+    {
+        get => _role;
+        set { _role = value; OnPropertyChanged(); }
     }
     public DateTime Date
     {
