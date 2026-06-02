@@ -8,262 +8,279 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#F3EDEE"
+        Background="Transparent"
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Grid Margin="60">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
 
-        <!-- CLOSE BUTTON -->
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,-40,-40,0" Width="30" Height="30"
-                Background="#C9A3B5" Foreground="#5E3E4A"
-                FontWeight="Bold" Click="BtnClose_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
-                        <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#5E3E4A"/>
-                            <Setter Property="Foreground" Value="#F3EDEE"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
-        <Grid VerticalAlignment="Center"
-              HorizontalAlignment="Center"
-              Width="380">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="420"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Background="#4A2D1C" CornerRadius="24,0,0,24">
+                <Grid Margin="50,60,50,60">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-            <!-- TITLE -->
-            <TextBlock Grid.Row="0"
-                       Text="STAFF LOGIN"
-                       FontSize="34"
-                       FontWeight="SemiBold"
-                       FontFamily="Georgia"
-                       FontStyle="Italic"
-                       Foreground="#4B2F3A"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,40"/>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="BENGOS BISTRO" FontSize="24" FontWeight="Bold" Foreground="#F2F1F0"/>
+                        <TextBlock Text="STAFF HUB SYSTEM" FontSize="11" FontWeight="Bold" Foreground="#F2F1F0" Opacity="0.4" Margin="2,6,0,0" FontStretch="Expanded"/>
+                    </StackPanel>
 
-            <!-- USERNAME -->
-            <TextBlock Grid.Row="1"
-                       Text="Username"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       FontSize="14"
-                       Margin="0,0,0,6"/>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,20">
+                        <TextBlock Text="Welcome to your workspace." FontSize="28" FontWeight="Light" Foreground="#F2F1F0" TextWrapping="Wrap" LineHeight="36"/>
+                        <TextBlock Text="Connect securely to manage inventory, update schedules, and track restaurant operations in real-time." FontSize="13" Foreground="#F2F1F0" TextWrapping="Wrap" Opacity="0.6" Margin="0,16,0,0" LineHeight="20"/>
+                    </StackPanel>
 
-            <TextBox x:Name="txtUsername"
-                     Grid.Row="2"
-                     Height="44"
-                     Background="#F3EDEE"
-                     Foreground="#4B2F3A"
-                     FontSize="14"
-                     Padding="10"
-                     Margin="0,0,0,18"
-                     BorderThickness="1"
-                     BorderBrush="#C9A3B5"
-                     KeyDown="PasswordField_KeyDown">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="TextBox">
-                                    <Border x:Name="border"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="8"
-                                            SnapsToDevicePixels="True">
-                                        <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="#7A5A68"/>
-                                        </Trigger>
-                                        <Trigger Property="IsFocused" Value="True">
-                                            <Setter TargetName="border" Property="BorderBrush" Value="#5E3E4A"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+                    <TextBlock Grid.Row="2" Text="v2.4.0 • Core HQ Control" FontSize="11" Foreground="#F2F1F0" Opacity="0.3"/>
+                </Grid>
+            </Border>
 
-            <!-- PASSWORD -->
-            <TextBlock Grid.Row="3"
-                       Text="Password"
-                       Foreground="#7A5A68"
-                       FontWeight="SemiBold"
-                       FontSize="14"
-                       Margin="0,0,0,6"/>
-
-            <!-- PASSWORD FIELD + SHOW BUTTON -->
-            <Grid Grid.Row="4" Margin="0,0,0,25">
-
-                <PasswordBox x:Name="txtPassword"
-                             Height="44"
-                             Background="#F3EDEE"
-                             Foreground="#4B2F3A"
-                             FontSize="14"
-                             Padding="10"
-                             BorderThickness="1"
-                             BorderBrush="#C9A3B5"
-                             KeyDown="PasswordField_KeyDown">
-                    <PasswordBox.Style>
-                        <Style TargetType="PasswordBox">
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="PasswordBox">
-                                        <Border x:Name="border"
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="8">
-                                            <ScrollViewer x:Name="PART_ContentHost"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="BorderBrush" Value="#7A5A68"/>
-                                            </Trigger>
-                                            <Trigger Property="IsFocused" Value="True">
-                                                <Setter TargetName="border" Property="BorderBrush" Value="#5E3E4A"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </PasswordBox.Style>
-                </PasswordBox>
-
-                <!-- TEXTBOX VIZIBIL (show password) -->
-                <TextBox x:Name="txtPasswordVisible"
-                         Height="44"
-                         Background="#F3EDEE"
-                         Foreground="#4B2F3A"
-                         FontSize="14"
-                         Padding="10,0,44,0"
-                         BorderThickness="1"
-                         BorderBrush="#C9A3B5"
-                         Visibility="Collapsed"
-                         VerticalContentAlignment="Center"
-                         KeyDown="PasswordField_KeyDown">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox">
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TextBox">
-                                        <Border x:Name="border"
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="8">
-                                            <ScrollViewer x:Name="PART_ContentHost"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="BorderBrush" Value="#7A5A68"/>
-                                            </Trigger>
-                                            <Trigger Property="IsFocused" Value="True">
-                                                <Setter TargetName="border" Property="BorderBrush" Value="#5E3E4A"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-
-                <!-- BUTON 👁 -->
-                <Button x:Name="BtnShowPassword"
-                        Width="36"
-                        Height="36"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="0,0,4,0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BtnShowPassword_Click">
+            <Grid Grid.Column="1" Margin="60,45,60,60">
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C"
+                        FontWeight="Bold" Click="BtnClose_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="Transparent">
-                                <TextBlock x:Name="EyeIcon"
-                                           Text="👁"
-                                           FontSize="16"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Foreground="#7A5A68">
-                                    <TextBlock.FontFamily>
-                                        <FontFamily>Segoe UI Emoji</FontFamily>
-                                    </TextBlock.FontFamily>
-                                </TextBlock>
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
 
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+
+                    <TextBlock Text="Account Login"
+                               FontSize="26"
+                               FontWeight="SemiBold"
+                               Foreground="#4A2D1C"
+                               Margin="0,0,0,8"/>
+
+                    <TextBlock Text="Enter your secure credentials below to check-in."
+                               FontSize="13"
+                               Foreground="#8B7365"
+                               Margin="0,0,0,35"/>
+
+                    <TextBlock Text="Username"
+                               Foreground="#8B7365"
+                               FontWeight="SemiBold"
+                               FontSize="12"
+                               Margin="0,0,0,8"/>
+
+                    <TextBox x:Name="txtUsername"
+                             Height="46"
+                             Background="#FFFFFF"
+                             Foreground="#4A2D1C"
+                             FontSize="14"
+                             Padding="12,0"
+                             VerticalContentAlignment="Center"
+                             Margin="0,0,0,22"
+                             BorderThickness="1"
+                             BorderBrush="#E5DFD9"
+                             KeyDown="PasswordField_KeyDown">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TextBox">
+                                            <Border x:Name="border"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="10"
+                                                    SnapsToDevicePixels="True">
+                                                <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="#8B7365"/>
+                                                </Trigger>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="border" Property="BorderBrush" Value="#4A2D1C"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <TextBlock Text="Password"
+                               Foreground="#8B7365"
+                               FontWeight="SemiBold"
+                               FontSize="12"
+                               Margin="0,0,0,8"/>
+
+                    <Grid Margin="0,0,0,30">
+                        <PasswordBox x:Name="txtPassword"
+                                     Height="46"
+                                     Background="#FFFFFF"
+                                     Foreground="#4A2D1C"
+                                     FontSize="14"
+                                     Padding="12,0,46,0"
+                                     VerticalContentAlignment="Center"
+                                     BorderThickness="1"
+                                     BorderBrush="#E5DFD9"
+                                     KeyDown="PasswordField_KeyDown">
+                            <PasswordBox.Style>
+                                <Style TargetType="PasswordBox">
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="PasswordBox">
+                                                <Border x:Name="border"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="10">
+                                                    <ScrollViewer x:Name="PART_ContentHost"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="border" Property="BorderBrush" Value="#8B7365"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsFocused" Value="True">
+                                                        <Setter TargetName="border" Property="BorderBrush" Value="#4A2D1C"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </PasswordBox.Style>
+                        </PasswordBox>
+
+                        <TextBox x:Name="txtPasswordVisible"
+                                 Height="46"
+                                 Background="#FFFFFF"
+                                 Foreground="#4A2D1C"
+                                 FontSize="14"
+                                 Padding="12,0,46,0"
+                                 BorderThickness="1"
+                                 BorderBrush="#E5DFD9"
+                                 Visibility="Collapsed"
+                                 VerticalContentAlignment="Center"
+                                 KeyDown="PasswordField_KeyDown">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="TextBox">
+                                                <Border x:Name="border"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="10">
+                                                    <ScrollViewer x:Name="PART_ContentHost"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="border" Property="BorderBrush" Value="#8B7365"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsFocused" Value="True">
+                                                        <Setter TargetName="border" Property="BorderBrush" Value="#4A2D1C"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+
+                        <Button x:Name="BtnShowPassword"
+                                Width="38"
+                                Height="38"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="0,0,4,0"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Cursor="Hand"
+                                Click="BtnShowPassword_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent">
+                                        <TextBlock x:Name="EyeIcon"
+                                                   Text="👁"
+                                                   FontSize="15"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#8B7365"
+                                                   Opacity="0.7">
+                                            <TextBlock.FontFamily>
+                                                <FontFamily>Segoe UI Emoji</FontFamily>
+                                            </TextBlock.FontFamily>
+                                        </TextBlock>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+
+                    <Button Content="Sign In"
+                            Height="48"
+                            Background="#4A2D1C"
+                            Foreground="#F2F1F0"
+                            FontSize="15"
+                            FontWeight="SemiBold"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="BtnLogin_Click"
+                            Margin="0,0,0,15">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        CornerRadius="10">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="12" Direction="270" ShadowDepth="2" Opacity="0.15" Color="#4A2D1C"/>
+                                    </Border.Effect>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#5F3B26"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <TextBlock x:Name="lblError"
+                               Foreground="#8A3F4A"
+                               HorizontalAlignment="Center"
+                               FontSize="13"
+                               FontWeight="Medium"/>
+                </StackPanel>
             </Grid>
-
-            <!-- LOGIN BUTTON -->
-            <Button Grid.Row="5"
-                    Content="LOGIN"
-                    Height="48"
-                    Background="#5E3E4A"
-                    Foreground="#F3EDEE"
-                    FontSize="16"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="BtnLogin_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="12">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#7A5A68"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <!-- ERROR -->
-            <TextBlock x:Name="lblError"
-                       Grid.Row="5"
-                       Foreground="#8A3F4A"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
-                       Margin="0,0,0,-28"
-                       FontSize="12"/>
-
         </Grid>
-    </Grid>
-
+    </Border>
 </Window>
