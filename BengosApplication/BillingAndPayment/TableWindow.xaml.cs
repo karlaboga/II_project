@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace BillingAndPayment;
+
 public partial class TableWindow : Window
 {
     private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
@@ -13,12 +14,14 @@ public partial class TableWindow : Window
     private int? selectedTableId;
     private int? currentOrderId;
     private double discountPercent;
+
     public TableWindow()
     {
         InitializeComponent();
         LoadTables();
         LoadAllDishes();
     }
+
     private void LoadTables()
     {
         tables.Clear();
@@ -46,6 +49,7 @@ public partial class TableWindow : Window
         TableList.ItemsSource = null;
         TableList.ItemsSource = tables;
     }
+
     private void LoadAllDishes()
     {
         allDishes.Clear();
@@ -69,30 +73,33 @@ public partial class TableWindow : Window
             MessageBox.Show("Error loading dishes: " + ex.Message);
         }
     }
+
     private void TableCard_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Border border && border.Tag is int tableId)
         {
-            // Reset previous table selection
             foreach (var t in tables)
                 if (t.Status == "Selected") t.Status = "Free";
+
             var table = tables.FirstOrDefault(t => t.Id == tableId);
             if (table == null) return;
+
             if (table.Status == "Occupied")
             {
                 selectedTableId = tableId;
                 OpenExistingOrder(tableId);
                 return;
             }
-            // Mark as selected
+
             table.Status = "Selected";
             selectedTableId = tableId;
             TableList.Items.Refresh();
-            // Create new order in DB
+
             CreatePendingOrder(tableId);
             EnableOrderPanel(table);
         }
     }
+
     private void CreatePendingOrder(int tableId)
     {
         try
@@ -105,6 +112,7 @@ public partial class TableWindow : Window
                   VALUES (0, 0, 'Pending', @tid)", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
             currentOrderId = (int)cmd.ExecuteScalar();
+
             using var upd = new SqlCommand("UPDATE Tables SET Status='Occupied' WHERE Id=@id", conn);
             upd.Parameters.AddWithValue("@id", tableId);
             upd.ExecuteNonQuery();
@@ -115,15 +123,15 @@ public partial class TableWindow : Window
         }
         LoadTables();
     }
+
     private void OpenExistingOrder(int tableId)
     {
         try
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-            // Find pending order for this table
             using var cmd = new SqlCommand(
-                "SELECT Id, DiscountPercent FROM Orders WHERE TableId=@tid AND Status='Pending'", conn);
+                "SELECT Id, DiscountPercent FROM Orders WHERE TableId=@tid AND (Status='Pending' OR Status='ToKitchen')", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
             using var rdr = cmd.ExecuteReader();
             if (rdr.Read())
@@ -133,7 +141,6 @@ public partial class TableWindow : Window
             }
             else
             {
-                // No pending order — create one
                 rdr.Close();
                 CreatePendingOrder(tableId);
                 return;
@@ -143,11 +150,13 @@ public partial class TableWindow : Window
         {
             MessageBox.Show("Error loading order: " + ex.Message);
         }
+
         var table = tables.FirstOrDefault(t => t.Id == tableId);
         if (table != null) EnableOrderPanel(table);
         LoadOrderItems();
         RefreshTotals();
     }
+
     private void EnableOrderPanel(Table table)
     {
         TxtTableHeader.Text = $"Table {table.TableNumber} — Order";
@@ -155,6 +164,7 @@ public partial class TableWindow : Window
         OrderPanel.Opacity = 1;
         TxtSearch.Focus();
     }
+
     private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
     {
         string filter = TxtSearch.Text?.Trim().ToLower() ?? "";
@@ -169,6 +179,7 @@ public partial class TableWindow : Window
             .ToList();
         LstSearchResults.ItemsSource = results;
     }
+
     private void BtnAddDish_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button btn && btn.CommandParameter is Dish dish && currentOrderId.HasValue)
@@ -177,7 +188,6 @@ public partial class TableWindow : Window
             {
                 using var conn = new SqlConnection(connString);
                 conn.Open();
-                // Check if dish already in order
                 using var check = new SqlCommand(
                     "SELECT Id, Quantity FROM OrderItems WHERE OrderId=@oid AND Name=@name", conn);
                 check.Parameters.AddWithValue("@oid", currentOrderId.Value);
@@ -212,6 +222,7 @@ public partial class TableWindow : Window
             LoadOrderItems();
         }
     }
+
     private void BtnRemoveItem_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button btn && btn.CommandParameter is OrderItem item && currentOrderId.HasValue)
@@ -233,6 +244,7 @@ public partial class TableWindow : Window
             LoadOrderItems();
         }
     }
+
     private void LoadOrderItems()
     {
         var items = new System.Collections.ObjectModel.ObservableCollection<OrderItem>();
@@ -251,7 +263,8 @@ public partial class TableWindow : Window
                 {
                     Name = rdr["Name"]?.ToString() ?? "",
                     Quantity = Convert.ToInt32(rdr["Quantity"]),
-                    Price = Convert.ToDouble(rdr["Price"])
+                    Price = Convert.ToDouble(rdr["Price"]),
+                    Status = "Pending" // <--- Aici forțăm textul Pending pentru fiecare aliment adăugat
                 });
             }
         }
@@ -262,6 +275,7 @@ public partial class TableWindow : Window
         DgOrder.ItemsSource = items;
         RefreshTotals();
     }
+
     private void BtnDiscount_Click(object sender, RoutedEventArgs e)
     {
         var popup = new Window
@@ -300,16 +314,15 @@ public partial class TableWindow : Window
             {
                 discountPercent = pct;
                 RefreshTotals();
-                MessageBox.Show($"Discount of {pct}% applied!", "Done",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Discount of {pct}% applied!", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
                 popup.Close();
             }
-            else MessageBox.Show("Please enter a value between 0 and 100.", "Invalid",
-                MessageBoxButton.OK, MessageBoxImage.Warning);
+            else MessageBox.Show("Please enter a value between 0 and 100.", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
         };
         popup.Content = stack;
         popup.ShowDialog();
     }
+
     private void BtnBilling_Click(object sender, RoutedEventArgs e)
     {
         if (!currentOrderId.HasValue || !selectedTableId.HasValue)
@@ -320,11 +333,11 @@ public partial class TableWindow : Window
         var billing = new BillingWindow(selectedTableId.Value, currentOrderId.Value, discountPercent);
         billing.Owner = this;
         billing.ShowDialog();
-        // Refresh after returning
         discountPercent = billing.CurrentDiscount;
         LoadOrderItems();
         RefreshTotals();
     }
+
     private void FinalizeOrder(double total)
     {
         if (!currentOrderId.HasValue || !selectedTableId.HasValue) return;
@@ -332,14 +345,13 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-            // Update order
             using var cmd = new SqlCommand(
                 "UPDATE Orders SET Total=@total, DiscountPercent=@disc, Status='Paid' WHERE Id=@oid", conn);
             cmd.Parameters.AddWithValue("@total", total);
             cmd.Parameters.AddWithValue("@disc", discountPercent);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
             cmd.ExecuteNonQuery();
-            // Free table
+
             using var upd = new SqlCommand(
                 "UPDATE Tables SET Status='Free' WHERE Id=@id", conn);
             upd.Parameters.AddWithValue("@id", selectedTableId.Value);
@@ -352,6 +364,7 @@ public partial class TableWindow : Window
         ResetOrderPanel();
         LoadTables();
     }
+
     private void ResetOrderPanel()
     {
         currentOrderId = null;
@@ -364,25 +377,25 @@ public partial class TableWindow : Window
         LstSearchResults.ItemsSource = null;
         DgOrder.ItemsSource = null;
     }
+
     private double GetSubtotal()
     {
         var items = DgOrder.ItemsSource as System.Collections.ObjectModel.ObservableCollection<OrderItem>;
         return items?.Sum(i => i.Total) ?? 0;
     }
+
     private void RefreshTotals()
     {
         double subtotalVal = GetSubtotal();
         double discountAmount = subtotalVal * discountPercent / 100.0;
         double totalVal = subtotalVal - discountAmount;
         TxtSubtotal.Text = $"{subtotalVal:0.00} RON";
-        TxtDiscount.Text = discountPercent > 0
-            ? $"-{discountAmount:0.00} ({discountPercent}%)"
-            : "0.00 RON";
+        TxtDiscount.Text = discountPercent > 0 ? $"-{discountAmount:0.00} ({discountPercent}%)" : "0.00 RON";
         TxtTotal.Text = $"{totalVal:0.00} RON";
     }
+
     private void BtnExit_Click(object sender, RoutedEventArgs e)
     {
-        // Cleanup: if no items and pending, delete the empty order
         if (currentOrderId.HasValue && selectedTableId.HasValue)
         {
             try
@@ -394,9 +407,10 @@ public partial class TableWindow : Window
                     "AND NOT EXISTS (SELECT 1 FROM OrderItems WHERE OrderId=@oid)", conn);
                 cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
                 cmd.ExecuteNonQuery();
+
                 using var upd = new SqlCommand(
                     "UPDATE Tables SET Status='Free' WHERE Id=@id AND Status='Occupied' " +
-                    "AND NOT EXISTS (SELECT 1 FROM Orders WHERE TableId=@id AND Status='Pending')", conn);
+                    "AND NOT EXISTS (SELECT 1 FROM Orders WHERE TableId=@id AND (Status='Pending' OR Status='ToKitchen'))", conn);
                 upd.Parameters.AddWithValue("@id", selectedTableId.Value);
                 upd.ExecuteNonQuery();
             }
@@ -407,14 +421,12 @@ public partial class TableWindow : Window
 
     private void BtnToKitchen_Click(object sender, RoutedEventArgs e)
     {
-        // 1. Verificăm dacă avem o comandă selectată
         if (!currentOrderId.HasValue)
         {
             MessageBox.Show("Nu există o comandă activă pentru a fi trimisă la bucătărie!", "Atenție", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
 
-        // 2. Verificăm dacă sunt produse adăugate în DataGrid-ul comenzii
         var items = DgOrder.ItemsSource as System.Collections.ObjectModel.ObservableCollection<OrderItem>;
         if (items == null || items.Count == 0)
         {
@@ -427,20 +439,16 @@ public partial class TableWindow : Window
             using var conn = new SqlConnection(connString);
             conn.Open();
 
-            // 3. Actualizăm comanda: îi punem statusul 'ToKitchen' și salvăm ora curentă (GETDATE())
-            // Folosim o singură interogare pentru a seta ambele câmpuri
             using var cmd = new SqlCommand(
                 "UPDATE Orders SET Status = 'ToKitchen', OrderDate = GETDATE() WHERE Id = @oid", conn);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
-
             cmd.ExecuteNonQuery();
 
-            // 4. Afișăm un mesaj de succes pentru ospătar
             MessageBox.Show($"Comanda #{currentOrderId.Value} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            // 5. Curățăm interfața din dreapta și reîncărcăm mesele (masa va rămâne Occupied în baza de date)
-            ResetOrderPanel();
             LoadTables();
+            LoadOrderItems();
+            RefreshTotals();
         }
         catch (Exception ex)
         {
@@ -448,4 +456,18 @@ public partial class TableWindow : Window
         }
     }
 
+    public class OrderItem
+    {
+        public string Name { get; set; } = "";
+        public int Quantity { get; set; }
+        public double Price { get; set; }
+
+        // Asigură-te că ai aceste 3 proprietăți cerute de DataGrid:
+        public string PriceDisplay => $"{Price:0.00} RON";
+        public string TotalDisplay => $"{Quantity * Price:0.00} RON";
+        public double Total => Quantity * Price;
+
+        // TREBUIE SĂ FIE ADĂUGATĂ:
+        public string Status { get; set; } = "Pending";
+    }
 }

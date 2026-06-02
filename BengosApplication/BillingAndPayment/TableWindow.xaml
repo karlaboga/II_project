@@ -46,7 +46,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- TITLU CU EMOTICON -->
                 <TextBlock Grid.Row="0"
                            FontSize="20" FontWeight="Bold"
                            Foreground="#5E3E4A"
@@ -240,6 +239,18 @@
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="60"/>
                         <DataGridTextColumn Header="Price" Binding="{Binding PriceDisplay}" Width="80"/>
                         <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" Width="80"/>
+
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="Foreground" Value="#8A6B7A"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
                         <DataGridTemplateColumn Header="" Width="50">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -292,7 +303,6 @@
                 </StackPanel>
 
                 <UniformGrid Grid.Row="5" Rows="2" Columns="2" Margin="10,10,10,5" Width="460" HorizontalAlignment="Center">
-
                     <Button x:Name="BtnDiscount" Content="Add Discount" Height="40" Margin="6" Cursor="Hand" FontSize="14" FontWeight="Bold" Click="BtnDiscount_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -352,7 +362,6 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-
                 </UniformGrid>
             </Grid>
         </Grid>
