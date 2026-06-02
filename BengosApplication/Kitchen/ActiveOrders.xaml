@@ -23,7 +23,7 @@
         <DockPanel Grid.Row="0" Margin="0,0,0,20">
 
             <Button Content="◀ Back"
-                    Width="70"
+                    Width="70" Height="30"
                     Background="#6A4B59"
                     Foreground="#F3EDEE"
                     BorderThickness="0"
@@ -31,33 +31,46 @@
                     Click="Button_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-Background="{TemplateBinding Background}"
-CornerRadius="0">
-
-                            <ContentPresenter HorizontalAlignment="Center"
-              VerticalAlignment="Center"/>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-        Property="Background"
-        Value="#7A5A68"/>
+                                <Setter TargetName="border" Property="Background" Value="#7A5A68"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
-            
             </Button>
 
+            <Button Content="🔄 Refresh"
+                    Width="85" Height="30"
+                    Margin="10,0,0,0"
+                    Background="#8A6B7A"
+                    Foreground="#F3EDEE"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="BtnRefresh_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#A88498"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
             <TextBlock Text="ACTIVE KITCHEN ORDERS"
                        FontSize="26"
                        FontWeight="Bold"
                        Foreground="#F3EDEE"
                        HorizontalAlignment="Center"
-                       Margin="0,0,70,0"/>
+                       Margin="0,0,155,0"/>
         </DockPanel>
 
         <Border Grid.Row="1"
@@ -155,7 +168,6 @@ CornerRadius="0">
                                                                FontSize="14"
                                                                Foreground="#4A2F39"
                                                                TextWrapping="Wrap">
-
                                                         <Run Text="• " FontWeight="Bold" Foreground="#A88498"/>
                                                         <Run Text="{Binding Quantity}" FontWeight="Bold"/>
                                                         <Run Text="x " Foreground="#6A4B59"/>

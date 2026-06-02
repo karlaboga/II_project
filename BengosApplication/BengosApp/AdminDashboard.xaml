@@ -6,264 +6,297 @@ Height="650" Width="1000"
 MinHeight="650" MinWidth="1000"
 WindowStartupLocation="CenterScreen"
 ResizeMode="NoResize"
-Background="#F3EDEE"
+Background="#F2F1F0"
 WindowStyle="None"
 AllowsTransparency="True"
+TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType"
+UseLayoutRounding="True"
         >
 
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.08" Color="#4A2D1C"/>
+        </Border.Effect>
 
-    <Border Background="#F3EDEE" CornerRadius="22" Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-       
-
-                <Grid Margin="55">
-
+            <Border Grid.Column="0" Background="#4A2D1C" CornerRadius="24,0,0,24">
+                <Grid Margin="30,45,25,40">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
 
-                    
+                    <StackPanel Grid.Row="0" Margin="5,0,0,50">
+                        <TextBlock Text="BENGOS BISTRO" 
+                                   FontSize="22" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F2F1F0"/>
+                        <TextBlock Text="CORE HQ CONTROL" 
+                                   FontSize="10" 
+                                   FontWeight="Bold" 
+                                   Foreground="#F2F1F0" 
+                                   Opacity="0.5" 
+                                   Margin="2,6,0,0"/>
+                    </StackPanel>
 
-            <!-- CLOSE BUTTON -->
-            <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
-                    Margin="0,-25,10,0" Width="30" Height="30" 
-                    Background="#C9A3B5" Foreground="#5E3E4A" 
-                    FontWeight="Bold" Click="BtnLogout_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
-                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" VerticalAlignment="Top">
+
+                        <Border Margin="0,0,0,16"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="16,14"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="BtnInventory_Click">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="#5F3B26"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#8B7365"/>
+                                            <Setter Property="BorderBrush" Value="#F2F1F0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="📦" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Inventory Control" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
+                            </Grid>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#5E3E4A"/>
-                                <Setter Property="Foreground" Value="#F3EDEE"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
 
-            <!-- HEADER (CHANGED TEXT) -->
-            <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                        <Border Margin="0,0,0,0"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="16,14"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="BtnStaff_Click">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="#5F3B26"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#8B7365"/>
+                                            <Setter Property="BorderBrush" Value="#F2F1F0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="👥" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Staff &amp; Roster" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
 
-                <TextBlock x:Name="TxtWelcome"
-                           Text="ADMIN DASHBOARD"
-                           FontSize="24"
-                           FontWeight="SemiBold"
-                           Foreground="#4B2F3A"
-                           HorizontalAlignment="Center"/>
-
-                <TextBlock Text="Restaurant management overview"
-                           FontSize="12"
-                           Foreground="#7A5A68"
-                           HorizontalAlignment="Center"
-                           Margin="0,4,0,0"/>
-
-            </StackPanel>
-
-            <!-- TOP CARDS -->
-            <Grid Grid.Row="1" HorizontalAlignment="Center">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="240"/>
-                    <ColumnDefinition Width="240"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- INVENTORY -->
-                <Border Grid.Column="0"
-                        Margin="10"
-                        Background="#F3EDEE"
-                        BorderBrush="#C9A3B5"
-                        BorderThickness="1"
-                        CornerRadius="14"
-                        Padding="16"
-                        Cursor="Hand"
-                        MouseLeftButtonUp="BtnInventory_Click">
-
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="📦" FontSize="28" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Inventory"
-                                   FontSize="15"
-                                   FontWeight="Bold"
-                                   Foreground="#4B2F3A"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,6,0,2"/>
-                        <TextBlock Text="Products management"
-                                   FontSize="10"
-                                   Foreground="#7A5A68"
-                                   HorizontalAlignment="Center"/>
                     </StackPanel>
-                </Border>
 
-                <!-- STAFF -->
-                <Border Grid.Column="1"
-                        Margin="10"
-                        Background="#F3EDEE"
-                        BorderBrush="#C9A3B5"
-                        BorderThickness="1"
-                        CornerRadius="14"
-                        Padding="16"
-                        Cursor="Hand"
-                        MouseLeftButtonUp="BtnStaff_Click">
+                    <Button Grid.Row="2"
+                            Content="Exit System"
+                            Height="44"
+                            Background="#8B7365"
+                            Foreground="#F2F1F0"
+                            BorderThickness="0"
+                            FontWeight="SemiBold"
+                            FontSize="13"
+                            Cursor="Hand"
+                            Click="BtnLogout_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#735E52"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </Border>
 
-                    <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="👥" FontSize="28" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Staff"
-                                   FontSize="15"
-                                   FontWeight="Bold"
-                                   Foreground="#4B2F3A"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,6,0,2"/>
-                        <TextBlock Text="Shifts &amp; scheduling"
-                                   FontSize="10"
-                                   Foreground="#7A5A68"
-                                   HorizontalAlignment="Center"/>
+            <Grid Grid.Column="1" Margin="40,45,40,40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,35">
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtWelcome"
+                                   Text="Welcome back, Administrator"
+                                   FontSize="24"
+                                   FontWeight="SemiBold"
+                                   Foreground="#4A2D1C"/>
+                        <TextBlock Text="System status active • Monitor and manage daily operations"
+                                   FontSize="13"
+                                   Foreground="#8B7365"
+                                   Opacity="0.9"
+                                   Margin="0,4,0,0"/>
                     </StackPanel>
-                </Border>
 
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" 
+                            Width="32" Height="32" 
+                            Background="Transparent" Foreground="#4A2D1C" 
+                            FontWeight="Normal" FontSize="13" Click="BtnLogout_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                    <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Margin="0,0,0,15" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="16" Padding="25">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="⚠️" FontSize="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="SYSTEM NOTIFICATIONS" FontSize="11" FontWeight="Bold" Foreground="#4A2D1C" Opacity="0.4" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <Button Grid.Row="1" Content="⚠  Launch Low Stock Warning Diagnostics"
+                                    Height="48"
+                                    FontWeight="SemiBold"
+                                    FontSize="13"
+                                    Foreground="#F3EDEE"
+                                    Background="#8A3F4A"
+                                    BorderThickness="0"
+                                    Cursor="Hand"
+                                    Click="BtnLowStock_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
+                                            <Border.Effect>
+                                                <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
+                                            </Border.Effect>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#A05563"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1" Margin="0,15,0,0" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="16" Padding="25">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="📊" FontSize="16" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="FINANCIAL OPERATIONS &amp; LEDGER" FontSize="11" FontWeight="Bold" Foreground="#4A2D1C" Opacity="0.4" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <UniformGrid Grid.Row="1" Columns="2" HorizontalAlignment="Stretch">
+                                <Button Content="💵  Payroll &amp; Salary"
+                                        Height="50"
+                                        Margin="0,0,8,0"
+                                        FontWeight="SemiBold"
+                                        FontSize="13"
+                                        Foreground="#F2F1F0"
+                                        Background="#4A2D1C"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Click="BtnSalary_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="12" Direction="270" ShadowDepth="1" Opacity="0.08" Color="#4A2D1C"/>
+                                                </Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#5F3B26"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button Content="📊  Revenue Reports"
+                                        Height="50"
+                                        Margin="8,0,0,0"
+                                        FontWeight="SemiBold"
+                                        FontSize="13"
+                                        Foreground="#F2F1F0"
+                                        Background="#8B7365"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Click="BtnRevenue_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="12">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="12" Direction="270" ShadowDepth="1" Opacity="0.08" Color="#4A2D1C"/>
+                                                </Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#735E52"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </UniformGrid>
+                        </Grid>
+                    </Border>
+
+                </Grid>
             </Grid>
-
-            <!-- ACTION BUTTONS (WITH UNIFORM STYLE) -->
-            <StackPanel Grid.Row="2"
-                        Margin="0,18,0,0"
-                        HorizontalAlignment="Center">
-
-                <!-- LOW STOCK -->
-                <Button Content="⚠ Low Stock"
-                        Width="260"
-                        Height="42"
-                        Margin="0,0,0,10"
-                        FontWeight="SemiBold"
-                        Foreground="#F3EDEE"
-                        Background="#8A3F4A"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BtnLowStock_Click">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="14">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#A05563"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- SALARY -->
-                <Button Content="💵 Salary"
-                        Width="260"
-                        Height="42"
-                        Margin="0,0,0,10"
-                        FontWeight="SemiBold"
-                        Foreground="#F3EDEE"
-                        Background="#5E3E4A"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BtnSalary_Click">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="14">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#7A5561"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- REVENUE -->
-                <Button Content="📊 Revenue"
-                        Width="260"
-                        Height="42"
-                        FontWeight="SemiBold"
-                        Foreground="#F3EDEE"
-                        Background="#4B2F3A"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BtnRevenue_Click">
-
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="14">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="#5E3E4A"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-            </StackPanel>
-
-            <!-- LOGOUT -->
-            <Button Grid.Row="4"
-                    Content="Logout"
-                    Width="140"
-                    Height="42"
-                    Background="#E9DDE5"
-                    Foreground="#4B2F3A"
-                    BorderThickness="0"
-                    FontWeight="SemiBold"
-                    Cursor="Hand"
-                    HorizontalAlignment="Center"
-                    Margin="0,22,0,0"
-                    Click="BtnLogout_Click">
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="14">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="#D6C6CF"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-
-            </Button>
-
         </Grid>
     </Border>
 </Window>
