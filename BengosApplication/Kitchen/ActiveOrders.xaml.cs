@@ -2,16 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Threading; // NEAPĂRAT: Avem nevoie de acest namespace pentru DispatcherTimer
 using Kitchen.Models1;
 
 namespace Kitchen
@@ -20,10 +13,29 @@ namespace Kitchen
     {
         private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
 
+        // Definim timerul la nivel de clasă
+        private DispatcherTimer autoRefreshTimer;
+
         public ActiveOrders()
         {
             InitializeComponent();
             LoadActiveOrders();
+            SetupAutoRefresh(); // Pornim configurarea timerului
+        }
+
+        // Metodă nouă pentru configurarea și pornirea cronometrului
+        private void SetupAutoRefresh()
+        {
+            autoRefreshTimer = new DispatcherTimer();
+            autoRefreshTimer.Interval = TimeSpan.FromSeconds(10); // Setat la fix 10 secunde
+            autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+            autoRefreshTimer.Start(); // Pornim timerul
+        }
+
+        // Evenimentul care se declanșează la fiecare 10 secunde
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            LoadActiveOrders(); // Reîncarcă automat comenzile din baza de date Azure
         }
 
         private void LoadActiveOrders()
@@ -113,7 +125,9 @@ namespace Kitchen
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Eroare la încărcarea datelor: " + ex.Message, "Eroare SQL", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Am scos MessageBox-ul de eroare de la Load (opțional) ca să nu bombardeze ecranul 
+                // bucătarului cu pop-up-uri la fiecare 10 secunde dacă pică internetul temporar.
+                System.Diagnostics.Debug.WriteLine("Eroare fundal SQL: " + ex.Message);
             }
 
             OrdersControl.ItemsSource = null;
@@ -122,10 +136,10 @@ namespace Kitchen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            autoRefreshTimer?.Stop(); // Oprim timerul la închiderea ferestrei pentru a elibera memoria
             this.Close();
         }
 
-        // EVENIMENTUL NOU DE CLICK PENTRU REFRESH MANUAL
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             LoadActiveOrders();
