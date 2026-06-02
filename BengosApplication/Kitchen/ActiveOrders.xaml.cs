@@ -2,8 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Kitchen.Models1;
 
 namespace Kitchen
@@ -117,6 +125,12 @@ namespace Kitchen
             this.Close();
         }
 
+        // EVENIMENTUL NOU DE CLICK PENTRU REFRESH MANUAL
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadActiveOrders();
+        }
+
         private void BtnCompleteOrder_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is KitchenOrderViewModel completedOrder)
@@ -129,12 +143,10 @@ namespace Kitchen
                         using var conn = new SqlConnection(connString);
                         conn.Open();
 
-                        // 1. Schimbăm statusul global al comenzii în 'ReadyToServe'
                         using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn);
                         cmd.Parameters.AddWithValue("@oid", oid);
                         cmd.ExecuteNonQuery();
 
-                        // 2. Schimbăm StatusItem în 'Ready' pentru toate produsele asociate acestei comenzi
                         string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
                         using var cmdItems = new SqlCommand(updateItemsQuery, conn);
                         cmdItems.Parameters.AddWithValue("@oid", oid);
@@ -143,7 +155,6 @@ namespace Kitchen
                         MessageBox.Show($"Produsele din comanda #{oid} sunt gata!");
                         LoadActiveOrders();
 
-                        // 3. Forțăm instanța TableWindow din fundal să își reîncarce datele imediat
                         if (BillingAndPayment.TableWindow.Instance != null)
                         {
                             BillingAndPayment.TableWindow.Instance.LoadTables();
