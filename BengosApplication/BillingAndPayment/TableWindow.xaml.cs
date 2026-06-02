@@ -15,14 +15,23 @@ public partial class TableWindow : Window
     private int? currentOrderId;
     private double discountPercent;
 
+    // ==========================================
+    // MODIFICARE: Permitem accesul global de tip Singleton pentru proiectul Kitchen
+    // ==========================================
+    public static TableWindow Instance { get; private set; }
+
     public TableWindow()
     {
         InitializeComponent();
+        Instance = this; // Salvează instanța curentă la deschiderea ferestrei
         LoadTables();
         LoadAllDishes();
     }
 
-    private void LoadTables()
+    // ==========================================
+    // MODIFICARE: Schimbat în 'public' pentru ca bucătăria să poată da Refresh hărții de mese
+    // ==========================================
+    public void LoadTables()
     {
         tables.Clear();
         try
@@ -48,6 +57,25 @@ public partial class TableWindow : Window
         }
         TableList.ItemsSource = null;
         TableList.ItemsSource = tables;
+
+        // ========================================================
+        // MODIFICARE CRUCIALĂ: Dacă masa selectată s-a eliberat (în urma plății),
+        // golim panoul și ștergem complet dish-urile vechi de pe ecran
+        // ========================================================
+        if (selectedTableId.HasValue)
+        {
+            var currentTable = tables.FirstOrDefault(t => t.Id == selectedTableId.Value);
+
+            if (currentTable == null || currentTable.Status == "Free")
+            {
+                ResetOrderPanel(); // Golește tabelele, textul și blochează panoul
+            }
+            else if (currentOrderId.HasValue)
+            {
+                // Dacă masa este în continuare ocupată, îi încărcăm produsele în mod normal
+                LoadOrderItems();
+            }
+        }
     }
 
     private void LoadAllDishes()
@@ -119,7 +147,7 @@ public partial class TableWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error creating order: " + ex.Message);
+            MessageBox.Show("Error create order: " + ex.Message);
         }
         LoadTables();
     }
@@ -130,8 +158,10 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
+
+            // CORECȚIE CRUCIALĂ: Încărcăm comanda activă indiferent dacă e trimisă la bucătărie sau gata preparată (Tot ce nu e 'Paid')
             using var cmd = new SqlCommand(
-                "SELECT Id, DiscountPercent FROM Orders WHERE TableId=@tid AND (Status='Pending' OR Status='ToKitchen')", conn);
+                "SELECT Id, DiscountPercent FROM Orders WHERE TableId=@tid AND Status <> 'Paid'", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
             using var rdr = cmd.ExecuteReader();
             if (rdr.Read())
@@ -208,7 +238,7 @@ public partial class TableWindow : Window
                 {
                     rdr.Close();
                     using var ins = new SqlCommand(
-                        "INSERT INTO OrderItems (OrderId, Name, Quantity, Price) VALUES (@oid, @name, 1, @price)", conn);
+                        "INSERT INTO OrderItems (OrderId, Name, Quantity, Price, StatusItem) VALUES (@oid, @name, 1, @price, 'Pending')", conn);
                     ins.Parameters.AddWithValue("@oid", currentOrderId.Value);
                     ins.Parameters.AddWithValue("@name", dish.Name);
                     ins.Parameters.AddWithValue("@price", dish.Price);
@@ -245,7 +275,7 @@ public partial class TableWindow : Window
         }
     }
 
-    private void LoadOrderItems()
+    public void LoadOrderItems()
     {
         var items = new System.Collections.ObjectModel.ObservableCollection<OrderItem>();
         if (!currentOrderId.HasValue) { DgOrder.ItemsSource = items; return; }
@@ -253,9 +283,12 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
+
+            // Adăugat selectarea câmpului StatusItem din tabelul SQL
             using var cmd = new SqlCommand(
-                "SELECT Name, Quantity, Price FROM OrderItems WHERE OrderId=@oid ORDER BY Id", conn);
+                "SELECT Name, Quantity, Price, ISNULL(StatusItem, 'Pending') AS StatusItem FROM OrderItems WHERE OrderId=@oid ORDER BY Id", conn);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+
             using var rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
@@ -264,7 +297,7 @@ public partial class TableWindow : Window
                     Name = rdr["Name"]?.ToString() ?? "",
                     Quantity = Convert.ToInt32(rdr["Quantity"]),
                     Price = Convert.ToDouble(rdr["Price"]),
-                    Status = "Pending" // <--- Aici forțăm textul Pending pentru fiecare aliment adăugat
+                    StatusItem = rdr["StatusItem"]?.ToString() ?? "Pending" // Mapare proprietate din DB
                 });
             }
         }
@@ -273,6 +306,7 @@ public partial class TableWindow : Window
             MessageBox.Show("Error loading items: " + ex.Message);
         }
         DgOrder.ItemsSource = items;
+        Thread.Sleep(10); // Scurtă pauză pentru stabilitatea firelor de execuție UI
         RefreshTotals();
     }
 
@@ -444,6 +478,12 @@ public partial class TableWindow : Window
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
             cmd.ExecuteNonQuery();
 
+            // Setează starea de pornire în bucătărie a preparatelor ca fiind 'Pending' direct în DB
+            using var cmdItemsStatus = new SqlCommand(
+                "UPDATE OrderItems SET StatusItem = 'Pending' WHERE OrderId = @oid", conn);
+            cmdItemsStatus.Parameters.AddWithValue("@oid", currentOrderId.Value);
+            cmdItemsStatus.ExecuteNonQuery();
+
             MessageBox.Show($"Comanda #{currentOrderId.Value} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
 
             LoadTables();
@@ -454,20 +494,5 @@ public partial class TableWindow : Window
         {
             MessageBox.Show("Eroare la trimiterea comenzii către bucătărie: " + ex.Message, "Eroare SQL", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-    public class OrderItem
-    {
-        public string Name { get; set; } = "";
-        public int Quantity { get; set; }
-        public double Price { get; set; }
-
-        // Asigură-te că ai aceste 3 proprietăți cerute de DataGrid:
-        public string PriceDisplay => $"{Price:0.00} RON";
-        public string TotalDisplay => $"{Quantity * Price:0.00} RON";
-        public double Total => Quantity * Price;
-
-        // TREBUIE SĂ FIE ADĂUGATĂ:
-        public string Status { get; set; } = "Pending";
     }
 }

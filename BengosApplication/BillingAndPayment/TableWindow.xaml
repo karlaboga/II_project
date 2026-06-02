@@ -240,7 +240,7 @@
                         <DataGridTextColumn Header="Price" Binding="{Binding PriceDisplay}" Width="80"/>
                         <DataGridTextColumn Header="Total" Binding="{Binding TotalDisplay}" Width="80"/>
 
-                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70">
+                        <DataGridTextColumn Header="Status" Binding="{Binding StatusItem}" Width="70">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="FontWeight" Value="SemiBold"/>
