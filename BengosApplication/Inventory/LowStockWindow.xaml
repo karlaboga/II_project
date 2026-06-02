@@ -3,18 +3,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Low Stock Alert"
         Height="650" Width="1000"
+        MinHeight="650" MinWidth="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        Background="Transparent" 
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#F3EDEE"
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Border Background="#F3EDEE"
-            CornerRadius="20"
-            Margin="10">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
         <Grid Margin="35">
             <Grid.RowDefinitions>
@@ -24,47 +34,78 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0"
-                    Background="#5E3E4A"
+                    Background="#8A3F4A"
                     CornerRadius="12"
                     Padding="15"
                     Margin="0,0,0,20">
-                <TextBlock Text="⚠ LOW STOCK ALERT"
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
+                </Border.Effect>
+                <TextBlock Text="⚠ LOW STOCK ALERT SYSTEM"
                            FontSize="22"
                            FontWeight="SemiBold"
-                           Foreground="#F3EDEE"
+                           Foreground="#F2F1F0"
                            HorizontalAlignment="Center"/>
             </Border>
 
             <Border Grid.Row="1"
-                    Background="#F3EDEE"
-                    BorderBrush="#C9A3B5"
+                    Background="#FFFFFF"
+                    BorderBrush="#E5DFD9"
                     BorderThickness="1"
-                    CornerRadius="12"
-                    Padding="10">
+                    CornerRadius="16"
+                    Padding="15">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
+                </Border.Effect>
 
                 <DataGrid x:Name="DgLowStock"
                           AutoGenerateColumns="False"
-                          Background="#F3EDEE"
+                          Background="Transparent"
                           BorderThickness="0"
-                          Foreground="#4B2F3A"
-                          RowBackground="#F3EDEE"
-                          AlternatingRowBackground="#E9DDE5"
+                          Foreground="#4A2D1C"
+                          RowBackground="#FFFFFF"
+                          AlternatingRowBackground="#F2F1F0"
                           HeadersVisibility="Column"
-                          GridLinesVisibility="Horizontal">
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#E5DFD9"
+                          RowHeight="42">
 
                     <DataGrid.Resources>
                         <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#5E3E4A"/>
-                            <Setter Property="Foreground" Value="#F3EDEE"/>
+                            <Setter Property="Background" Value="#4A2D1C"/>
+                            <Setter Property="Foreground" Value="#F2F1F0"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="Padding" Value="10"/>
+                            <Setter Property="FontSize" Value="13"/>
+                            <Setter Property="Padding" Value="12,10"/>
+                            <Setter Property="BorderThickness" Value="0"/>
                         </Style>
 
                         <Style TargetType="DataGridRow">
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#C9A3B5"/>
-                                    <Setter Property="Foreground" Value="#2F1E18"/>
+                                    <Setter Property="Background" Value="#8B7365"/>
+                                    <Setter Property="Foreground" Value="#F2F1F0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <Style x:Key="PremiumTextBoxStyle" TargetType="TextBox">
+                            <Setter Property="Background" Value="#F2F1F0"/>
+                            <Setter Property="Foreground" Value="#4A2D1C"/>
+                            <Setter Property="BorderBrush" Value="#E5DFD9"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="90"/>
+                            <Setter Property="Height" Value="28"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FFFFFF"/>
+                                    <Setter Property="BorderBrush" Value="#8B7365"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" Value="#FFFFFF"/>
+                                    <Setter Property="BorderBrush" Value="#4A2D1C"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -73,40 +114,41 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Product" Binding="{Binding Name}" Width="*"/>
                         <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="90"/>
-                        <DataGridTextColumn Header="Min Stock" Binding="{Binding MinStock}" Width="90"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
+                        <DataGridTextColumn Header="Min Stock" Binding="{Binding MinStock}" Width="100"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="130"/>
 
-                        <DataGridTemplateColumn Header="Qty to Add" Width="100">
+                        <DataGridTemplateColumn Header="Quantity to Add" Width="140">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox Text="{Binding AddQuantity, UpdateSourceTrigger=PropertyChanged}" 
-                                             Background="White" 
-                                             Foreground="#4B2F3A" 
-                                             BorderBrush="#C9A3B5" 
-                                             TextAlignment="Center" 
-                                             VerticalContentAlignment="Center"
-                                             Padding="2"/>
+                                             Style="{StaticResource PremiumTextBoxStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Action" Width="100">
+                        <DataGridTemplateColumn Header="Action" Width="110">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="➕ Restock" 
                                             Click="BtnRestock_Click"
-                                            Background="#5E3E4A" 
-                                            Foreground="#F3EDEE" 
+                                            Background="#4A2D1C" 
+                                            Foreground="#F2F1F0" 
                                             FontWeight="SemiBold" 
                                             FontSize="12" 
-                                            Height="26" 
+                                            Height="28" 
+                                            Width="85"
                                             Cursor="Hand">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="8">
                                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="btnBorder" Property="Background" Value="#5F3B26"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
@@ -121,25 +163,25 @@
             <StackPanel Grid.Row="2"
                         HorizontalAlignment="Center"
                         Margin="0,20,0,0">
-                <Button Content="Close"
-                        Width="140"
-                        Height="38"
-                        Background="#5E3E4A"
-                        Foreground="#F3EDEE"
+                <Button Content="Close Panel"
+                        Width="150"
+                        Height="42"
+                        Background="#8B7365"
+                        Foreground="#F2F1F0"
                         FontWeight="SemiBold"
                         BorderThickness="0"
                         Cursor="Hand"
                         Click="BtnClose_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}"
-                                    CornerRadius="10">
+                            <Border x:Name="border" Background="{TemplateBinding Background}"
+                                    CornerRadius="12">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#7A5A68"/>
+                                    <Setter TargetName="border" Property="Background" Value="#735E52"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
