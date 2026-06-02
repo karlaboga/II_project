@@ -30,23 +30,41 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0"
-                    Background="#8A3F4A"
-                    CornerRadius="12"
-                    Padding="15"
-                    Margin="0,0,0,20">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
-                </Border.Effect>
-                <TextBlock Text="⚠ LOW STOCK ALERT SYSTEM"
-                           FontSize="22"
-                           FontWeight="SemiBold"
-                           Foreground="#F2F1F0"
-                           HorizontalAlignment="Center"/>
-            </Border>
+            <Grid Grid.Row="0" Margin="0,0,0,20">
+                <Border Background="#8A3F4A"
+                        CornerRadius="12"
+                        Padding="15"
+                        HorizontalAlignment="Stretch">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" Direction="270" ShadowDepth="2" Opacity="0.1" Color="#8A3F4A"/>
+                    </Border.Effect>
+                    <TextBlock Text="⚠ LOW STOCK ALERT SYSTEM"
+                               FontSize="22"
+                               FontWeight="SemiBold"
+                               Foreground="#F2F1F0"
+                               HorizontalAlignment="Center"/>
+                </Border>
+
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Margin="0,12,15,0" Width="32" Height="32"
+                        Background="Transparent" Foreground="#F2F1F0"
+                        FontWeight="Bold" Click="BtnClose_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#A05563"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
 
             <Border Grid.Row="1"
                     Background="#FFFFFF"
@@ -174,35 +192,6 @@
 
                 </DataGrid>
             </Border>
-
-            <StackPanel Grid.Row="2"
-                        HorizontalAlignment="Center"
-                        Margin="0,20,0,0">
-                <Button Content="Close Panel"
-                        Width="150"
-                        Height="42"
-                        Background="#8B7365"
-                        Foreground="#F2F1F0"
-                        FontWeight="SemiBold"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        Click="BtnClose_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}"
-                                    CornerRadius="12">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#735E52"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
 
         </Grid>
     </Border>
