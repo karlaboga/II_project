@@ -90,6 +90,7 @@
                         </Style>
 
                         <Style x:Key="PremiumTextBoxStyle" TargetType="TextBox">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                             <Setter Property="Background" Value="#F2F1F0"/>
                             <Setter Property="Foreground" Value="#4A2D1C"/>
                             <Setter Property="BorderBrush" Value="#E5DFD9"/>
@@ -98,16 +99,30 @@
                             <Setter Property="VerticalContentAlignment" Value="Center"/>
                             <Setter Property="Width" Value="90"/>
                             <Setter Property="Height" Value="28"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FFFFFF"/>
-                                    <Setter Property="BorderBrush" Value="#8B7365"/>
-                                </Trigger>
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="Background" Value="#FFFFFF"/>
-                                    <Setter Property="BorderBrush" Value="#4A2D1C"/>
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Border x:Name="border"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="6"
+                                                SnapsToDevicePixels="True">
+                                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="#8B7365"/>
+                                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                            </Trigger>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter TargetName="border" Property="BorderBrush" Value="#4A2D1C"/>
+                                                <Setter TargetName="border" Property="Background" Value="#FFFFFF"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </DataGrid.Resources>
 
