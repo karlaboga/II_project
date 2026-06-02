@@ -3,134 +3,219 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Salary Report"
         Height="650" Width="1000"
-WindowStartupLocation="CenterScreen"
-ResizeMode="NoResize"
-WindowStyle="None"
-AllowsTransparency="True"
-Background="#F3EDEE"
-FontFamily="Segoe UI"
-TextOptions.TextFormattingMode="Display"
-TextOptions.TextRenderingMode="ClearType">
+        MinHeight="650" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontFamily="Segoe UI"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Grid Margin="15">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <!-- TITLE -->
-        <TextBlock Grid.Row="0"
-                   Text="💵 Salary Report"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   Foreground="#5E3E4A"
-                   HorizontalAlignment="Center"
-                   Margin="0,5,0,10"/>
-
-        <!-- MONTH/YEAR SELECTOR -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
-            <TextBlock Text="Month:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#5E3E4A" FontWeight="SemiBold"/>
-            <ComboBox x:Name="CmbMonth" Width="110" Height="30" Margin="0,0,15,0" 
-                      Background="#F3EDEE" BorderBrush="#C9A3B5" VerticalContentAlignment="Center"/>
-            
-            <TextBlock Text="Year:" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#5E3E4A" FontWeight="SemiBold"/>
-            <ComboBox x:Name="CmbYear" Width="80" Height="30" Margin="0,0,15,0" 
-                      Background="#F3EDEE" BorderBrush="#C9A3B5" VerticalContentAlignment="Center"/>
-
-            <Button Content="Generate Report" Click="BtnLoad_Click" Width="120" Height="30" 
-                    Background="#5E3E4A" Foreground="#F3EDEE" FontWeight="Bold" Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
+    <Window.Resources>
+        <Style x:Key="PremiumComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#4A2D1C"/>
+            <Setter Property="BorderBrush" Value="#E5DFD9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Padding" Value="8,6"/>
+                        <Setter Property="Foreground" Value="#4A2D1C"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="FontSize" Value="13"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border x:Name="ItemBorder" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="4" Margin="1">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#F2F1F0"/>
+                                            <Setter Property="Foreground" Value="#8B7365"/>
+                                        </Trigger>
+                                        <Trigger Property="IsHighlighted" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
+                                            <Setter Property="Foreground" Value="#F2F1F0"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
+                                            <Setter Property="Foreground" Value="#F2F1F0"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6"/>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#8B7365"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Path x:Name="Arrow" Fill="#4A2D1C" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Data="M 0 0 L 4 4 L 8 0 Z"/>
+                            <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid x:Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#FFFFFF" BorderThickness="1" BorderBrush="#E5DFD9" CornerRadius="0,0,6,6"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
                     </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </StackPanel>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
-        <!-- DATA GRID -->
-        <DataGrid Grid.Row="2"
-                  x:Name="DgSalary"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Background="#F3EDEE"
-                  BorderBrush="#C9A3B5"
-                  Foreground="#5E3E4A"
-                  RowBackground="#F3EDEE"
-                  AlternatingRowBackground="#E9DDE5"
-                  HeadersVisibility="Column"
-                  GridLinesVisibility="Horizontal">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
 
-            <DataGrid.Resources>
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
-                <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#5E3E4A"/>
-                    <Setter Property="Foreground" Value="#F3EDEE"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                </Style>
+        <Grid Margin="35,30,35,35">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            </DataGrid.Resources>
+            <Grid Grid.Row="0" Margin="0,0,0,25">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="💵  Salary &amp; Payroll Ledger" FontSize="22" FontWeight="SemiBold" Foreground="#4A2D1C"/>
+                    <TextBlock Text="Review staff shifts, hourly rates, and generate operational payroll reports." FontSize="13" Foreground="#8B7365" Opacity="0.9" Margin="2,4,0,0"/>
+                </StackPanel>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Employee" Binding="{Binding Username}" Width="*"/>
-                <DataGridTextColumn Header="Total Shifts" Binding="{Binding TotalShifts}" Width="85"/>
-                <DataGridTextColumn Header="Morning" Binding="{Binding MorningShifts}" Width="70"/>
-                <DataGridTextColumn Header="Evening" Binding="{Binding EveningShifts}" Width="70"/>
-                <DataGridTextColumn Header="Night" Binding="{Binding NightShifts}" Width="70"/>
-                <DataGridTextColumn Header="Total Hours" Binding="{Binding TotalHours}" Width="85"/>
-                <DataGridTextColumn Header="Hourly Rate" Binding="{Binding HourlyRateDisplay}" Width="100"/>
-                <DataGridTextColumn Header="Total Salary" Binding="{Binding TotalSalaryDisplay}" Width="110"/>
-            </DataGrid.Columns>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C"
+                        FontWeight="Bold" Click="BtnClose_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
 
-        </DataGrid>
+            <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="14" Padding="20,15" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Target Month" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#4A2D1C" FontSize="13" FontWeight="SemiBold"/>
 
-        <!-- BUTTON -->
-        <Button Grid.Row="3"
-        Content="Close"
-        Width="110"
-        Height="38"
-        Background="#C9A3B5"
-        Foreground="#2F1E18"
-        BorderThickness="0"
-        FontWeight="Bold"
-        Cursor="Hand"
-        Margin="0,10,0,0"
-        HorizontalAlignment="Center"
-        Click="BtnClose_Click">
+                    <ComboBox x:Name="CmbMonth" Width="140" Height="38" Margin="0,0,20,0" 
+                              Style="{StaticResource PremiumComboBoxStyle}" VerticalContentAlignment="Center"/>
 
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="border"
-                    Background="{TemplateBinding Background}"
-                    CornerRadius="12"
-                    SnapsToDevicePixels="True">
+                    <TextBlock Text="Year" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="#4A2D1C" FontSize="13" FontWeight="SemiBold"/>
 
-                        <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
+                    <ComboBox x:Name="CmbYear" Width="100" Height="38" Margin="0,0,25,0" 
+                              Style="{StaticResource PremiumComboBoxStyle}" VerticalContentAlignment="Center"/>
 
-                    </Border>
+                    <Button Content="Generate Report" Click="BtnLoad_Click" Width="140" Height="38" 
+                            Background="#4A2D1C" Foreground="#F2F1F0" FontWeight="SemiBold" FontSize="13" Cursor="Hand">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="btnBorder" Property="Background" Value="#5F3B26"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Border>
 
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#B896A3"/>
-                        </Trigger>
+            <Border Grid.Row="2" Background="#FFFFFF" BorderBrush="#E5DFD9" BorderThickness="1" CornerRadius="16" Padding="5">
+                <DataGrid x:Name="DgSalary"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          Foreground="#4A2D1C"
+                          RowBackground="#FFFFFF"
+                          AlternatingRowBackground="#F9F8F7"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          HorizontalGridLinesBrush="#E5DFD9"
+                          RowHeight="40"
+                          FontSize="13">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#8B7365"/>
+                            <Setter Property="Foreground" Value="#F2F1F0"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Padding" Value="12,10"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="12,0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="DataGridCell">
+                                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                            <ContentPresenter VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#E5DFD9"/>
+                                    <Setter Property="Foreground" Value="#4A2D1C"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
 
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#A57F90"/>
-                        </Trigger>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Employee" Binding="{Binding Username}" Width="*"/>
+                        <DataGridTextColumn Header="Total Shifts" Binding="{Binding TotalShifts}" Width="100"/>
+                        <DataGridTextColumn Header="Morning" Binding="{Binding MorningShifts}" Width="85"/>
+                        <DataGridTextColumn Header="Evening" Binding="{Binding EveningShifts}" Width="85"/>
+                        <DataGridTextColumn Header="Night" Binding="{Binding NightShifts}" Width="85"/>
+                        <DataGridTextColumn Header="Total Hours" Binding="{Binding TotalHours}" Width="100"/>
+                        <DataGridTextColumn Header="Hourly Rate" Binding="{Binding HourlyRateDisplay}" Width="110"/>
+                        <DataGridTextColumn Header="Total Salary" Binding="{Binding TotalSalaryDisplay}" Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
 
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Button.Template>
-
-        </Button>
-
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
