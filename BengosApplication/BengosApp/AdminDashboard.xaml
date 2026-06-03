@@ -71,12 +71,12 @@ UseLayoutRounding="True"
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="📦" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="0" Text="📦" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center" FontFamily="Segoe UI Symbol" Foreground="#F2F1F0"/>
                                 <TextBlock Grid.Column="1" Text="Inventory Control" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
 
-                        <Border Margin="0,0,0,0"
+                        <Border Margin="0,0,0,16"
                                 BorderThickness="1"
                                 CornerRadius="12"
                                 Padding="16,14"
@@ -99,8 +99,36 @@ UseLayoutRounding="True"
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="👥" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="0" Text="👥" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center" FontFamily="Segoe UI Symbol" Foreground="#F2F1F0"/>
                                 <TextBlock Grid.Column="1" Text="Staff &amp; Roster" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Margin="0,0,0,0"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="16,14"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="BtnPrices_Click">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="#5F3B26"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#8B7365"/>
+                                            <Setter Property="BorderBrush" Value="#F2F1F0"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="💲" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center" FontFamily="Segoe UI Symbol" Foreground="#F2F1F0"/>
+                                <TextBlock Grid.Column="1" Text="Price Management" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
 
