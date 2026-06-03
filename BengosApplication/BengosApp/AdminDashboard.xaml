@@ -100,7 +100,7 @@ UseLayoutRounding="True"
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="👥" FontSize="18" Margin="0,0,14,0" VerticalAlignment="Center" FontFamily="Segoe UI Symbol" Foreground="#F2F1F0"/>
-                                <TextBlock Grid.Column="1" Text="Staff &amp; Roster" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="Staff Management" FontSize="14" FontWeight="SemiBold" Foreground="#F2F1F0" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
 

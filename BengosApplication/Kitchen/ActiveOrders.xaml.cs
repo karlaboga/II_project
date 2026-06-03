@@ -148,7 +148,6 @@ namespace Kitchen
         {
             if (sender is Button btn && btn.DataContext is KitchenOrderViewModel completedOrder)
             {
-                int oid = 0;
                 try
                 {
                     using var conn = new SqlConnection(connString);
@@ -163,28 +162,53 @@ namespace Kitchen
                         MessageBox.Show("Comanda nu a fost găsită în baza de date.");
                         return;
                     }
-                    oid = Convert.ToInt32(result);
+                    int oid = Convert.ToInt32(result);
 
-                    using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn);
-                    cmd.Parameters.AddWithValue("@oid", oid);
-                    cmd.ExecuteNonQuery();
-
-                    string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
-                    using var cmdItems = new SqlCommand(updateItemsQuery, conn);
-                    cmdItems.Parameters.AddWithValue("@oid", oid);
-                    cmdItems.ExecuteNonQuery();
-
-                    MessageBox.Show($"Produsele din comanda #{completedOrder.OrderNumber} sunt gata!");
-                    LoadActiveOrders();
-
-                    if (BillingAndPayment.TableWindow.Instance != null)
+                    using var transaction = conn.BeginTransaction();
+                    try
                     {
-                        BillingAndPayment.TableWindow.Instance.LoadTables();
+                        using var cmd = new SqlCommand(
+                            "UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn, transaction);
+                        cmd.Parameters.AddWithValue("@oid", oid);
+                        cmd.ExecuteNonQuery();
+
+                        using var cmdItems = new SqlCommand(
+                            "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid", conn, transaction);
+                        cmdItems.Parameters.AddWithValue("@oid", oid);
+                        cmdItems.ExecuteNonQuery();
+
+                        string deductStock = @"
+                            UPDATE p
+                            SET p.Quantity = p.Quantity - (di.QuantityRequired * oi.Quantity)
+                            FROM dbo.Produses p
+                            INNER JOIN dbo.DishIngredients di ON p.Id = di.ProductId
+                            INNER JOIN dbo.Dishes d ON di.DishId = d.Id
+                            INNER JOIN dbo.OrderItems oi ON d.Name = oi.Name
+                            WHERE oi.OrderId = @oid";
+
+                        using var cmdDeduct = new SqlCommand(deductStock, conn, transaction);
+                        cmdDeduct.Parameters.AddWithValue("@oid", oid);
+                        cmdDeduct.ExecuteNonQuery();
+
+                        transaction.Commit();
+
+                        MessageBox.Show($"Produsele din comanda #{completedOrder.OrderNumber} sunt gata, iar ingredientele au fost scăzute din stoc!",
+                                        "Comandă Finalizată", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadActiveOrders();
+
+                        if (BillingAndPayment.TableWindow.Instance != null)
+                            BillingAndPayment.TableWindow.Instance.LoadTables();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Eroare la finalizarea comenzii și scăderea stocului.",
+                                        "Eroare", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Eroare la salvare: " + ex.Message);
+                    MessageBox.Show("Eroare la conexiune: " + ex.Message);
                 }
             }
         }
