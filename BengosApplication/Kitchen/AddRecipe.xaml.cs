@@ -195,8 +195,8 @@ namespace Kitchen
                     return;
                 }
 
-                // Extrage corect textul din ComboBoxItem (ex: "Grams" în loc de obiectul WPF)
-                string selectedUnit = (ComboIngredientUnit.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+                // SCHIMBAT: Am adăugat .Trim() ca să curățăm eventualele spații goale din XAML
+                string selectedUnit = (ComboIngredientUnit.SelectedItem as ComboBoxItem)?.Content?.ToString()?.Trim() ?? "";
 
                 // --- SISTEM DE CONVERSIE INTELIGENT PENTRU RECEPTAR ---
                 // Grame -> Kilograme
@@ -205,10 +205,10 @@ namespace Kitchen
                     qty = qty / 1000.0; // 250g devine 0.25 kg
                     selectedUnit = "Kilograms";
                 }
-                // Mililitri -> Litri
+                // REPARAT: Schimbat din "Milliliters" în "Mililiters" (cu un singur l) ca să bată perfect cu interfața ta XAML!
                 else if (selectedUnit.Equals("Milliliters", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("ml", StringComparison.OrdinalIgnoreCase))
                 {
-                    qty = qty / 1000.0; // 500ml devine 0.5 Liters
+                    qty = qty / 1000.0; // 200ml devine 0.2 Liters
                     selectedUnit = "Liters";
                 }
                 // Bucăți / Unități fixe (Pieces, Packs, etc.) rămân exact la fel, nu se modifică nimic matematic

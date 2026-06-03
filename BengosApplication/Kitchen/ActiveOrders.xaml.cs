@@ -146,7 +146,6 @@ namespace Kitchen
                 string idString = completedOrder.OrderId.Replace("Order #", "").Trim();
                 if (int.TryParse(idString, out int oid))
                 {
-                    // Folosim o tranzacție pentru a ne asigura că ori se salvează totul, ori nimic în caz de eroare
                     using var conn = new SqlConnection(connString);
                     conn.Open();
                     using var transaction = conn.BeginTransaction();
@@ -164,8 +163,8 @@ namespace Kitchen
                         cmdItems.Parameters.AddWithValue("@oid", oid);
                         cmdItems.ExecuteNonQuery();
 
-                        // 3. --- SCĂDEREA AUTOMATĂ A INVENTARULUI ---
-                        // Această interogare actualizează tabela 'Produses' (stocul) scăzând cantitatea necesară (incred.QuantityRequired * oi.Quantity comandată)
+                        // 3. --- SCĂDEREA AUTOMATĂ A INVENTARULUI (CORECTATĂ) ---
+                        // Legăm corect: ItemComandat -> NumeReteta -> IngredienteReteta -> ProdusDinInventar
                         string deductStockQuery = @"
                             UPDATE p
                             SET p.Quantity = p.Quantity - (di.QuantityRequired * oi.Quantity)
@@ -178,9 +177,8 @@ namespace Kitchen
                         using var cmdDeduct = new SqlCommand(deductStockQuery, conn, transaction);
                         cmdDeduct.Parameters.AddWithValue("@oid", oid);
                         cmdDeduct.ExecuteNonQuery();
-                        // --------------------------------------------
+                        // ------------------------------------------------------
 
-                        // Salvăm modificările definitive în Azure SQL
                         transaction.Commit();
 
                         MessageBox.Show($"Produsele din comanda #{oid} sunt gata, iar ingredientele au fost scăzute din stoc!", "Comandă Finalizată", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -193,7 +191,6 @@ namespace Kitchen
                     }
                     catch (Exception ex)
                     {
-                        // În caz de eroare (ex: probleme de rețea), dăm înapoi toate modificările ca să nu stricăm baza de date
                         transaction.Rollback();
                         MessageBox.Show("Eroare la finalizarea comenzii și scăderea stocului: " + ex.Message, "Eroare Core", MessageBoxButton.OK, MessageBoxImage.Error);
                     }

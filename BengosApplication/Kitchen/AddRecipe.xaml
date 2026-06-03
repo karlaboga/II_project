@@ -322,7 +322,7 @@
                                     <ComboBoxItem Content="Kilograms"/>
                                     <ComboBoxItem Content="Grams"/>
                                     <ComboBoxItem Content="Liters"/>
-                                    <ComboBoxItem Content="Mililiters"/>
+                                    <ComboBoxItem Content="Milliliters"/>
                                     <ComboBoxItem Content="Pieces"/>
                                 </ComboBox>
                             </StackPanel>
