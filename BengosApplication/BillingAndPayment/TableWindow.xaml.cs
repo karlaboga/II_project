@@ -9,7 +9,7 @@ namespace BillingAndPayment;
 
 public partial class TableWindow : Window
 {
-    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True";
     private List<Table> tables = new();
     private List<Dish> allDishes = new();
     private int? selectedTableId;
