@@ -376,6 +376,16 @@
                 <Button x:Name="BtnPay" Content="Pay Now" Height="42" Margin="5"
                         Background="#4A2D1C" Foreground="#F2F1F0" BorderThickness="0"
                         Cursor="Hand" FontWeight="Bold" FontSize="13" Click="BtnPay_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" Value="0.35"/>
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
