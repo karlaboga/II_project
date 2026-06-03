@@ -20,7 +20,7 @@ public partial class MenuViewer : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-            using var cmd = new SqlCommand("SELECT Name, Description, Price, Category FROM Dishes ORDER BY Category, Name", conn);
+            using var cmd = new SqlCommand("SELECT Name, Description, Price, Category, ImageUrl FROM Dishes ORDER BY Category, Name", conn);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -29,7 +29,8 @@ public partial class MenuViewer : Window
                     Name = reader["Name"]?.ToString() ?? "",
                     Description = reader["Description"]?.ToString() ?? "",
                     Price = Convert.ToDouble(reader["Price"]),
-                    Category = reader["Category"]?.ToString() ?? ""
+                    Category = reader["Category"]?.ToString() ?? "",
+                    ImageUrl = reader["ImageUrl"]?.ToString() ?? ""
                 });
             }
         }
@@ -60,5 +61,6 @@ public class DishItem
     public double Price { get; set; }
     public string Category { get; set; } = "";
     public string PriceDisplay => $"{Price:0.00} RON";
+    public string ImageUrl { get; set; } = "";
 
 }
