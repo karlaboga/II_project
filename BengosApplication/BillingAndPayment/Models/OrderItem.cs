@@ -10,5 +10,8 @@ namespace BillingAndPayment.Models
         public double Total => Quantity * Price;
 
         public string StatusItem { get; set; } = "Pending";
+
+        public bool HasInsufficientIngredients { get; set; }
+        public string WarningText => HasInsufficientIngredients ? "⚠ Insuficient ingredients" : "";
     }
 }

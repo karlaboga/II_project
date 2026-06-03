@@ -329,6 +329,7 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
+
             using var cmd = new SqlCommand(
                 "SELECT Name, Quantity, Price, ISNULL(StatusItem, 'Pending') AS StatusItem FROM OrderItems WHERE OrderId=@oid ORDER BY Id", conn);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
@@ -343,6 +344,38 @@ public partial class TableWindow : Window
                     StatusItem = rdr["StatusItem"]?.ToString() ?? "Pending"
                 });
             }
+            rdr.Close();
+
+            var insufficientDishes = new HashSet<string>();
+            using var checkCmd = new SqlCommand(@"
+                SELECT oi.Name AS DishName
+                FROM OrderItems oi
+                INNER JOIN Dishes d ON oi.Name = d.Name
+                INNER JOIN DishIngredients di ON di.DishId = d.Id
+                INNER JOIN Produses p ON p.Id = di.ProductId
+                WHERE oi.OrderId = @oid
+                  AND p.Quantity < (di.QuantityRequired * oi.Quantity)
+                GROUP BY oi.Name", conn);
+            checkCmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+            using var checkReader = checkCmd.ExecuteReader();
+            while (checkReader.Read())
+            {
+                string dishName = checkReader["DishName"]?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(dishName))
+                    insufficientDishes.Add(dishName);
+            }
+            checkReader.Close();
+
+            bool hasInsufficient = false;
+            foreach (var item in items)
+            {
+                if (insufficientDishes.Contains(item.Name))
+                {
+                    item.HasInsufficientIngredients = true;
+                    hasInsufficient = true;
+                }
+            }
+            BtnToKitchen.IsEnabled = !hasInsufficient;
         }
         catch (Exception ex)
         {
