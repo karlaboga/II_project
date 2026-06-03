@@ -49,7 +49,7 @@
                         <TextBlock Text="Welcome to your workspace." FontSize="28" FontWeight="Light" Foreground="#F2F1F0" TextWrapping="Wrap" LineHeight="36"/>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="2" Text="v2.4.0 • Core HQ Control" FontSize="11" Foreground="#F2F1F0" Opacity="0.3"/>
+                   
                 </Grid>
             </Border>
 
