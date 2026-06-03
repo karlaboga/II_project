@@ -187,11 +187,17 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" FontSize="22" FontWeight="Bold" Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,0,0,15">
-                    <TextBlock.Inlines>
-                        <Run Text="Tables"/>
-                    </TextBlock.Inlines>
-                </TextBlock>
+                <Grid Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="#4A2D1C" HorizontalAlignment="Center">
+                        <TextBlock.Inlines>
+                            <Run Text="Tables"/>
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <Button x:Name="BtnRefresh" Content="🔄" Width="32" Height="32"
+                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                            Background="Transparent" Foreground="#4A2D1C"
+                            FontSize="16" Cursor="Hand" Click="BtnRefresh_Click"/>
+                </Grid>
 
                 <ListBox Grid.Row="1" x:Name="TableList" 
                          Background="Transparent" BorderThickness="0" 
