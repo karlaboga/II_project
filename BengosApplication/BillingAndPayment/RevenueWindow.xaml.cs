@@ -4,6 +4,7 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using System.Windows.Threading;
 
 namespace BillingAndPayment;
 
@@ -13,7 +14,7 @@ public partial class RevenueWindow : Window
 
     private static readonly SKColor[] Palette =
     {
-        SKColor.Parse("#FFE6A7"),
+        SKColor.Parse("#FFFFFF"),
         SKColor.Parse("#4A2D1C"),
         SKColor.Parse("#905327"),
         SKColor.Parse("#C9A3B5"),
@@ -21,16 +22,32 @@ public partial class RevenueWindow : Window
         SKColor.Parse("#7A5A68"),
     };
 
+    private DispatcherTimer? refreshTimer;
+
     public RevenueWindow()
     {
         InitializeComponent();
         FromDatePicker.SelectedDate = DateTime.Today;
         ToDatePicker.SelectedDate = DateTime.Today;
         LoadData();
+        StartAutoRefresh();
+    }
+
+    private void StartAutoRefresh()
+    {
+        refreshTimer = new DispatcherTimer();
+        refreshTimer.Interval = TimeSpan.FromSeconds(30);
+        refreshTimer.Tick += (s, e) => LoadData();
+        refreshTimer.Start();
     }
 
     private void BtnLoad_Click(object sender, RoutedEventArgs e) => LoadData();
-    private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
+
+    private void BtnClose_Click(object sender, RoutedEventArgs e)
+    {
+        refreshTimer?.Stop();
+        Close();
+    }
 
     private void LoadData()
     {
@@ -157,10 +174,8 @@ public partial class RevenueWindow : Window
 
         TxtPodium1.Text = podiums.Count > 0 ? podiums[0].DishName : "—";
         TxtPodium1Qty.Text = podiums.Count > 0 ? $"{podiums[0].Quantity} buc" : "";
-
         TxtPodium2.Text = podiums.Count > 1 ? podiums[1].DishName : "—";
         TxtPodium2Qty.Text = podiums.Count > 1 ? $"{podiums[1].Quantity} buc" : "";
-
         TxtPodium3.Text = podiums.Count > 2 ? podiums[2].DishName : "—";
         TxtPodium3Qty.Text = podiums.Count > 2 ? $"{podiums[2].Quantity} buc" : "";
     }
