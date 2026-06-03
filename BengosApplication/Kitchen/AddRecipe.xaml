@@ -318,7 +318,13 @@
 
                             <StackPanel Grid.Column="2" Margin="0,0,10,0">
                                 <TextBlock Text="Unit Needed:" FontSize="12" FontWeight="Bold" Foreground="#4A2D1C" Margin="0,0,0,4"/>
-                                <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}"/>
+                                <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}">
+                                    <ComboBoxItem Content="Kilograms"/>
+                                    <ComboBoxItem Content="Grams"/>
+                                    <ComboBoxItem Content="Liters"/>
+                                    <ComboBoxItem Content="Milliliters"/>
+                                    <ComboBoxItem Content="Pieces"/>
+                                </ComboBox>
                             </StackPanel>
 
                             <Button Grid.Column="3" x:Name="BtnAddIngredientRow"
@@ -357,7 +363,7 @@
                               FontSize="14">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="2*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Qty Required" Binding="{Binding Quantity}" Width="1*"/>
+                            <DataGridTextColumn Header="Qty Required" Binding="{Binding Quantity, StringFormat={}{0:0.##}}" Width="1*"/>
                             <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="1*" IsReadOnly="True"/>
                             <DataGridTemplateColumn Width="60">
                                 <DataGridTemplateColumn.CellTemplate>
