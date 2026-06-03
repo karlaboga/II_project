@@ -13,9 +13,9 @@ public partial class RevenueWindow : Window
 
     private static readonly SKColor[] Palette =
     {
+        SKColor.Parse("#FFE6A7"),
         SKColor.Parse("#4A2D1C"),
         SKColor.Parse("#905327"),
-        SKColor.Parse("#FFE6A7"),
         SKColor.Parse("#DED1C4"),
         SKColor.Parse("#E5DFD9"),
         SKColor.Parse("#DDD7D1"),
@@ -38,60 +38,42 @@ public partial class RevenueWindow : Window
         if (FromDatePicker.SelectedDate == null || ToDatePicker.SelectedDate == null) return;
         var from = FromDatePicker.SelectedDate.Value;
         var to = ToDatePicker.SelectedDate.Value;
-        LoadOrders(from, to);
+        LoadSummary(from, to);
         LoadCategoryChart(from, to);
-        LoadDailyTrend(from, to);
-        LoadTopDishes(from, to);
+        LoadPodium(from, to);
+        LoadAllProductsByQty(from, to);
     }
 
-    private void LoadOrders(DateTime from, DateTime to)
+    private void LoadSummary(DateTime from, DateTime to)
     {
-        var orders = new List<OrderSummary>();
+        int orderCount = 0;
         double totalRevenue = 0, totalDiscount = 0;
         try
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
             using var cmd = new SqlCommand(
-                @"SELECT o.Id, o.OrderDate, o.Total, o.DiscountPercent,
-                         ISNULL(t.TableNumber, 0) AS TableNumber
-                  FROM Orders o
-                  LEFT JOIN Tables t ON o.TableId = t.Id
-                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
-                  ORDER BY o.OrderDate", conn);
+                @"SELECT COUNT(*) AS Cnt, ISNULL(SUM(Total), 0) AS Rev,
+                         ISNULL(AVG(DiscountPercent), 0) AS AvgDisc
+                  FROM Orders
+                  WHERE CAST(OrderDate AS DATE) BETWEEN @from AND @to", conn);
             cmd.Parameters.AddWithValue("@from", from);
             cmd.Parameters.AddWithValue("@to", to);
             using var rdr = cmd.ExecuteReader();
-            while (rdr.Read())
+            if (rdr.Read())
             {
-                int id = Convert.ToInt32(rdr["Id"]);
-                string time = Convert.ToDateTime(rdr["OrderDate"]).ToString("HH:mm");
-                int tableNum = Convert.ToInt32(rdr["TableNumber"]);
-                double total = Convert.ToDouble(rdr["Total"]);
-                double disc = Convert.ToDouble(rdr["DiscountPercent"]);
-                orders.Add(new OrderSummary
-                {
-                    OrderId = id,
-                    Time = time,
-                    TableDisplay = tableNum > 0 ? $"Table {tableNum}" : "No Table",
-                    Subtotal = total,
-                    DiscountPercent = disc,
-                    Total = total,
-                });
-                totalRevenue += total;
-                totalDiscount += disc;
+                orderCount = Convert.ToInt32(rdr["Cnt"]);
+                totalRevenue = Convert.ToDouble(rdr["Rev"]);
+                totalDiscount = Convert.ToDouble(rdr["AvgDisc"]);
             }
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error loading orders: " + ex.Message);
+            MessageBox.Show("Error loading summary: " + ex.Message);
         }
-        DgOrders.ItemsSource = orders;
-        TxtOrderCount.Text = orders.Count.ToString();
+        TxtOrderCount.Text = orderCount.ToString();
         TxtTotalRevenue.Text = $"{totalRevenue:0.00} RON";
-        TxtAvgDiscount.Text = orders.Count > 0
-            ? $"{(totalDiscount / orders.Count):0.0}%"
-            : "0%";
+        TxtAvgDiscount.Text = $"{totalDiscount:0.00}RON";
     }
 
     private void LoadCategoryChart(DateTime from, DateTime to)
@@ -139,88 +121,28 @@ public partial class RevenueWindow : Window
         PieCategories.Series = series;
     }
 
-    private void LoadDailyTrend(DateTime from, DateTime to)
+    private void LoadPodium(DateTime from, DateTime to)
     {
-        var dates = new List<string>();
-        var revenues = new List<double>();
+        var podiums = new List<DishRevenue>();
         try
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
             using var cmd = new SqlCommand(
-                @"SELECT CAST(o.OrderDate AS DATE) AS OrderDay,
-                         SUM(o.Total) AS Revenue
-                  FROM Orders o
-                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
-                  GROUP BY CAST(o.OrderDate AS DATE)
-                  ORDER BY OrderDay", conn);
-            cmd.Parameters.AddWithValue("@from", from);
-            cmd.Parameters.AddWithValue("@to", to);
-            using var rdr = cmd.ExecuteReader();
-            while (rdr.Read())
-            {
-                dates.Add(Convert.ToDateTime(rdr["OrderDay"]).ToString("MMM dd"));
-                revenues.Add(Convert.ToDouble(rdr["Revenue"]));
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Error loading daily trend: " + ex.Message);
-        }
-
-        ChartDailyTrend.Series = new ISeries[]
-        {
-            new ColumnSeries<double>
-            {
-                Values = revenues,
-                Name = "Revenue",
-                Fill = new SolidColorPaint(Palette[0]),
-                Stroke = null,
-            }
-        };
-
-        ChartDailyTrend.XAxes = new Axis[]
-        {
-            new Axis
-            {
-                Labels = dates,
-                LabelsRotation = 45,
-            }
-        };
-
-        ChartDailyTrend.YAxes = new Axis[]
-        {
-            new Axis
-            {
-                Name = "RON",
-                NameTextSize = 12,
-                Labeler = value => value.ToString("N0"),
-            }
-        };
-    }
-
-    private void LoadTopDishes(DateTime from, DateTime to)
-    {
-        var dishes = new List<DishRevenue>();
-        try
-        {
-            using var conn = new SqlConnection(connString);
-            conn.Open();
-            using var cmd = new SqlCommand(
-                @"SELECT TOP 10 d.Name, SUM(oi.Quantity) AS Quantity,
+                @"SELECT TOP 3 d.Name, SUM(oi.Quantity) AS Quantity,
                          SUM(oi.Quantity * oi.Price) AS Revenue
                   FROM OrderItems oi
                   JOIN Dishes d ON oi.Name = d.Name
                   JOIN Orders o ON oi.OrderId = o.Id
                   WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
                   GROUP BY d.Name
-                  ORDER BY Revenue DESC", conn);
+                  ORDER BY Quantity DESC", conn);
             cmd.Parameters.AddWithValue("@from", from);
             cmd.Parameters.AddWithValue("@to", to);
             using var rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-                dishes.Add(new DishRevenue
+                podiums.Add(new DishRevenue
                 {
                     DishName = Convert.ToString(rdr["Name"])!,
                     Quantity = Convert.ToInt32(rdr["Quantity"]),
@@ -230,26 +152,61 @@ public partial class RevenueWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Error loading top dishes: " + ex.Message);
+            MessageBox.Show("Error loading podium: " + ex.Message);
         }
-        DgTopDishes.ItemsSource = dishes;
-    }
-}
 
-public class OrderSummary
-{
-    public int OrderId { get; set; }
-    public string Time { get; set; } = "";
-    public string TableDisplay { get; set; } = "";
-    public double Subtotal { get; set; }
-    public double DiscountPercent { get; set; }
-    public double Total { get; set; }
-    public string DiscountDisplay => DiscountPercent > 0 ? $"-{Subtotal * DiscountPercent / 100:0.00} ({DiscountPercent}%)" : "0.00";
-    public string TotalDisplay => $"{Total:0.00} RON";
+        TxtPodium1.Text = podiums.Count > 0 ? podiums[0].DishName : "—";
+        TxtPodium1Qty.Text = podiums.Count > 0 ? $"{podiums[0].Quantity} buc" : "";
+
+        TxtPodium2.Text = podiums.Count > 1 ? podiums[1].DishName : "—";
+        TxtPodium2Qty.Text = podiums.Count > 1 ? $"{podiums[1].Quantity} buc" : "";
+
+        TxtPodium3.Text = podiums.Count > 2 ? podiums[2].DishName : "—";
+        TxtPodium3Qty.Text = podiums.Count > 2 ? $"{podiums[2].Quantity} buc" : "";
+    }
+
+    private void LoadAllProductsByQty(DateTime from, DateTime to)
+    {
+        var dishes = new List<DishRevenue>();
+        try
+        {
+            using var conn = new SqlConnection(connString);
+            conn.Open();
+            using var cmd = new SqlCommand(
+                @"SELECT d.Name, SUM(oi.Quantity) AS Quantity,
+                         SUM(oi.Quantity * oi.Price) AS Revenue
+                  FROM OrderItems oi
+                  JOIN Dishes d ON oi.Name = d.Name
+                  JOIN Orders o ON oi.OrderId = o.Id
+                  WHERE CAST(o.OrderDate AS DATE) BETWEEN @from AND @to
+                  GROUP BY d.Name
+                  ORDER BY Quantity DESC", conn);
+            cmd.Parameters.AddWithValue("@from", from);
+            cmd.Parameters.AddWithValue("@to", to);
+            using var rdr = cmd.ExecuteReader();
+            int rank = 1;
+            while (rdr.Read())
+            {
+                dishes.Add(new DishRevenue
+                {
+                    Rank = rank++,
+                    DishName = Convert.ToString(rdr["Name"])!,
+                    Quantity = Convert.ToInt32(rdr["Quantity"]),
+                    Revenue = Convert.ToDouble(rdr["Revenue"]),
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error loading products: " + ex.Message);
+        }
+        DgProductsByQty.ItemsSource = dishes;
+    }
 }
 
 public class DishRevenue
 {
+    public int Rank { get; set; }
     public string DishName { get; set; } = "";
     public int Quantity { get; set; }
     public double Revenue { get; set; }
