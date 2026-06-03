@@ -33,7 +33,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- CLOSE BUTTON -->
             <Button Grid.Row="0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
@@ -61,7 +60,6 @@
                 </Button.Template>
             </Button>
 
-            <!-- HEADER -->
             <Border Grid.Row="1"
                     Background="#8A3F4A"
                     CornerRadius="12"
@@ -77,13 +75,12 @@
                            HorizontalAlignment="Center"/>
             </Border>
 
-            <!-- DATA GRID -->
             <Border Grid.Row="2"
                     Background="#FFFFFF"
                     BorderBrush="#E5DFD9"
                     BorderThickness="1"
                     CornerRadius="16"
-                    Padding="15">
+                    Padding="5">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="2" Opacity="0.02" Color="#4A2D1C"/>
                 </Border.Effect>
@@ -94,27 +91,37 @@
                           BorderThickness="0"
                           Foreground="#4A2D1C"
                           RowBackground="#FFFFFF"
-                          AlternatingRowBackground="#F2F1F0"
+                          AlternatingRowBackground="#F9F8F7"
                           HeadersVisibility="Column"
                           GridLinesVisibility="Horizontal"
                           HorizontalGridLinesBrush="#E5DFD9"
-                          RowHeight="42">
+                          RowHeight="42"
+                          FontSize="13">
 
                     <DataGrid.Resources>
                         <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#4A2D1C"/>
+                            <Setter Property="Background" Value="#8B7365"/>
                             <Setter Property="Foreground" Value="#F2F1F0"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="FontSize" Value="13"/>
                             <Setter Property="Padding" Value="12,10"/>
                             <Setter Property="BorderThickness" Value="0"/>
                         </Style>
 
-                        <Style TargetType="DataGridRow">
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="12,0"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="DataGridCell">
+                                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                            <ContentPresenter VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#8B7365"/>
-                                    <Setter Property="Foreground" Value="#F2F1F0"/>
+                                    <Setter Property="Background" Value="#E5DFD9"/>
+                                    <Setter Property="Foreground" Value="#4A2D1C"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -138,7 +145,7 @@
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 CornerRadius="6"
                                                 SnapsToDevicePixels="True">
-                                            <ScrollViewer x:Name="PART_ContentHost" Margin="0"/>
+                                            <ScrollViewer x:Name="PART_ContentHost" Margin="0" VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
@@ -157,11 +164,32 @@
                     </DataGrid.Resources>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Product" Binding="{Binding Name}" Width="*"/>
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
-                        <DataGridTextColumn Header="Min Stock" Binding="{Binding MinStock}" Width="100"/>
-                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="130"/>
+                        <DataGridTextColumn Header="Product" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Category" Binding="{Binding Category}" IsReadOnly="True" Width="*"/>
+
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" IsReadOnly="True" Width="100">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Min Stock" Binding="{Binding MinStock}" IsReadOnly="True" Width="100">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" IsReadOnly="True" Width="130">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
 
                         <DataGridTemplateColumn Header="Quantity to Add" Width="140">
                             <DataGridTemplateColumn.CellTemplate>
