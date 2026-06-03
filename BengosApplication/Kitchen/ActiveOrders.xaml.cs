@@ -12,6 +12,7 @@ namespace Kitchen
     public partial class ActiveOrders : Window
     {
         private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+
         private DispatcherTimer autoRefreshTimer;
 
         public ActiveOrders()
@@ -46,6 +47,7 @@ namespace Kitchen
                 string orderQuery = @"
                     SELECT 
                         o.Id AS OrderId, 
+                        o.OrderNumber,
                         ISNULL(o.OrderDate, GETDATE()) AS Timestamp, 
                         t.TableNumber AS TableNumber
                     FROM Orders o
@@ -59,6 +61,7 @@ namespace Kitchen
                 List<int> orderIds = new();
                 Dictionary<int, DateTime> orderTimes = new();
                 Dictionary<int, int> tableNumbers = new();
+                Dictionary<int, int> orderNumbers = new();
 
                 while (rdrOrders.Read())
                 {
@@ -66,6 +69,7 @@ namespace Kitchen
                     orderIds.Add(id);
                     orderTimes[id] = Convert.ToDateTime(rdrOrders["Timestamp"]);
                     tableNumbers[id] = Convert.ToInt32(rdrOrders["TableNumber"]);
+                    orderNumbers[id] = Convert.ToInt32(rdrOrders["OrderNumber"]);
                 }
                 rdrOrders.Close();
 
@@ -111,7 +115,8 @@ namespace Kitchen
 
                     activeOrders.Add(new KitchenOrderViewModel
                     {
-                        OrderId = $"Order #{oid}",
+                        OrderDisplay = $"Order #{orderNumbers[oid]}",
+                        OrderNumber = orderNumbers[oid],
                         TableNumber = tableNumbers[oid],
                         Timestamp = orderTimes[oid],
                         TotalPrepTime = (int)Math.Round(averageTime),
@@ -143,29 +148,36 @@ namespace Kitchen
         {
             if (sender is Button btn && btn.DataContext is KitchenOrderViewModel completedOrder)
             {
-                string idString = completedOrder.OrderId.Replace("Order #", "").Trim();
-                if (int.TryParse(idString, out int oid))
+                try
                 {
                     using var conn = new SqlConnection(connString);
                     conn.Open();
-                    using var transaction = conn.BeginTransaction();
 
+                    using var getIdCmd = new SqlCommand(
+                        "SELECT Id FROM Orders WHERE OrderNumber=@onum AND Status='ToKitchen'", conn);
+                    getIdCmd.Parameters.AddWithValue("@onum", completedOrder.OrderNumber);
+                    var result = getIdCmd.ExecuteScalar();
+                    if (result == null)
+                    {
+                        MessageBox.Show("Comanda nu a fost găsită în baza de date.");
+                        return;
+                    }
+                    int oid = Convert.ToInt32(result);
+
+                    using var transaction = conn.BeginTransaction();
                     try
                     {
-                        // 1. Schimbăm statusul comenzii principale în 'ReadyToServe'
-                        using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn, transaction);
+                        using var cmd = new SqlCommand(
+                            "UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn, transaction);
                         cmd.Parameters.AddWithValue("@oid", oid);
                         cmd.ExecuteNonQuery();
 
-                        // 2. Schimbăm statusul produselor din comandă în 'Ready'
-                        string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
-                        using var cmdItems = new SqlCommand(updateItemsQuery, conn, transaction);
+                        using var cmdItems = new SqlCommand(
+                            "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid", conn, transaction);
                         cmdItems.Parameters.AddWithValue("@oid", oid);
                         cmdItems.ExecuteNonQuery();
 
-                        // 3. --- SCĂDEREA AUTOMATĂ A INVENTARULUI (CORECTATĂ) ---
-                        // Legăm corect: ItemComandat -> NumeReteta -> IngredienteReteta -> ProdusDinInventar
-                        string deductStockQuery = @"
+                        string deductStock = @"
                             UPDATE p
                             SET p.Quantity = p.Quantity - (di.QuantityRequired * oi.Quantity)
                             FROM dbo.Produses p
@@ -174,26 +186,29 @@ namespace Kitchen
                             INNER JOIN dbo.OrderItems oi ON d.Name = oi.Name
                             WHERE oi.OrderId = @oid";
 
-                        using var cmdDeduct = new SqlCommand(deductStockQuery, conn, transaction);
+                        using var cmdDeduct = new SqlCommand(deductStock, conn, transaction);
                         cmdDeduct.Parameters.AddWithValue("@oid", oid);
                         cmdDeduct.ExecuteNonQuery();
-                        // ------------------------------------------------------
 
                         transaction.Commit();
 
-                        MessageBox.Show($"Produsele din comanda #{oid} sunt gata, iar ingredientele au fost scăzute din stoc!", "Comandă Finalizată", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show($"Produsele din comanda #{completedOrder.OrderNumber} sunt gata, iar ingredientele au fost scăzute din stoc!",
+                                        "Comandă Finalizată", MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadActiveOrders();
 
                         if (BillingAndPayment.TableWindow.Instance != null)
-                        {
                             BillingAndPayment.TableWindow.Instance.LoadTables();
-                        }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Eroare la finalizarea comenzii și scăderea stocului: " + ex.Message, "Eroare Core", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Eroare la finalizarea comenzii și scăderea stocului.",
+                                        "Eroare", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Eroare la conexiune: " + ex.Message);
                 }
             }
         }

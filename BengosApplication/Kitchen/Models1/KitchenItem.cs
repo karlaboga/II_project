@@ -14,9 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 namespace Kitchen.Models1
 {
-    class KitchenItem
+   public class KitchenItem
     {
         public int Quantity { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = " ";
     }
 }

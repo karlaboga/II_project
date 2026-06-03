@@ -7,17 +7,16 @@ using System.Windows.Media;
 
 namespace BillingAndPayment;
 
-
 public partial class TableWindow : Window
 {
-    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True";
     private List<Table> tables = new();
     private List<Dish> allDishes = new();
     private int? selectedTableId;
     private int? currentOrderId;
+    private int? currentOrderNumber;
     private double discountPercent;
 
-    // Instanță statică Singleton pentru acces direct din proiectul Kitchen
     public static TableWindow Instance { get; private set; }
 
     public TableWindow()
@@ -59,23 +58,15 @@ public partial class TableWindow : Window
         {
             var matchedTable = tables.FirstOrDefault(t => t.Id == selectedTableId.Value);
             if (matchedTable != null)
-            {
-                // Activăm selecția strict în memorie pentru masa curentă
                 matchedTable.IsSelected = true;
-            }
         }
-        // Dacă masa selectată s-a eliberat din DB în urma plății, resetăm panoul din dreapta
         if (selectedTableId.HasValue)
         {
             var currentTable = tables.FirstOrDefault(t => t.Id == selectedTableId.Value);
             if (currentTable == null || currentTable.Status == "Free")
-            {
                 ResetOrderPanel();
-            }
             else if (currentOrderId.HasValue)
-            {
                 LoadOrderItems();
-            }
         }
     }
 
@@ -105,14 +96,11 @@ public partial class TableWindow : Window
 
     private void TableCard_Click(object sender, RoutedEventArgs e)
     {
-        // Forțăm elementul Border pe care am dat click să primească Focusul nativ de Windows pentru umbră
         if (sender is Border border && border.Tag is int tableId)
         {
             border.Focus();
-
             var table = tables.FirstOrDefault(t => t.Id == tableId);
             if (table == null) return;
-
             selectedTableId = tableId;
 
             if (table.Status == "Occupied")
@@ -121,21 +109,15 @@ public partial class TableWindow : Window
                 return;
             }
 
-            // DACĂ MASA ESTE LIBERĂ (FREE):
-            // Cod curat: lăsăm starea neatinsă. Ea rămâne Free pe ecran și în DB!
             currentOrderId = null;
+            currentOrderNumber = null;
             discountPercent = 0;
-
             DgOrder.ItemsSource = null;
             RefreshTotals();
-            EnableOrderPanel(table); // Permite ospătarului să adauge produse în dreapta
-
-            
-
+            EnableOrderPanel(table);
         }
     }
 
-    // Metodă automată care generează comanda în DB DOAR când punem primul produs în listă
     private void EnsureOrderExists(int tableId)
     {
         if (currentOrderId.HasValue) return;
@@ -145,14 +127,19 @@ public partial class TableWindow : Window
             using var conn = new SqlConnection(connString);
             conn.Open();
 
-            using var cmd = new SqlCommand(
-                @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
-                  OUTPUT INSERTED.Id
-                  VALUES (0, 0, 'Pending', @tid)", conn);
+            using var cmd = new SqlCommand(@"
+                INSERT INTO Orders (Total, DiscountPercent, Status, TableId, OrderNumber)
+                OUTPUT INSERTED.Id, INSERTED.OrderNumber
+                VALUES (0, 0, 'Pending', @tid,
+                    ISNULL((SELECT MAX(OrderNumber) FROM Orders WHERE CAST(ISNULL(OrderDate, GETDATE()) AS DATE) = CAST(GETDATE() AS DATE)), 0) + 1)", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
-            currentOrderId = (int)cmd.ExecuteScalar();
+            using var rdr = cmd.ExecuteReader();
+            if (rdr.Read())
+            {
+                currentOrderId = Convert.ToInt32(rdr["Id"]);
+                currentOrderNumber = Convert.ToInt32(rdr["OrderNumber"]);
+            }
 
-            // Schimbăm starea în 'Occupied' în DB abia ACUM
             using var upd = new SqlCommand("UPDATE Tables SET Status='Occupied' WHERE Id=@id", conn);
             upd.Parameters.AddWithValue("@id", tableId);
             upd.ExecuteNonQuery();
@@ -171,18 +158,20 @@ public partial class TableWindow : Window
             conn.Open();
 
             using var cmd = new SqlCommand(
-                "SELECT Id, DiscountPercent FROM Orders WHERE TableId=@tid AND Status <> 'Paid'", conn);
+                "SELECT Id, DiscountPercent, OrderNumber FROM Orders WHERE TableId=@tid AND Status <> 'Paid'", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
             using var rdr = cmd.ExecuteReader();
             if (rdr.Read())
             {
                 currentOrderId = Convert.ToInt32(rdr["Id"]);
                 discountPercent = Convert.ToDouble(rdr["DiscountPercent"]);
+                currentOrderNumber = Convert.ToInt32(rdr["OrderNumber"]);
             }
             else
             {
                 rdr.Close();
                 currentOrderId = null;
+                currentOrderNumber = null;
                 return;
             }
         }
@@ -226,7 +215,6 @@ public partial class TableWindow : Window
         {
             try
             {
-                // Asigură crearea comenzii și trecerea mesei în Occupied
                 EnsureOrderExists(selectedTableId.Value);
 
                 using var conn = new SqlConnection(connString);
@@ -263,7 +251,6 @@ public partial class TableWindow : Window
                 MessageBox.Show("Error adding dish: " + ex.Message);
             }
 
-            // Reîncărcăm totul curat. Acum masa devine structural Occupied în DB și se va redesena ca atare!
             LoadTables();
         }
     }
@@ -298,11 +285,9 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-
             using var cmd = new SqlCommand(
                 "SELECT Name, Quantity, Price, ISNULL(StatusItem, 'Pending') AS StatusItem FROM OrderItems WHERE OrderId=@oid ORDER BY Id", conn);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
-
             using var rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
@@ -416,6 +401,7 @@ public partial class TableWindow : Window
     private void ResetOrderPanel()
     {
         currentOrderId = null;
+        currentOrderNumber = null;
         selectedTableId = null;
         discountPercent = 0;
         OrderPanel.IsEnabled = false;
@@ -497,7 +483,7 @@ public partial class TableWindow : Window
             cmdItemsStatus.Parameters.AddWithValue("@oid", currentOrderId.Value);
             cmdItemsStatus.ExecuteNonQuery();
 
-            MessageBox.Show($"Comanda #{currentOrderId.Value} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Comanda #{currentOrderNumber} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
 
             LoadTables();
             LoadOrderItems();
