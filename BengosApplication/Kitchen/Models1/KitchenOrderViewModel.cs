@@ -15,13 +15,14 @@ using System.Windows.Shapes;
 
 namespace Kitchen.Models1
 {
-    class KitchenOrderViewModel
+    public class KitchenOrderViewModel
     {
-        public string OrderId { get; set; }
+        public string OrderDisplay { get; set; } = "";
+        public int OrderNumber { get; set; }
         public int TableNumber { get; set; }
         public DateTime Timestamp { get; set; }
-        public int TotalPrepTime { get; set; } // Va primi timpul mediu rotunjit
-        public List<KitchenItem> Items { get; set; }
+        public int TotalPrepTime { get; set; }
+        public List<KitchenItem> Items { get; set; } = new();
     }
 }
 

@@ -158,7 +158,7 @@
 
                                                 <Grid>
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Foreground="#F2F1F0" FontSize="15"/>
+                                                        <TextBlock Text="{Binding OrderDisplay}" FontWeight="Bold" Foreground="#F2F1F0" FontSize="15"/>
                                                         <TextBlock Text=" — " FontWeight="Bold" Foreground="#8B7365" FontSize="15"/>
                                                         <TextBlock Text="{Binding TableNumber, StringFormat='Table {0}'}" FontWeight="Bold" Foreground="#FFFFFF" FontSize="15"/>
                                                     </StackPanel>
