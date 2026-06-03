@@ -122,6 +122,45 @@ namespace Kitchen
             }
         }
 
+        // --- NOU: FILTRAREA DINAMICĂ A UNITĂȚILOR DE MĂSURĂ ---
+        private void ComboInventoryProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboInventoryProducts.SelectedItem is Product selectedProd)
+            {
+                List<string> allowedUnits = new List<string>();
+                string baseUnit = selectedProd.Unit?.Trim();
+
+                // Verificăm unitatea de bază din baza de date (Produses -> Unit)
+                if (string.Equals(baseUnit, "Kilograms", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(baseUnit, "KG", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(baseUnit, "Grams", StringComparison.OrdinalIgnoreCase))
+                {
+                    allowedUnits.Add("Grams");
+                    allowedUnits.Add("Kilograms");
+                }
+                else if (string.Equals(baseUnit, "Liters", StringComparison.OrdinalIgnoreCase) ||
+                         string.Equals(baseUnit, "L", StringComparison.OrdinalIgnoreCase) ||
+                         string.Equals(baseUnit, "Mililiters", StringComparison.OrdinalIgnoreCase) ||
+                         string.Equals(baseUnit, "Milliliters", StringComparison.OrdinalIgnoreCase))
+                {
+                    allowedUnits.Add("Mililiters");
+                    allowedUnits.Add("Liters");
+                }
+                else
+                {
+                    // Pentru Pieces, Packs, Units sau orice altceva nespecificat
+                    allowedUnits.Add(string.IsNullOrEmpty(baseUnit) ? "Pieces" : baseUnit);
+                }
+
+                ComboIngredientUnit.ItemsSource = allowedUnits;
+                ComboIngredientUnit.SelectedIndex = 0; // Selectează automat prima opțiune disponibilă
+            }
+            else
+            {
+                ComboIngredientUnit.ItemsSource = null;
+            }
+        }
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             // 1. Validare Nume și Categorie
@@ -157,7 +196,7 @@ namespace Kitchen
 
                     if (editingDishId == 0)
                     {
-                        // CAZUL A: INSERARE REȚETĂ NOUĂ
+                        // AZUL A: INSERARE REȚETĂ NOUĂ
                         string dishQuery = @"
                             INSERT INTO [dbo].[Dishes] (Name, Price, Category, PreparationTime, Alergies, Steps, Description)
                             OUTPUT INSERTED.Id
@@ -243,7 +282,9 @@ namespace Kitchen
                     return;
                 }
 
-                string selectedUnit = (ComboIngredientUnit.SelectedItem as ComboBoxItem)?.Content?.ToString()?.Trim() ?? "";
+                // MODIFICAT: Deoarece acum legăm o listă simplă de string-uri în ComboBox,
+                // citim direct textul selectat, fără conversie prin ComboBoxItem.
+                string selectedUnit = ComboIngredientUnit.SelectedItem?.ToString()?.Trim() ?? "";
 
                 if (selectedUnit.Equals("Grams", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("g", StringComparison.OrdinalIgnoreCase))
                 {
