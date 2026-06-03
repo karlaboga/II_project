@@ -355,16 +355,38 @@
                 </ListBox>
 
                 <DataGrid Grid.Row="3" x:Name="DgOrder" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" MaxHeight="160" Background="#FFFFFF" BorderBrush="#8B7365" MinRowHeight="35" GridLinesVisibility="Horizontal">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasInsufficientIngredients}" Value="True">
+                                    <Setter Property="Foreground" Value="#CC0000"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="TextWrapping" Value="Wrap"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="Padding" Value="6,4"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="Item" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" Padding="6,4,6,0"/>
+                                        <TextBlock Text="{Binding WarningText}" Foreground="#CC0000" FontSize="11" FontWeight="SemiBold" Padding="6,0,6,2">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding HasInsufficientIngredients}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="65"/>
                         <DataGridTextColumn Header="Price" Binding="{Binding PriceDisplay}" Width="80"/>
@@ -429,6 +451,9 @@
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="border" Property="Background" Value="#4A2D1C"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="border" Property="Background" Value="#C0B0A0"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

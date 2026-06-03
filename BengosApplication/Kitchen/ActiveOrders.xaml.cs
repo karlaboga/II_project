@@ -164,6 +164,41 @@ namespace Kitchen
                     }
                     int oid = Convert.ToInt32(result);
 
+                    var insufficient = new List<string>();
+                    using (var checkCmd = new SqlCommand(@"
+                        SELECT d.Name AS DishName, p.Name AS Ingredient,
+                               SUM(di.QuantityRequired * oi.Quantity) AS Needed,
+                               MAX(p.Quantity) AS Available
+                        FROM OrderItems oi
+                        INNER JOIN Dishes d ON oi.Name = d.Name
+                        INNER JOIN DishIngredients di ON di.DishId = d.Id
+                        INNER JOIN Produses p ON p.Id = di.ProductId
+                        WHERE oi.OrderId = @oid
+                        GROUP BY d.Name, p.Name
+                        HAVING MAX(p.Quantity) < SUM(di.QuantityRequired * oi.Quantity)", conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@oid", oid);
+                        using var checkRdr = checkCmd.ExecuteReader();
+                        while (checkRdr.Read())
+                        {
+                            string dish = checkRdr["DishName"]?.ToString() ?? "";
+                            string ing = checkRdr["Ingredient"]?.ToString() ?? "";
+                            double needed = Convert.ToDouble(checkRdr["Needed"]);
+                            double available = Convert.ToDouble(checkRdr["Available"]);
+                            insufficient.Add($"  • {dish}: needs {needed}× {ing}, only {available} in stock");
+                        }
+                    }
+
+                    if (insufficient.Count > 0)
+                    {
+                        MessageBox.Show(
+                            "Cannot complete order — insufficient stock:\n" +
+                            string.Join("\n", insufficient),
+                            "Insufficient Stock", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        LoadActiveOrders();
+                        return;
+                    }
+
                     using var transaction = conn.BeginTransaction();
                     try
                     {
