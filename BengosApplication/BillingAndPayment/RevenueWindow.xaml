@@ -3,127 +3,212 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         Title="Revenue Report"
-        Height="650" Width="1000" MinHeight="600" MinWidth="900"
+        Height="650" Width="1000" MinHeight="650" MinWidth="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#DDD7D1"
+        Background="Transparent"
         FontFamily="Segoe UI"
         TextOptions.TextFormattingMode="Display"
-        TextOptions.TextRenderingMode="ClearType">
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Border CornerRadius="22" Margin="10">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
+
+    <Border CornerRadius="24" Margin="10">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="#DDD7D1" Offset="0"/>
                 <GradientStop Color="#F2F1F0" Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
-            <Grid Margin="20,15,20,15">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <Grid>
+            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,20,0" Panel.ZIndex="99"
+                    Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C"
+                    FontWeight="Bold" Click="BtnClose_Click" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="xBorder" Background="{TemplateBinding Background}" CornerRadius="16">
+                            <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="xBorder" Property="Background" Value="#E5DFD9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
-                <Button HorizontalAlignment="Right" VerticalAlignment="Top"
-                        Margin="0,-5,-15,0" Width="30" Height="30"
-                        Background="#4A2D1C" Foreground="#FFFFFF"
-                        FontWeight="Bold" Click="BtnClose_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
-                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#905327"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <Grid Margin="20,15,20,15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Margin="0,5,0,8">
-                    <TextBlock Text="📊 Revenue Report"
-                               FontSize="22" FontWeight="Bold"
-                               Foreground="#4A2D1C"
-                               HorizontalAlignment="Center"
-                               Margin="0,0,0,6"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <DatePicker x:Name="FromDatePicker"
-                                    Background="#FFFFFF" BorderBrush="#DED1C4"
-                                    Foreground="#4A2D1C" FontSize="12"/>
-                        <TextBlock Text="  →  " FontSize="16" FontWeight="Bold"
-                                   Foreground="#4A2D1C" VerticalAlignment="Center"/>
-                        <DatePicker x:Name="ToDatePicker"
-                                    Background="#FFFFFF" BorderBrush="#DED1C4"
-                                    Foreground="#4A2D1C" FontSize="12"/>
-                        <Button Content="Load" Width="70" Height="28" Margin="10,0,0,0"
-                                Background="#4A2D1C" Foreground="#FFFFFF"
-                                BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"
-                                Click="BtnLoad_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="14">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#905327"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                    <StackPanel Grid.Row="0" Margin="0,5,0,8">
+                        <TextBlock Text="📊 Revenue Report"
+                                   FontSize="22" FontWeight="Bold"
+                                   Foreground="#4A2D1C"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <DatePicker x:Name="FromDatePicker"
+                                        Background="#FFFFFF" BorderBrush="#DED1C4"
+                                        Foreground="#4A2D1C" FontSize="12"/>
+                            <TextBlock Text="  →  " FontSize="16" FontWeight="Bold"
+                                       Foreground="#4A2D1C" VerticalAlignment="Center"/>
+                            <DatePicker x:Name="ToDatePicker"
+                                        Background="#FFFFFF" BorderBrush="#DED1C4"
+                                        Foreground="#4A2D1C" FontSize="12"/>
+
+                            <Button Content="Load" Width="70" Height="28" Margin="10,0,0,0"
+                                    Background="#8B7365" Foreground="#F2F1F0"
+                                    BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"
+                                    Click="BtnLoad_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="14">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#4A2D1C"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
 
-                <!-- ROW 1: Summary card + Categories PieChart -->
-                <Grid Grid.Row="1" Margin="0,0,0,8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Summary card -->
-                    <Border Grid.Column="0" Background="#FFFFFF" CornerRadius="14" Margin="0,0,8,0"
-                            BorderBrush="#DED1C4" BorderThickness="1" Padding="16">
+                        <Border Grid.Column="0" Background="#FFFFFF" CornerRadius="14" Margin="0,0,8,0"
+                                BorderBrush="#DED1C4" BorderThickness="1" Padding="16">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
+                            </Border.Effect>
+                            <StackPanel VerticalAlignment="Center">
+                                <StackPanel Margin="0,6,0,10">
+                                    <TextBlock Text="🛒  TOTAL ORDERS" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="#905327" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtOrderCount" Text="0" FontSize="26" FontWeight="Bold"
+                                               Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <Rectangle Height="1" Fill="#DED1C4" Margin="20,0"/>
+                                <StackPanel Margin="0,10,0,10">
+                                    <TextBlock Text="📉  TOTAL DISCOUNT" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="#905327" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtAvgDiscount" Text="0.00 RON" FontSize="20" FontWeight="Bold"
+                                               Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <Rectangle Height="1" Fill="#DED1C4" Margin="20,0"/>
+                                <StackPanel Margin="0,10,0,6">
+                                    <TextBlock Text="💰  TOTAL REVENUE" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="#905327" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="TxtTotalRevenue" Text="0.00 RON" FontSize="20" FontWeight="Bold"
+                                               Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="14" Margin="8,0,0,0"
+                                BorderBrush="#DED1C4" BorderThickness="1" Padding="8">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
+                            </Border.Effect>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="📂  Categories" FontSize="13" FontWeight="Bold"
+                                           Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,4"/>
+                                <lvc:PieChart x:Name="PieCategories" Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Border Grid.Row="2" Background="#FFFFFF" CornerRadius="14" Margin="0,0,0,8"
+                            BorderBrush="#DED1C4" BorderThickness="1" Padding="12,10">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
                         </Border.Effect>
-                        <StackPanel VerticalAlignment="Center">
-                            <StackPanel Margin="0,6,0,10">
-                                <TextBlock Text="🛒  TOTAL ORDERS" FontSize="11" FontWeight="SemiBold"
-                                           Foreground="#905327" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="TxtOrderCount" Text="0" FontSize="26" FontWeight="Bold"
-                                           Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-                            <Rectangle Height="1" Fill="#DED1C4" Margin="20,0"/>
-                            <StackPanel Margin="0,10,0,10">
-                                <TextBlock Text="📉  TOTAL DISCOUNT" FontSize="11" FontWeight="SemiBold"
-                                           Foreground="#905327" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="TxtAvgDiscount" Text="0.00 RON" FontSize="20" FontWeight="Bold"
-                                           Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-                            <Rectangle Height="1" Fill="#DED1C4" Margin="20,0"/>
-                            <StackPanel Margin="0,10,0,6">
-                                <TextBlock Text="💰  TOTAL REVENUE" FontSize="11" FontWeight="SemiBold"
-                                           Foreground="#905327" HorizontalAlignment="Center"/>
-                                <TextBlock x:Name="TxtTotalRevenue" Text="0.00 RON" FontSize="20" FontWeight="Bold"
-                                           Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,0"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="🏆  Top Products" FontSize="14" FontWeight="Bold"
+                                       Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Background="#E5DFD9" CornerRadius="10" Margin="4" Padding="8"
+                                        BorderBrush="#DDD7D1" BorderThickness="1">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="🥈" FontSize="22" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtPodium2" Text="—" FontSize="12" FontWeight="Bold"
+                                                   Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,3,0,2"/>
+                                        <TextBlock x:Name="TxtPodium2Qty" Text="0 buc" FontSize="10"
+                                                   Foreground="#905327" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="1" Background="#905327" CornerRadius="10" Margin="4" Padding="10"
+                                        BorderBrush="#DED1C4" BorderThickness="1">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.10" Color="#905327"/>
+                                    </Border.Effect>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="🥇" FontSize="26" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtPodium1" Text="—" FontSize="13" FontWeight="Bold"
+                                                   Foreground="#FFFFFF" HorizontalAlignment="Center" Margin="0,3,0,2"/>
+                                        <TextBlock x:Name="TxtPodium1Qty" Text="0 buc" FontSize="10"
+                                                   Foreground="#FFFFFF" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Column="2" Background="#DED1C4" CornerRadius="10" Margin="4" Padding="8"
+                                        BorderBrush="#DDD7D1" BorderThickness="1">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Text="🥉" FontSize="22" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="TxtPodium3" Text="—" FontSize="12" FontWeight="Bold"
+                                                   Foreground="#905327" HorizontalAlignment="Center" Margin="0,3,0,2"/>
+                                        <TextBlock x:Name="TxtPodium3Qty" Text="0 buc" FontSize="10"
+                                                   Foreground="#905327" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </Border>
 
-                    <!-- Categories PieChart -->
-                    <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="14" Margin="8,0,0,0"
-                            BorderBrush="#DED1C4" BorderThickness="1" Padding="8">
+                    <Border Grid.Row="3" Background="#FFFFFF" CornerRadius="14"
+                            BorderBrush="#DED1C4" BorderThickness="1" Padding="10">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
                         </Border.Effect>
@@ -132,144 +217,67 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="📂  Categories" FontSize="13" FontWeight="Bold"
-                                       Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,4,0,4"/>
-                            <lvc:PieChart x:Name="PieCategories" Grid.Row="1"/>
+                            <TextBlock Text="📋  All Products by Quantity Sold" FontSize="13" FontWeight="Bold"
+                                       Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,2,0,6"/>
+
+                            <DataGrid Grid.Row="1" x:Name="DgProductsByQty"
+                                      AutoGenerateColumns="False" IsReadOnly="True"
+                                      Background="Transparent" BorderBrush="#E5DFD9"
+                                      Foreground="#4A2D1C" RowBackground="Transparent"
+                                      AlternatingRowBackground="#F2F1F0"
+                                      GridLinesVisibility="Horizontal">
+                                <DataGrid.Resources>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#4A2D1C"/>
+                                        <Setter Property="Foreground" Value="#FFFFFF"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Height" Value="28"/>
+                                    </Style>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#4A2D1C"/>
+                                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="#4A2D1C"/>
+                                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="#" Binding="{Binding Rank}" Width="40"/>
+                                    <DataGridTextColumn Header="Product Name" Binding="{Binding DishName}" Width="*"/>
+                                    <DataGridTextColumn Header="Quantity Sold" Binding="{Binding Quantity}" Width="100">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Revenue" Binding="{Binding RevenueDisplay}" Width="120">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                <Setter Property="Padding" Value="0,0,12,0"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
                     </Border>
+
                 </Grid>
-
-                <!-- ROW 2: Podium Top 3 -->
-                <Border Grid.Row="2" Background="#FFFFFF" CornerRadius="14" Margin="0,0,0,8"
-                        BorderBrush="#DED1C4" BorderThickness="1" Padding="12,10">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
-                    </Border.Effect>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="🏆  Top Products" FontSize="14" FontWeight="Bold"
-                                   Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0" Background="#E5DFD9" CornerRadius="10" Margin="4" Padding="8"
-                                    BorderBrush="#DDD7D1" BorderThickness="1">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="🥈" FontSize="22" HorizontalAlignment="Center"/>
-                                    <TextBlock x:Name="TxtPodium2" Text="—" FontSize="12" FontWeight="Bold"
-                                               Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,3,0,2"/>
-                                    <TextBlock x:Name="TxtPodium2Qty" Text="0 buc" FontSize="10"
-                                               Foreground="#905327" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Column="1" Background="#905327" CornerRadius="10" Margin="4" Padding="10"
-                                    BorderBrush="#DED1C4" BorderThickness="1">
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.10" Color="#905327"/>
-                                </Border.Effect>
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="🥇" FontSize="26" HorizontalAlignment="Center"/>
-                                    <TextBlock x:Name="TxtPodium1" Text="—" FontSize="13" FontWeight="Bold"
-                                               Foreground="#FFFFFF" HorizontalAlignment="Center" Margin="0,3,0,2"/>
-                                    <TextBlock x:Name="TxtPodium1Qty" Text="0 buc" FontSize="10"
-                                               Foreground="#FFFFFF" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Column="2" Background="#DED1C4" CornerRadius="10" Margin="4" Padding="8"
-                                    BorderBrush="#DDD7D1" BorderThickness="1">
-                                <StackPanel HorizontalAlignment="Center">
-                                    <TextBlock Text="🥉" FontSize="22" HorizontalAlignment="Center"/>
-                                    <TextBlock x:Name="TxtPodium3" Text="—" FontSize="12" FontWeight="Bold"
-                                               Foreground="#905327" HorizontalAlignment="Center" Margin="0,3,0,2"/>
-                                    <TextBlock x:Name="TxtPodium3Qty" Text="0 buc" FontSize="10"
-                                               Foreground="#905327" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </Grid>
-                </Border>
-
-                <!-- ROW 3: All Products by Quantity -->
-                <Border Grid.Row="3" Background="#FFFFFF" CornerRadius="14"
-                        BorderBrush="#DED1C4" BorderThickness="1" Padding="10">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.10" Color="#4A2D1C"/>
-                    </Border.Effect>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="📋  All Products by Quantity Sold" FontSize="13" FontWeight="Bold"
-                                   Foreground="#4A2D1C" HorizontalAlignment="Center" Margin="0,2,0,6"/>
-
-                        <DataGrid Grid.Row="1" x:Name="DgProductsByQty"
-                                  AutoGenerateColumns="False" IsReadOnly="True"
-                                  Background="Transparent" BorderBrush="#E5DFD9"
-                                  Foreground="#4A2D1C" RowBackground="Transparent"
-                                  AlternatingRowBackground="#F2F1F0"
-                                  GridLinesVisibility="Horizontal">
-                            <DataGrid.Resources>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="Background" Value="#4A2D1C"/>
-                                    <Setter Property="Foreground" Value="#FFFFFF"/>
-                                    <Setter Property="FontWeight" Value="SemiBold"/>
-                                    <Setter Property="Height" Value="28"/>
-                                </Style>
-                                <Style TargetType="DataGridCell">
-                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#4A2D1C"/>
-                                            <Setter Property="Foreground" Value="#FFFFFF"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                                <Style TargetType="DataGridRow">
-                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="Background" Value="#4A2D1C"/>
-                                            <Setter Property="Foreground" Value="#FFFFFF"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="#" Binding="{Binding Rank}" Width="40"/>
-                                <DataGridTextColumn Header="Product Name" Binding="{Binding DishName}" Width="*"/>
-                                <DataGridTextColumn Header="Quantity Sold" Binding="{Binding Quantity}" Width="100">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="FontWeight" Value="SemiBold"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Revenue" Binding="{Binding RevenueDisplay}" Width="120">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Right"/>
-                                            <Setter Property="Padding" Value="0,0,12,0"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </Border>
-
-            </Grid>
-        </ScrollViewer>
+            </ScrollViewer>
+        </Grid>
     </Border>
 </Window>
