@@ -5,16 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Inventory;
 
 namespace Kitchen
@@ -22,18 +14,81 @@ namespace Kitchen
     public partial class AddRecipe : Window
     {
         private readonly string connectionString = "Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+        private List<Product> inventoryProducts = new List<Product>();
+        private ObservableCollection<Product> selectedIngredients = new ObservableCollection<Product>();
+
+        // Identificator hibrid: 0 = Rețetă Nouă (Insert), >0 = Editare Rețetă (Update)
+        private int editingDishId = 0;
+
+        // CONSTRUCTOR 1: Folosit la crearea unei rețete noi
         public AddRecipe()
         {
             InitializeComponent();
             GridRecipeIngredients.ItemsSource = selectedIngredients;
             LoadInventoryProducts();
-            //LoadAvailableUnits();
         }
-        private List<Product> inventoryProducts = new List<Product>();
-        private List<string> availableUnits = new List<string>();
-        private ObservableCollection<Product> selectedIngredients = new ObservableCollection<Product>();
 
-        //------------------------------------------------------------------------------------------------------------------
+        // CONSTRUCTOR 2: Apelat automat la editare din CookBook
+        public AddRecipe(Dish dishToEdit) : this()
+        {
+            editingDishId = dishToEdit.Id;
+
+            // Populare date existente în UI
+            TxtName.Text = dishToEdit.Name;
+            TxtPrice.Text = "";
+            TxtPrepTime.Text = dishToEdit.PreparationTime.Replace(" min", "").Trim();
+            TxtAllergens.Text = dishToEdit.Alergies;
+            TxtSteps.Text = dishToEdit.Steps;
+
+            // Selectare categorie corespunzătoare
+            foreach (ComboBoxItem item in ComboCategory.Items)
+            {
+                if (item.Content.ToString().Equals(dishToEdit.Category, StringComparison.OrdinalIgnoreCase))
+                {
+                    ComboCategory.SelectedItem = item;
+                    break;
+                }
+            }
+
+            // Schimbare text buton de acțiune
+            BtnSave.Content = "💾 Update Recipe";
+
+            // Încărcare ingrediente în tabelul de lucru local
+            LoadIngredientsForEditing(dishToEdit.Id);
+        }
+
+        private void LoadIngredientsForEditing(int dishId)
+        {
+            try
+            {
+                using var conn = new SqlConnection(connectionString);
+                conn.Open();
+                string query = @"
+                    SELECT p.Id, p.Name, di.QuantityRequired, p.Unit 
+                    FROM dbo.DishIngredients di
+                    INNER JOIN dbo.Produses p ON di.ProductId = p.Id
+                    WHERE di.DishId = @DishId";
+
+                using var cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@DishId", dishId);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    selectedIngredients.Add(new Product
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        ProductName = reader["Name"].ToString(),
+                        Unit = reader["Unit"].ToString(),
+                        Quantity = Convert.ToDouble(reader["QuantityRequired"])
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading existing ingredients: " + ex.Message);
+            }
+        }
+
         private void LoadInventoryProducts()
         {
             try
@@ -67,49 +122,23 @@ namespace Kitchen
             }
         }
 
-        //---------------------------------------------------------------------------------------------------------
-        private void LoadAvailableUnits()
-        {
-            try
-            {
-                availableUnits.Clear();
-                string query = "SELECT DISTINCT Unit FROM dbo.Produses WHERE Unit IS NOT NULL AND Unit != '' ORDER BY Unit ASC";
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            availableUnits.Add(reader["Unit"].ToString());
-                        }
-                    }
-                }
-                ComboIngredientUnit.ItemsSource = availableUnits;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading units: " + ex.Message);
-            }
-        }
-
-        //---------------------------------------------------------------------------------------------------------
-        //SAVE RECIPE AND INGREDIENTS
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            // 1. Validare Nume și Categorie
             if (string.IsNullOrWhiteSpace(TxtName.Text) || ComboCategory.SelectedItem == null)
             {
                 MessageBox.Show("Please complete the Dish Name and Category.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (!double.TryParse(TxtPrice.Text, out double price) || !int.TryParse(TxtPrepTime.Text, out int prepTime))
+            // 2. REPARAT: Validare strictă pentru preț (Să fie număr și strict mai mare ca 0)
+            if (!double.TryParse(TxtPrice.Text, out double price) || price <= 0)
             {
-                MessageBox.Show("Please enter valid numbers for Price and Prep Time.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a valid price greater than 0 RON.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            if (!int.TryParse(TxtPrepTime.Text, out int prepTime)) prepTime = 0;
 
             string name = TxtName.Text.Trim();
             string category = (ComboCategory.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -124,15 +153,17 @@ namespace Kitchen
 
                 try
                 {
-                    // 1. Salvare în tabela Dishes
-                    string dishQuery = @"
-                        INSERT INTO [dbo].[Dishes] (Name, Price, Category, PreparationTime, Alergies, Steps, Description)
-                        OUTPUT INSERTED.Id
-                        VALUES (@Name, @Price, @Category, @PrepTime, @Allergens, @Steps, @Description)";
+                    int targetDishId = editingDishId;
 
-                    int newDishId = 0;
-                    using (SqlCommand cmd = new SqlCommand(dishQuery, conn, transaction))
+                    if (editingDishId == 0)
                     {
+                        // CAZUL A: INSERARE REȚETĂ NOUĂ
+                        string dishQuery = @"
+                            INSERT INTO [dbo].[Dishes] (Name, Price, Category, PreparationTime, Alergies, Steps, Description)
+                            OUTPUT INSERTED.Id
+                            VALUES (@Name, @Price, @Category, @PrepTime, @Allergens, @Steps, @Description)";
+
+                        using var cmd = new SqlCommand(dishQuery, conn, transaction);
                         cmd.Parameters.AddWithValue("@Name", name);
                         cmd.Parameters.AddWithValue("@Price", price);
                         cmd.Parameters.AddWithValue("@Category", category);
@@ -141,44 +172,61 @@ namespace Kitchen
                         cmd.Parameters.AddWithValue("@Steps", string.IsNullOrEmpty(steps) ? "No steps provided." : steps);
                         cmd.Parameters.AddWithValue("@Description", string.IsNullOrEmpty(description) ? (object)DBNull.Value : description);
 
-                        newDishId = (int)cmd.ExecuteScalar();
+                        targetDishId = (int)cmd.ExecuteScalar();
+                    }
+                    else
+                    {
+                        // CAZUL B: ACTUALIZARE REȚETĂ EXISTENTĂ
+                        string updateDishQuery = @"
+                            UPDATE [dbo].[Dishes] 
+                            SET Name=@Name, Category=@Category, PreparationTime=@PrepTime, Alergies=@Allergens, Steps=@Steps
+                            WHERE Id=@DishId";
+
+                        using var cmdUpdate = new SqlCommand(updateDishQuery, conn, transaction);
+                        cmdUpdate.Parameters.AddWithValue("@DishId", targetDishId);
+                        cmdUpdate.Parameters.AddWithValue("@Name", name);
+                        cmdUpdate.Parameters.AddWithValue("@Category", category);
+                        cmdUpdate.Parameters.AddWithValue("@PrepTime", prepTime);
+                        cmdUpdate.Parameters.AddWithValue("@Allergens", allergens);
+                        cmdUpdate.Parameters.AddWithValue("@Steps", steps);
+                        cmdUpdate.ExecuteNonQuery();
+
+                        // Ștergem vechile asocieri din tabela junction pentru rescriere curată
+                        using var cmdClean = new SqlCommand("DELETE FROM [dbo].[DishIngredients] WHERE DishId=@DishId", conn, transaction);
+                        cmdClean.Parameters.AddWithValue("@DishId", targetDishId);
+                        cmdClean.ExecuteNonQuery();
                     }
 
-                    // 2. Salvare în tabela junction DishIngredients
+                    // Scriere / Rescriere ingrediente în tabela junction
                     string ingredQuery = "INSERT INTO [dbo].[DishIngredients] (DishId, ProductId, QuantityRequired) VALUES (@DishId, @ProductId, @QuantityRequired)";
                     foreach (var ingred in selectedIngredients)
                     {
-                        using (SqlCommand cmd = new SqlCommand(ingredQuery, conn, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@DishId", newDishId);
-                            cmd.Parameters.AddWithValue("@ProductId", ingred.Id);
-                            cmd.Parameters.AddWithValue("@QuantityRequired", ingred.Quantity);
-
-                            cmd.ExecuteNonQuery();
-                        }
+                        using var cmdIngred = new SqlCommand(ingredQuery, conn, transaction);
+                        cmdIngred.Parameters.AddWithValue("@DishId", targetDishId);
+                        cmdIngred.Parameters.AddWithValue("@ProductId", ingred.Id);
+                        cmdIngred.Parameters.AddWithValue("@QuantityRequired", ingred.Quantity);
+                        cmdIngred.ExecuteNonQuery();
                     }
 
                     transaction.Commit();
-                    MessageBox.Show("Recipe and its ingredients saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Recipe saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.DialogResult = true;
                     this.Close();
                 }
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    MessageBox.Show("Error saving to database: " + ex.Message, "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error saving data: " + ex.Message, "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
 
-        //------------------------------------------------------------------------------------------------------------------
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
-        //------------------------------------------------------------------------------------------------------------------
         private void BtnAddIngredientRow_Click(object sender, RoutedEventArgs e)
         {
             if (ComboInventoryProducts.SelectedItem is Product prod)
@@ -195,26 +243,19 @@ namespace Kitchen
                     return;
                 }
 
-                // SCHIMBAT: Am adăugat .Trim() ca să curățăm eventualele spații goale din XAML
                 string selectedUnit = (ComboIngredientUnit.SelectedItem as ComboBoxItem)?.Content?.ToString()?.Trim() ?? "";
 
-                // --- SISTEM DE CONVERSIE INTELIGENT PENTRU RECEPTAR ---
-                // Grame -> Kilograme
                 if (selectedUnit.Equals("Grams", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("g", StringComparison.OrdinalIgnoreCase))
                 {
-                    qty = qty / 1000.0; // 250g devine 0.25 kg
+                    qty = qty / 1000.0;
                     selectedUnit = "Kilograms";
                 }
-                // REPARAT: Schimbat din "Milliliters" în "Mililiters" (cu un singur l) ca să bată perfect cu interfața ta XAML!
-                else if (selectedUnit.Equals("Milliliters", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("ml", StringComparison.OrdinalIgnoreCase))
+                else if (selectedUnit.Equals("Mililiters", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("ml", StringComparison.OrdinalIgnoreCase))
                 {
-                    qty = qty / 1000.0; // 200ml devine 0.2 Liters
+                    qty = qty / 1000.0;
                     selectedUnit = "Liters";
                 }
-                // Bucăți / Unități fixe (Pieces, Packs, etc.) rămân exact la fel, nu se modifică nimic matematic
-                // ----------------------------------------------------------------------
 
-                // Verificăm dacă ingredientul este deja adăugat CU ACEEAȘI UNITATE standardizată ca să îi creștem doar cantitatea
                 foreach (var existing in selectedIngredients)
                 {
                     if (existing.Id == prod.Id && existing.Unit.Equals(selectedUnit, StringComparison.OrdinalIgnoreCase))
@@ -225,7 +266,6 @@ namespace Kitchen
                     }
                 }
 
-                // Adăugăm rândul proaspăt convertit în colecția vizuală
                 selectedIngredients.Add(new Product
                 {
                     Id = prod.Id,
@@ -236,13 +276,8 @@ namespace Kitchen
 
                 TxtIngredientQty.Clear();
             }
-            else
-            {
-                MessageBox.Show("Please select a product from the list first.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
         }
 
-        //------------------------------------------------------------------------------------------------------------------
         private void BtnRemoveIngredientRow_Click(object sender, RoutedEventArgs e)
         {
             if (((Button)sender).DataContext is Product item)

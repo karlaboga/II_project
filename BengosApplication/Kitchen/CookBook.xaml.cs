@@ -4,31 +4,20 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 namespace Kitchen
 {
-    /// <summary>
-    /// Interaction logic for CookBook.xaml
-    /// </summary>
     public partial class CookBook : Window
     {
-
         private readonly string connectionString = "Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
-
         private List<Dish> allDishes = new List<Dish>();
+
         public CookBook()
         {
             InitializeComponent();
-            RecipeListBox.DisplayMemberPath = "Name"; // Corectat pentru a mapa proprietatea din clasă
+            RecipeListBox.DisplayMemberPath = "Name";
             RecipeListBox.SelectionChanged += RecipeListBox_SelectionChanged;
             LoadDishesFromDatabase();
         }
@@ -55,8 +44,7 @@ namespace Kitchen
                                 Category = reader["Category"].ToString(),
                                 PreparationTime = reader["PreparationTime"] != DBNull.Value ? reader["PreparationTime"].ToString() : "--",
                                 Alergies = reader["Alergies"] != DBNull.Value ? reader["Alergies"].ToString() : "None",
-                                Steps = reader["Steps"] != DBNull.Value ? reader["Steps"].ToString() : "No instructions provided.",
-
+                                Steps = reader["Steps"] != DBNull.Value ? reader["Steps"].ToString() : "No instructions provided."
                             });
                         }
                     }
@@ -78,13 +66,11 @@ namespace Kitchen
 
             List<Dish> filteredList = allDishes;
 
-            // 1. Filtrare după Categorie
             if (!string.IsNullOrEmpty(selectedCategory) && selectedCategory != "All Dishes")
             {
                 filteredList = filteredList.FindAll(d => d.Category.Equals(selectedCategory, StringComparison.OrdinalIgnoreCase));
             }
 
-            // 2. Filtrare după textul din Search Box
             if (!string.IsNullOrEmpty(searchText))
             {
                 filteredList = filteredList.FindAll(d => d.Name.ToLower().Contains(searchText));
@@ -108,13 +94,11 @@ namespace Kitchen
         {
             if (RecipeListBox.SelectedItem is Dish selectedDish)
             {
-                // Setăm datele generale de pe UI
                 TxtDishName.Text = selectedDish.Name;
                 TxtPrepTime.Text = $"{selectedDish.PreparationTime} min";
                 TxtAllergens.Text = selectedDish.Alergies;
                 TxtInstructions.Text = !string.IsNullOrEmpty(selectedDish.Steps) ? selectedDish.Steps : "No instructions provided.";
 
-                // Încărcăm ingredientele din tabela junction utilizând INNER JOIN
                 LoadIngredientsForDish(selectedDish.Id);
             }
         }
@@ -173,7 +157,6 @@ namespace Kitchen
         private void BtnAddRecipe_Click(object sender, RoutedEventArgs e)
         {
             AddRecipe addRecipeWindow = new AddRecipe();
-
             addRecipeWindow.Owner = this;
 
             if (addRecipeWindow.ShowDialog() == true)
@@ -181,6 +164,64 @@ namespace Kitchen
                 LoadDishesFromDatabase();
             }
         }
+
+        private void BtnEditRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (RecipeListBox.SelectedItem is Dish selectedDish)
+            {
+                // Aici apelăm al doilea constructor trimitând obiectul selectat ca parametru
+                AddRecipe editWindow = new AddRecipe(selectedDish);
+                editWindow.Owner = this;
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    LoadDishesFromDatabase();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a recipe from the sidebar list first to edit.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void BtnDeleteRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (RecipeListBox.SelectedItem is Dish selectedDish)
+            {
+                var result = MessageBox.Show($"Are you sure you want to completely delete the recipe for '{selectedDish.Name}'?",
+                                             "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        using var conn = new SqlConnection(connectionString);
+                        conn.Open();
+                        using var cmd = new SqlCommand("DELETE FROM dbo.Dishes WHERE Id = @Id", conn);
+                        cmd.Parameters.AddWithValue("@Id", selectedDish.Id);
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Recipe deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Resetare UI
+                        TxtDishName.Text = "Select a Recipe";
+                        TxtPrepTime.Text = "--";
+                        TxtAllergens.Text = "--";
+                        TxtIngredients.Text = "No ingredients to display.";
+                        TxtInstructions.Text = "Select a dish from the sidebar menu to read instructions.";
+
+                        LoadDishesFromDatabase();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error deleting recipe: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a recipe from the sidebar list first to delete.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
     }
-    
 }
