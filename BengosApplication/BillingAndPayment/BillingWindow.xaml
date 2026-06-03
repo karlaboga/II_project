@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BillingAndPayment.BillingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Billing &amp; Payments"
+        Title="Billing and Payments"
         Height="650" Width="1000"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -120,11 +120,11 @@
                             </Trigger>
                             <Trigger Property="IsHighlighted" Value="True">
                                 <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
-                                <Setter Property="Foreground" Value="#F2F1F0"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
-                                <Setter Property="Foreground" Value="#F2F1F0"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -146,22 +146,14 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
         <Style TargetType="DataGridCell">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="DataGridCell">
-                        <Border x:Name="CellBorder" Background="Transparent" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" BorderThickness="0"/>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="CellBorder" Property="Background" Value="#4A2D1C" />
-                                <Setter Property="Foreground" Value="#F2F1F0" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#4A2D1C" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="DataGridRow">
@@ -169,7 +161,7 @@
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#4A2D1C" />
-                    <Setter Property="Foreground" Value="#F2F1F0" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -191,7 +183,7 @@
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Margin="0,5,0,15">
-                <TextBlock Text="Billing &amp; Payments" FontSize="24" FontWeight="Bold"
+                <TextBlock Text="Billing and Payments" FontSize="24" FontWeight="Bold"
                            Foreground="#4A2D1C" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                 <Button HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -226,13 +218,13 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Select Dish:" Foreground="#8B7365" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,6"/>
+                        <TextBlock Text="Select Dish:" Foreground="#4A2D1C" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,6"/>
                         <ComboBox x:Name="CmbDish" DisplayMemberPath="DisplayText" Height="38" FontSize="14" 
                                   SelectedIndex="-1" SelectionChanged="CmbDish_SelectionChanged" Style="{StaticResource ModernComboBoxStyle}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Quantity:" Foreground="#8B7365" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,6"/>
+                        <TextBlock Text="Quantity:" Foreground="#4A2D1C" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,6"/>
                         <TextBox x:Name="TxtQty" Text="1" Height="38" FontSize="14" Style="{StaticResource ModernTextBoxStyle}" TextAlignment="Center" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
@@ -256,7 +248,7 @@
                 </Grid>
             </Border>
 
-            <TextBlock Grid.Row="2" x:Name="TxtUnitPrice" Foreground="#8B7365"
+            <TextBlock Grid.Row="2" x:Name="TxtUnitPrice" Foreground="#4A2D1C"
                        FontStyle="Italic" HorizontalAlignment="Left" Margin="5,0,0,12" FontSize="13"/>
 
             <Border Grid.Row="3" Background="#FFFFFF" CornerRadius="12" Padding="5" Margin="0,0,0,15">
@@ -264,6 +256,7 @@
                     <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.05" Color="#4A2D1C"/>
                 </Border.Effect>
                 <DataGrid x:Name="DgOrder" AutoGenerateColumns="False" BorderThickness="0"
+                          Foreground="#4A2D1C"
                           CanUserAddRows="False" Background="Transparent" MinRowHeight="38"
                           HeadersVisibility="Column" GridLinesVisibility="Horizontal" CellEditEnding="DgOrder_CellEditEnding"
                           RowBackground="#FFFFFF" AlternatingRowBackground="#F9F8F7" 
@@ -311,12 +304,12 @@
 
             <StackPanel Grid.Row="4" Margin="0,5,15,15" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4">
-                    <TextBlock Text="Subtotal:" FontWeight="SemiBold" Width="110" FontSize="13" Foreground="#8B7365"/>
+                    <TextBlock Text="Subtotal:" FontWeight="SemiBold" Width="110" FontSize="13" Foreground="#4A2D1C"/>
                     <TextBlock x:Name="TxtSubtotal" Text="0.00 RON" Width="120" FontSize="13" FontWeight="SemiBold"
                                Foreground="#4A2D1C" TextAlignment="Right"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4">
-                    <TextBlock Text="Discount applied:" FontWeight="SemiBold" Width="110" FontSize="13" Foreground="#8B7365"/>
+                    <TextBlock Text="Discount applied:" FontWeight="SemiBold" Width="110" FontSize="13" Foreground="#4A2D1C"/>
                     <TextBlock x:Name="TxtDiscount" Text="0.00" Width="120" FontSize="13" FontWeight="SemiBold"
                                Foreground="#4A2D1C" TextAlignment="Right"/>
                 </StackPanel>
