@@ -111,7 +111,7 @@ namespace Kitchen
                     }
                     rdrItems.Close();
 
-                    double averageTime = prepTimes.Count > 0 ? prepTimes.Average() : 0;
+                    double averageTime = prepTimes.Count > 0 ? prepTimes.Max() : 0;
 
                     activeOrders.Add(new KitchenOrderViewModel
                     {
