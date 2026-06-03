@@ -11,223 +11,240 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#4A2F39">
+        Background="Transparent"
+        TextOptions.TextFormattingMode="Display"
+        TextOptions.TextRenderingMode="ClearType"
+        UseLayoutRounding="True">
 
-    <Grid Margin="15">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="45" 
+                      CornerRadius="24" 
+                      GlassFrameThickness="0" 
+                      ResizeBorderThickness="0"/>
+    </WindowChrome.WindowChrome>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
+        </Border.Effect>
 
-        <DockPanel Grid.Row="0" Margin="0,0,0,20">
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <Button Content="◀ Back"
-                    Width="70" Height="30"
-                    Background="#6A4B59"
-                    Foreground="#F3EDEE"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="Button_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#7A5A68"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <DockPanel Grid.Row="0" Margin="0,0,0,20">
 
-            <Button Content="🔄 Refresh"
-                    Width="85" Height="30"
-                    Margin="10,0,0,0"
-                    Background="#8A6B7A"
-                    Foreground="#F3EDEE"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="BtnRefresh_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#A88498"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                <Button DockPanel.Dock="Right"
+                        Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C"
+                        FontWeight="Bold" Cursor="Hand" Click="Button_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="16">
+                                <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#E5DFD9"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-            <TextBlock Text="ACTIVE KITCHEN ORDERS"
-                       FontSize="26"
-                       FontWeight="Bold"
-                       Foreground="#F3EDEE"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,155,0"/>
-        </DockPanel>
+                <Button Content="🔄 Refresh"
+                        Width="85" Height="30"
+                        Margin="10,0,0,0"
+                        Background="#8B7365"
+                        Foreground="#F2F1F0"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="BtnRefresh_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#735E52"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-        <Border Grid.Row="1"
-                CornerRadius="8"
-                BorderThickness="3"
-                BorderBrush="#A88498">
-
-            <Border.Background>
-                <SolidColorBrush Color="#F3EDEE" Opacity="0.95"/>
-            </Border.Background>
-
-            <Grid Margin="15">
-
-                <TextBlock x:Name="TxtWaitingMessage"
-                           Text="Waiting for incoming orders..."
-                           FontSize="16"
-                           Foreground="#4A2F39"
+                <TextBlock Text="ACTIVE KITCHEN ORDERS"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           Foreground="#4A2D1C"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontStyle="Italic">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Items.Count, ElementName=OrdersControl}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                           Margin="0,0,155,0"/>
+            </DockPanel>
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
+            <Border Grid.Row="1"
+                    CornerRadius="8"
+                    BorderThickness="3"
+                    BorderBrush="#8B7365">
 
-                    <ItemsControl x:Name="OrdersControl">
+                <Border.Background>
+                    <SolidColorBrush Color="#FFFFFF" Opacity="0.95"/>
+                </Border.Background>
 
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                <Grid Margin="15">
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                    <TextBlock x:Name="TxtWaitingMessage"
+                               Text="Waiting for incoming orders..."
+                               FontSize="16"
+                               Foreground="#4A2D1C"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontStyle="Italic">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Items.Count, ElementName=OrdersControl}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                                <Border Width="230"
-                                        Margin="10"
-                                        Background="#F3EDEE"
-                                        BorderBrush="#A88498"
-                                        BorderThickness="2.5"
-                                        CornerRadius="8">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
 
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="6"
-                                                          ShadowDepth="4"
-                                                          Opacity="0.15"/>
-                                    </Border.Effect>
+                        <ItemsControl x:Name="OrdersControl">
 
-                                    <Grid>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
 
-                                        <Border Grid.Row="0"
-                                                Background="#4A2F39"
-                                                Padding="6,4,6,4"
-                                                CornerRadius="4"
-                                                Margin="0,0,0,12">
+                                    <Border Width="230"
+                                            Margin="10"
+                                            Background="#F2F1F0"
+                                            BorderBrush="#8B7365"
+                                            BorderThickness="2.5"
+                                            CornerRadius="8">
 
-                                            <Grid>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Foreground="#F3EDEE" FontSize="15"/>
-                                                    <TextBlock Text=" — " FontWeight="Bold" Foreground="#D8C6CF" FontSize="15"/>
-                                                    <TextBlock Text="{Binding TableNumber, StringFormat='Table {0}'}" FontWeight="Bold" Foreground="#FFFDF9" FontSize="15"/>
-                                                </StackPanel>
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="6"
+                                                              ShadowDepth="4"
+                                                              Opacity="0.15"
+                                                              Color="#4A2D1C"/>
+                                        </Border.Effect>
 
-                                                <TextBlock Text="{Binding Timestamp, StringFormat=\{0:HH:mm\}}" Foreground="#D8C6CF" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                            </Grid>
-                                        </Border>
+                                        <Grid>
 
-                                        <ItemsControl Grid.Row="1"
-                                                      ItemsSource="{Binding Items}"
-                                                      MinHeight="70"
-                                                      Margin="0,0,0,10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
+                                            <Border Grid.Row="0"
+                                                    Background="#4A2D1C"
+                                                    Padding="6,4,6,4"
+                                                    CornerRadius="4"
+                                                    Margin="0,0,0,12">
 
-                                                    <TextBlock Margin="0,4,0,4"
-                                                               FontSize="14"
-                                                               Foreground="#4A2F39"
-                                                               TextWrapping="Wrap">
-                                                        <Run Text="• " FontWeight="Bold" Foreground="#A88498"/>
-                                                        <Run Text="{Binding Quantity}" FontWeight="Bold"/>
-                                                        <Run Text="x " Foreground="#6A4B59"/>
-                                                        <Run Text="{Binding Name}"/>
-                                                    </TextBlock>
+                                                <Grid>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding OrderId}" FontWeight="Bold" Foreground="#F2F1F0" FontSize="15"/>
+                                                        <TextBlock Text=" — " FontWeight="Bold" Foreground="#8B7365" FontSize="15"/>
+                                                        <TextBlock Text="{Binding TableNumber, StringFormat='Table {0}'}" FontWeight="Bold" Foreground="#FFFFFF" FontSize="15"/>
+                                                    </StackPanel>
 
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
+                                                    <TextBlock Text="{Binding Timestamp, StringFormat=\{0:HH:mm\}}" Foreground="#F2F1F0" Opacity="0.8" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </Border>
 
-                                        </ItemsControl>
+                                            <ItemsControl Grid.Row="1"
+                                                          ItemsSource="{Binding Items}"
+                                                          MinHeight="70"
+                                                          Margin="0,0,0,10">
 
-                                        <StackPanel Grid.Row="2"
-                                                    Orientation="Horizontal"
-                                                    Margin="0,5,0,12">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
 
-                                            <TextBlock Text="⏱ Est. Time: "
-                                                       FontSize="13"
-                                                       FontWeight="SemiBold"
-                                                       Foreground="#6A4B59"/>
+                                                        <TextBlock Margin="0,4,0,4"
+                                                                   FontSize="14"
+                                                                   Foreground="#4A2D1C"
+                                                                   TextWrapping="Wrap">
+                                                            <Run Text="• " FontWeight="Bold" Foreground="#8B7365"/>
+                                                            <Run Text="{Binding Quantity}" FontWeight="Bold"/>
+                                                            <Run Text="x " Foreground="#8B7365"/>
+                                                            <Run Text="{Binding Name}"/>
+                                                        </TextBlock>
 
-                                            <TextBlock Text="{Binding TotalPrepTime}"
-                                                       FontSize="13"
-                                                       FontWeight="Bold"
-                                                       Foreground="#A88498"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
 
-                                            <TextBlock Text=" mins"
-                                                       FontSize="13"
-                                                       Foreground="#6A4B59"/>
-                                        </StackPanel>
+                                            </ItemsControl>
 
-                                        <Button Grid.Row="3"
-                                                Content="✔ Complete Order"
-                                                Click="BtnCompleteOrder_Click"
-                                                DataContext="{Binding}"
-                                                Background="#4A2F39"
-                                                Foreground="#F3EDEE"
-                                                FontWeight="Bold"
-                                                Height="32"
-                                                BorderThickness="0"
-                                                Cursor="Hand">
+                                            <StackPanel Grid.Row="2"
+                                                        Orientation="Horizontal"
+                                                        Margin="0,5,0,12">
 
-                                            <Button.Resources>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="CornerRadius" Value="4"/>
-                                                </Style>
-                                            </Button.Resources>
+                                                <TextBlock Text="⏱ Est. Time: "
+                                                           FontSize="13"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="#8B7365"/>
 
-                                        </Button>
+                                                <TextBlock Text="{Binding TotalPrepTime}"
+                                                           FontSize="13"
+                                                           FontWeight="Bold"
+                                                           Foreground="#4A2D1C"/>
 
-                                    </Grid>
-                                </Border>
+                                                <TextBlock Text=" mins"
+                                                           FontSize="13"
+                                                           Foreground="#8B7365"/>
+                                            </StackPanel>
 
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                                            <Button Grid.Row="3"
+                                                    Content="✔ Complete Order"
+                                                    Click="BtnCompleteOrder_Click"
+                                                    DataContext="{Binding}"
+                                                    Background="#4A2D1C"
+                                                    Foreground="#F2F1F0"
+                                                    FontWeight="Bold"
+                                                    Height="32"
+                                                    BorderThickness="0"
+                                                    Cursor="Hand">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="border" Property="Background" Value="#5F3B26"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
 
-                    </ItemsControl>
+                                        </Grid>
+                                    </Border>
 
-                </ScrollViewer>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
 
-            </Grid>
-        </Border>
-    </Grid>
+                        </ItemsControl>
+
+                    </ScrollViewer>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
 </Window>
