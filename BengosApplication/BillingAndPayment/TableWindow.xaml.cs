@@ -4,20 +4,18 @@ using Microsoft.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace BillingAndPayment;
 
 public partial class TableWindow : Window
 {
-    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True;";
     private List<Table> tables = new();
     private List<Dish> allDishes = new();
     private int? selectedTableId;
     private int? currentOrderId;
     private int? currentOrderNumber;
     private double discountPercent;
-    private DispatcherTimer? refreshTimer;
 
     public static TableWindow Instance { get; private set; }
 
@@ -27,15 +25,11 @@ public partial class TableWindow : Window
         Instance = this;
         LoadTables();
         LoadAllDishes();
-        StartAutoRefresh();
     }
 
-    private void StartAutoRefresh()
+    private void BtnRefresh_Click(object sender, RoutedEventArgs e)
     {
-        refreshTimer = new DispatcherTimer();
-        refreshTimer.Interval = TimeSpan.FromSeconds(3);
-        refreshTimer.Tick += (s, e) => LoadTables();
-        refreshTimer.Start();
+        LoadTables();
     }
 
     public void LoadTables()
@@ -45,7 +39,13 @@ public partial class TableWindow : Window
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
-            using var cmd = new SqlCommand("SELECT Id, TableNumber, Capacity, Status FROM Tables ORDER BY TableNumber", conn);
+            using var cmd = new SqlCommand(@"
+                SELECT t.Id, t.TableNumber, t.Capacity, t.Status,
+                       ISNULL(o.Status, '') AS OrderStatus
+                FROM Tables t
+                LEFT JOIN Orders o ON o.TableId = t.Id AND o.Status <> 'Paid'
+                    AND o.Id = (SELECT MAX(Id) FROM Orders WHERE TableId = t.Id AND Status <> 'Paid')
+                ORDER BY t.TableNumber", conn);
             using var rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
@@ -54,7 +54,8 @@ public partial class TableWindow : Window
                     Id = Convert.ToInt32(rdr["Id"]),
                     TableNumber = Convert.ToInt32(rdr["TableNumber"]),
                     Capacity = Convert.ToInt32(rdr["Capacity"]),
-                    Status = rdr["Status"]?.ToString() ?? "Free"
+                    Status = rdr["Status"]?.ToString() ?? "Free",
+                    OrderStatus = rdr["OrderStatus"]?.ToString() ?? ""
                 });
             }
         }
@@ -75,9 +76,41 @@ public partial class TableWindow : Window
         {
             var currentTable = tables.FirstOrDefault(t => t.Id == selectedTableId.Value);
             if (currentTable == null || currentTable.Status == "Free")
+            {
                 ResetOrderPanel();
-            else if (currentOrderId.HasValue)
-                LoadOrderItems();
+            }
+            else
+            {
+                try
+                {
+                    using var conn = new SqlConnection(connString);
+                    conn.Open();
+                    using var cmd = new SqlCommand(
+                        "SELECT Id, OrderNumber, DiscountPercent, Status FROM Orders " +
+                        "WHERE TableId=@tid AND Status <> 'Paid' ORDER BY Id DESC", conn);
+                    cmd.Parameters.AddWithValue("@tid", selectedTableId.Value);
+                    using var rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        currentOrderId = Convert.ToInt32(rdr["Id"]);
+                        currentOrderNumber = Convert.ToInt32(rdr["OrderNumber"]);
+                        discountPercent = Convert.ToDouble(rdr["DiscountPercent"]);
+                        var orderStatus = rdr["Status"]?.ToString() ?? "";
+                        TxtTableHeader.Text = orderStatus == "ReadyToServe"
+                            ? $"Table {currentTable.TableNumber} — Order (Ready to Serve ✅)"
+                            : $"Table {currentTable.TableNumber} — Order";
+                    }
+                    else
+                    {
+                        ResetOrderPanel();
+                        return;
+                    }
+                }
+                catch { }
+
+                if (currentOrderId.HasValue)
+                    LoadOrderItems();
+            }
         }
     }
 
@@ -441,8 +474,6 @@ public partial class TableWindow : Window
 
     private void BtnExit_Click(object sender, RoutedEventArgs e)
     {
-        refreshTimer?.Stop();
-
         if (currentOrderId.HasValue && selectedTableId.HasValue)
         {
             try

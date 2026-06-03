@@ -154,28 +154,44 @@ public class InventoryViewModel : INotifyPropertyChanged
     private void AddProduct()
     {
         if (string.IsNullOrWhiteSpace(ProductName)) return;
+
         if (Quantity < 0 || MinStock < 0)
         {
-            System.Windows.MessageBox.Show("Cantitatea și stocul minim trebuie să fie numere strict pozitive (mai mari sau egale cu 0)!", "Date Invalide", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            System.Windows.MessageBox.Show("Cantitatea și stocul minim trebuie să fie numere de tip zecimal strict pozitive (mai mari sau egale cu 0)!", "Date Invalide", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             return;
         }
+
         if (!ProductName.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
         {
             System.Windows.MessageBox.Show("Eroare: Numele produsului trebuie să conțină doar litere și spații!", "Date Invalide", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             return;
         }
+
+        // --- BLOCARE DUPLICATE DUPĂ NUME ---
+        // Curățăm textul de spații goale la început/sfârșit și ignorăm literele mari/mici (case-insensitive)
+        string cleanName = ProductName.Trim();
+        bool exists = Products.Any(p => p.ProductName.Trim().Equals(cleanName, StringComparison.OrdinalIgnoreCase));
+
+        if (exists)
+        {
+            System.Windows.MessageBox.Show($"Eroare: Produsul '{cleanName}' există deja în inventar! Folosește funcția de editare dacă vrei să îi modifici stocul.", "Produs Duplicat", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            return;
+        }
+        // ------------------------------------
+
         try
         {
             using var conn = new SqlConnection(connString);
             conn.Open();
             using var cmd = new SqlCommand(
                 "INSERT INTO Produses (Name, Category, Quantity, Unit, MinStock) VALUES (@name, @cat, @qty, @unit, @min)", conn);
-            cmd.Parameters.AddWithValue("@name", ProductName);
+            cmd.Parameters.AddWithValue("@name", cleanName); // Salvează numele curățat de spații inutile
             cmd.Parameters.AddWithValue("@cat", Category);
             cmd.Parameters.AddWithValue("@qty", Quantity);
             cmd.Parameters.AddWithValue("@unit", Unit);
             cmd.Parameters.AddWithValue("@min", MinStock);
             cmd.ExecuteNonQuery();
+
             ClearForm();
             LoadProducts();
         }
@@ -188,16 +204,32 @@ public class InventoryViewModel : INotifyPropertyChanged
     private void EditProduct()
     {
         if (SelectedProduct == null || string.IsNullOrWhiteSpace(ProductName)) return;
+
         if (Quantity < 0 || MinStock < 0)
         {
             System.Windows.MessageBox.Show("Cantitatea și stocul minim trebuie să fie numere strict pozitive (mai mari sau egale cu 0)!", "Date Invalide", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
             return;
         }
+
         if (!ProductName.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
         {
             System.Windows.MessageBox.Show("Eroare: Modificarea nu a reușit. Numele trebuie să conțină doar litere și spații!", "Date Invalide", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             return;
         }
+
+        // --- BLOCARE DUPLICATE LA EDITARE ---
+        string cleanName = ProductName.Trim();
+        // Verificăm dacă există ALTE produse (cu ID diferit) care au deja acest nume
+        bool nameExistsElsewhere = Products.Any(p => p.Id != SelectedProduct.Id && p.ProductName.Trim().Equals(cleanName, StringComparison.OrdinalIgnoreCase));
+
+        if (nameExistsElsewhere)
+        {
+            System.Windows.MessageBox.Show($"Eroare: Nu poți redenumi produsul în '{cleanName}' deoarece mai există un produs cu acest nume în inventar!", "Nume Duplicat", 
+              System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            return;
+        }
+        // -------------------------------------
+
         try
         {
             using var conn = new SqlConnection(connString);
@@ -205,15 +237,15 @@ public class InventoryViewModel : INotifyPropertyChanged
             using var cmd = new SqlCommand(
                 "UPDATE Produses SET Name=@name, Category=@cat, Quantity=@qty, Unit=@unit, MinStock=@min WHERE Id=@id", conn);
             cmd.Parameters.AddWithValue("@id", SelectedProduct.Id);
-            cmd.Parameters.AddWithValue("@name", ProductName);
+            cmd.Parameters.AddWithValue("@name", cleanName);
             cmd.Parameters.AddWithValue("@cat", Category);
             cmd.Parameters.AddWithValue("@qty", Quantity);
             cmd.Parameters.AddWithValue("@unit", Unit);
             cmd.Parameters.AddWithValue("@min", MinStock);
             cmd.ExecuteNonQuery();
 
-            ClearForm();    // Curăță formularul după salvare
-            LoadProducts(); // Reîncarcă tabelul cu noile date din baza de date
+            ClearForm();
+            LoadProducts();
         }
         catch (Exception ex)
         {
