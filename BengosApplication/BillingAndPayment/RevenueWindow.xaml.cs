@@ -16,9 +16,9 @@ public partial class RevenueWindow : Window
         SKColor.Parse("#FFE6A7"),
         SKColor.Parse("#4A2D1C"),
         SKColor.Parse("#905327"),
-        SKColor.Parse("#DED1C4"),
-        SKColor.Parse("#E5DFD9"),
-        SKColor.Parse("#DDD7D1"),
+        SKColor.Parse("#C9A3B5"),
+        SKColor.Parse("#A0847A"),
+        SKColor.Parse("#7A5A68"),
     };
 
     public RevenueWindow()
@@ -30,7 +30,6 @@ public partial class RevenueWindow : Window
     }
 
     private void BtnLoad_Click(object sender, RoutedEventArgs e) => LoadData();
-
     private void BtnClose_Click(object sender, RoutedEventArgs e) => Close();
 
     private void LoadData()
@@ -53,8 +52,9 @@ public partial class RevenueWindow : Window
             using var conn = new SqlConnection(connString);
             conn.Open();
             using var cmd = new SqlCommand(
-                @"SELECT COUNT(*) AS Cnt, ISNULL(SUM(Total), 0) AS Rev,
-                         ISNULL(AVG(DiscountPercent), 0) AS AvgDisc
+                @"SELECT COUNT(*) AS Cnt,
+                         ISNULL(SUM(Total), 0) AS Rev,
+                         ISNULL(SUM(Total * DiscountPercent / 100.0), 0) AS TotalDisc
                   FROM Orders
                   WHERE CAST(OrderDate AS DATE) BETWEEN @from AND @to", conn);
             cmd.Parameters.AddWithValue("@from", from);
@@ -64,7 +64,7 @@ public partial class RevenueWindow : Window
             {
                 orderCount = Convert.ToInt32(rdr["Cnt"]);
                 totalRevenue = Convert.ToDouble(rdr["Rev"]);
-                totalDiscount = Convert.ToDouble(rdr["AvgDisc"]);
+                totalDiscount = Convert.ToDouble(rdr["TotalDisc"]);
             }
         }
         catch (Exception ex)
@@ -73,7 +73,7 @@ public partial class RevenueWindow : Window
         }
         TxtOrderCount.Text = orderCount.ToString();
         TxtTotalRevenue.Text = $"{totalRevenue:0.00} RON";
-        TxtAvgDiscount.Text = $"{totalDiscount:0.00}RON";
+        TxtAvgDiscount.Text = $"{totalDiscount:0.00} RON";
     }
 
     private void LoadCategoryChart(DateTime from, DateTime to)
