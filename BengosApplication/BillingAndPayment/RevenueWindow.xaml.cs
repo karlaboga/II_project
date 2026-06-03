@@ -14,7 +14,7 @@ public partial class RevenueWindow : Window
 
     private static readonly SKColor[] Palette =
     {
-        SKColor.Parse("#FFFFFF"),
+        SKColor.Parse("#FFF2CC"),
         SKColor.Parse("#4A2D1C"),
         SKColor.Parse("#905327"),
         SKColor.Parse("#C9A3B5"),
