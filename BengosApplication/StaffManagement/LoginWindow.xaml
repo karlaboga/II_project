@@ -50,7 +50,7 @@
                         <TextBlock Text="Connect securely to manage inventory, update schedules, and track restaurant operations in real-time." FontSize="13" Foreground="#F2F1F0" TextWrapping="Wrap" Opacity="0.6" Margin="0,16,0,0" LineHeight="20"/>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="2" Text="v2.4.0 • Core HQ Control" FontSize="11" Foreground="#F2F1F0" Opacity="0.3"/>
+                   
                 </Grid>
             </Border>
 
