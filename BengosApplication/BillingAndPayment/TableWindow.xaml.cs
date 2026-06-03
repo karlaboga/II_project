@@ -4,18 +4,20 @@ using Microsoft.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace BillingAndPayment;
 
 public partial class TableWindow : Window
 {
-    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True";
+    private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
     private List<Table> tables = new();
     private List<Dish> allDishes = new();
     private int? selectedTableId;
     private int? currentOrderId;
     private int? currentOrderNumber;
     private double discountPercent;
+    private DispatcherTimer? refreshTimer;
 
     public static TableWindow Instance { get; private set; }
 
@@ -25,6 +27,15 @@ public partial class TableWindow : Window
         Instance = this;
         LoadTables();
         LoadAllDishes();
+        StartAutoRefresh();
+    }
+
+    private void StartAutoRefresh()
+    {
+        refreshTimer = new DispatcherTimer();
+        refreshTimer.Interval = TimeSpan.FromSeconds(3);
+        refreshTimer.Tick += (s, e) => LoadTables();
+        refreshTimer.Start();
     }
 
     public void LoadTables()
@@ -158,7 +169,7 @@ public partial class TableWindow : Window
             conn.Open();
 
             using var cmd = new SqlCommand(
-                "SELECT Id, DiscountPercent, OrderNumber FROM Orders WHERE TableId=@tid AND Status <> 'Paid'", conn);
+                "SELECT Id, DiscountPercent, OrderNumber FROM Orders WHERE TableId=@tid AND Status <> 'Paid' ORDER BY Id DESC", conn);
             cmd.Parameters.AddWithValue("@tid", tableId);
             using var rdr = cmd.ExecuteReader();
             if (rdr.Read())
@@ -430,6 +441,8 @@ public partial class TableWindow : Window
 
     private void BtnExit_Click(object sender, RoutedEventArgs e)
     {
+        refreshTimer?.Stop();
+
         if (currentOrderId.HasValue && selectedTableId.HasValue)
         {
             try
