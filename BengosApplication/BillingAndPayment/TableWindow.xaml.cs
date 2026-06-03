@@ -264,20 +264,34 @@ public partial class TableWindow : Window
                 using var conn = new SqlConnection(connString);
                 conn.Open();
                 using var check = new SqlCommand(
-                    "SELECT Id, Quantity FROM OrderItems WHERE OrderId=@oid AND Name=@name", conn);
+                    "SELECT Id, Quantity, ISNULL(StatusItem, 'Pending') AS StatusItem FROM OrderItems WHERE OrderId=@oid AND Name=@name", conn);
                 check.Parameters.AddWithValue("@oid", currentOrderId.Value);
                 check.Parameters.AddWithValue("@name", dish.Name);
                 using var rdr = check.ExecuteReader();
                 if (rdr.Read())
                 {
-                    int itemId = Convert.ToInt32(rdr["Id"]);
-                    int qty = Convert.ToInt32(rdr["Quantity"]) + 1;
-                    rdr.Close();
-                    using var upd = new SqlCommand(
-                        "UPDATE OrderItems SET Quantity=@qty WHERE Id=@id", conn);
-                    upd.Parameters.AddWithValue("@qty", qty);
-                    upd.Parameters.AddWithValue("@id", itemId);
-                    upd.ExecuteNonQuery();
+                    string existingStatus = rdr["StatusItem"]?.ToString() ?? "Pending";
+                    if (existingStatus == "Ready")
+                    {
+                        rdr.Close();
+                        using var ins = new SqlCommand(
+                            "INSERT INTO OrderItems (OrderId, Name, Quantity, Price, StatusItem) VALUES (@oid, @name, 1, @price, 'Pending')", conn);
+                        ins.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                        ins.Parameters.AddWithValue("@name", dish.Name);
+                        ins.Parameters.AddWithValue("@price", dish.Price);
+                        ins.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        int itemId = Convert.ToInt32(rdr["Id"]);
+                        int qty = Convert.ToInt32(rdr["Quantity"]) + 1;
+                        rdr.Close();
+                        using var upd = new SqlCommand(
+                            "UPDATE OrderItems SET Quantity=@qty WHERE Id=@id", conn);
+                        upd.Parameters.AddWithValue("@qty", qty);
+                        upd.Parameters.AddWithValue("@id", itemId);
+                        upd.ExecuteNonQuery();
+                    }
                 }
                 else
                 {
@@ -375,7 +389,8 @@ public partial class TableWindow : Window
                     hasInsufficient = true;
                 }
             }
-            BtnToKitchen.IsEnabled = !hasInsufficient;
+            bool allReady = items.Count > 0 && items.All(i => i.StatusItem == "Ready");
+            BtnToKitchen.IsEnabled = !hasInsufficient && !allReady;
         }
         catch (Exception ex)
         {
@@ -554,11 +569,6 @@ public partial class TableWindow : Window
                 "UPDATE Orders SET Status = 'ToKitchen', OrderDate = GETDATE() WHERE Id = @oid", conn);
             cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
             cmd.ExecuteNonQuery();
-
-            using var cmdItemsStatus = new SqlCommand(
-                "UPDATE OrderItems SET StatusItem = 'Pending' WHERE OrderId = @oid", conn);
-            cmdItemsStatus.Parameters.AddWithValue("@oid", currentOrderId.Value);
-            cmdItemsStatus.ExecuteNonQuery();
 
             MessageBox.Show($"Comanda #{currentOrderNumber} a fost trimisă cu succes la bucătărie!", "Trimis", MessageBoxButton.OK, MessageBoxImage.Information);
 

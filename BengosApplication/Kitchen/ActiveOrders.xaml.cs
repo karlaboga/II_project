@@ -84,7 +84,7 @@ namespace Kitchen
                                d.Alergies
                         FROM OrderItems oi
                         LEFT JOIN Dishes d ON oi.Name = d.Name
-                        WHERE oi.OrderId = @oid";
+                        WHERE oi.OrderId = @oid AND oi.StatusItem = 'Pending'";
 
                     using var cmdItems = new SqlCommand(itemsQuery, conn);
                     cmdItems.Parameters.AddWithValue("@oid", oid);
@@ -173,7 +173,7 @@ namespace Kitchen
                         INNER JOIN Dishes d ON oi.Name = d.Name
                         INNER JOIN DishIngredients di ON di.DishId = d.Id
                         INNER JOIN Produses p ON p.Id = di.ProductId
-                        WHERE oi.OrderId = @oid
+                        WHERE oi.OrderId = @oid AND oi.StatusItem = 'Pending'
                         GROUP BY d.Name, p.Name
                         HAVING MAX(p.Quantity) < SUM(di.QuantityRequired * oi.Quantity)", conn))
                     {
@@ -208,7 +208,7 @@ namespace Kitchen
                         cmd.ExecuteNonQuery();
 
                         using var cmdItems = new SqlCommand(
-                            "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid", conn, transaction);
+                            "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid AND StatusItem = 'Pending'", conn, transaction);
                         cmdItems.Parameters.AddWithValue("@oid", oid);
                         cmdItems.ExecuteNonQuery();
 
@@ -219,7 +219,7 @@ namespace Kitchen
                             INNER JOIN dbo.DishIngredients di ON p.Id = di.ProductId
                             INNER JOIN dbo.Dishes d ON di.DishId = d.Id
                             INNER JOIN dbo.OrderItems oi ON d.Name = oi.Name
-                            WHERE oi.OrderId = @oid";
+                            WHERE oi.OrderId = @oid AND oi.StatusItem = 'Pending'";
 
                         using var cmdDeduct = new SqlCommand(deductStock, conn, transaction);
                         cmdDeduct.Parameters.AddWithValue("@oid", oid);
