@@ -15,11 +15,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Inventory; 
+using Inventory;
 
 namespace Kitchen
 {
-    
     public partial class AddRecipe : Window
     {
         private readonly string connectionString = "Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
@@ -28,7 +27,7 @@ namespace Kitchen
             InitializeComponent();
             GridRecipeIngredients.ItemsSource = selectedIngredients;
             LoadInventoryProducts();
-            LoadAvailableUnits();
+            //LoadAvailableUnits();
         }
         private List<Product> inventoryProducts = new List<Product>();
         private List<string> availableUnits = new List<string>();
@@ -53,14 +52,14 @@ namespace Kitchen
                             inventoryProducts.Add(new Product
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                ProductName = reader["Name"].ToString(), 
+                                ProductName = reader["Name"].ToString(),
                                 Unit = reader["Unit"].ToString()
                             });
                         }
                     }
                 }
                 ComboInventoryProducts.ItemsSource = inventoryProducts;
-                ComboInventoryProducts.DisplayMemberPath = "ProductName"; // Folosește ProductName pentru afișare
+                ComboInventoryProducts.DisplayMemberPath = "ProductName";
             }
             catch (Exception ex)
             {
@@ -74,7 +73,6 @@ namespace Kitchen
             try
             {
                 availableUnits.Clear();
-                // Luăm doar valorile unice de pe coloana Unit ca să nu avem duplicate în listă
                 string query = "SELECT DISTINCT Unit FROM dbo.Produses WHERE Unit IS NOT NULL AND Unit != '' ORDER BY Unit ASC";
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -89,7 +87,6 @@ namespace Kitchen
                         }
                     }
                 }
-                // Legăm lista direct de dropdown-ul tău
                 ComboIngredientUnit.ItemsSource = availableUnits;
             }
             catch (Exception ex)
@@ -98,7 +95,7 @@ namespace Kitchen
             }
         }
 
-        //------------------------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------------
         //SAVE RECIPE AND INGREDIENTS
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -181,13 +178,12 @@ namespace Kitchen
             this.Close();
         }
 
-
         //------------------------------------------------------------------------------------------------------------------
         private void BtnAddIngredientRow_Click(object sender, RoutedEventArgs e)
         {
             if (ComboInventoryProducts.SelectedItem is Product prod)
             {
-                if (!int.TryParse(TxtIngredientQty.Text, out int qty) || qty <= 0)
+                if (!double.TryParse(TxtIngredientQty.Text, out double qty) || qty <= 0)
                 {
                     MessageBox.Show("Please enter a valid positive quantity.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -199,10 +195,26 @@ namespace Kitchen
                     return;
                 }
 
-                // Preluăm unitatea aleasă din ComboBox-ul de unități (ex: Grams în loc de Kilograms)
-                string selectedUnit = ComboIngredientUnit.SelectedItem.ToString();
+                // Extrage corect textul din ComboBoxItem (ex: "Grams" în loc de obiectul WPF)
+                string selectedUnit = (ComboIngredientUnit.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
 
-                // Verificăm dacă ingredientul este deja adăugat CU ACEEAȘI UNITATE ca să îi creștem doar cantitatea
+                // --- SISTEM DE CONVERSIE INTELIGENT PENTRU RECEPTAR ---
+                // Grame -> Kilograme
+                if (selectedUnit.Equals("Grams", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("g", StringComparison.OrdinalIgnoreCase))
+                {
+                    qty = qty / 1000.0; // 250g devine 0.25 kg
+                    selectedUnit = "Kilograms";
+                }
+                // Mililitri -> Litri
+                else if (selectedUnit.Equals("Milliliters", StringComparison.OrdinalIgnoreCase) || selectedUnit.Equals("ml", StringComparison.OrdinalIgnoreCase))
+                {
+                    qty = qty / 1000.0; // 500ml devine 0.5 Liters
+                    selectedUnit = "Liters";
+                }
+                // Bucăți / Unități fixe (Pieces, Packs, etc.) rămân exact la fel, nu se modifică nimic matematic
+                // ----------------------------------------------------------------------
+
+                // Verificăm dacă ingredientul este deja adăugat CU ACEEAȘI UNITATE standardizată ca să îi creștem doar cantitatea
                 foreach (var existing in selectedIngredients)
                 {
                     if (existing.Id == prod.Id && existing.Unit.Equals(selectedUnit, StringComparison.OrdinalIgnoreCase))
@@ -213,12 +225,12 @@ namespace Kitchen
                     }
                 }
 
-                // Adăugăm o instanță nouă de Product dedicată acestui rând din rețetă
+                // Adăugăm rândul proaspăt convertit în colecția vizuală
                 selectedIngredients.Add(new Product
                 {
                     Id = prod.Id,
                     ProductName = prod.ProductName,
-                    Unit = selectedUnit, // Se folosește unitatea specificată din dropdown
+                    Unit = selectedUnit,
                     Quantity = qty
                 });
 
@@ -238,8 +250,5 @@ namespace Kitchen
                 selectedIngredients.Remove(item);
             }
         }
-
-
-        
     }
 }

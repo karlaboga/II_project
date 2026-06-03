@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading; // NEAPĂRAT: Avem nevoie de acest namespace pentru DispatcherTimer
+using System.Windows.Threading;
 using Kitchen.Models1;
 
 namespace Kitchen
@@ -12,30 +12,26 @@ namespace Kitchen
     public partial class ActiveOrders : Window
     {
         private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
-
-        // Definim timerul la nivel de clasă
         private DispatcherTimer autoRefreshTimer;
 
         public ActiveOrders()
         {
             InitializeComponent();
             LoadActiveOrders();
-            SetupAutoRefresh(); // Pornim configurarea timerului
+            SetupAutoRefresh();
         }
 
-        // Metodă nouă pentru configurarea și pornirea cronometrului
         private void SetupAutoRefresh()
         {
             autoRefreshTimer = new DispatcherTimer();
-            autoRefreshTimer.Interval = TimeSpan.FromSeconds(10); // Setat la fix 10 secunde
+            autoRefreshTimer.Interval = TimeSpan.FromSeconds(10);
             autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-            autoRefreshTimer.Start(); // Pornim timerul
+            autoRefreshTimer.Start();
         }
 
-        // Evenimentul care se declanșează la fiecare 10 secunde
         private void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
-            LoadActiveOrders(); // Reîncarcă automat comenzile din baza de date Azure
+            LoadActiveOrders();
         }
 
         private void LoadActiveOrders()
@@ -125,8 +121,6 @@ namespace Kitchen
             }
             catch (Exception ex)
             {
-                // Am scos MessageBox-ul de eroare de la Load (opțional) ca să nu bombardeze ecranul 
-                // bucătarului cu pop-up-uri la fiecare 10 secunde dacă pică internetul temporar.
                 System.Diagnostics.Debug.WriteLine("Eroare fundal SQL: " + ex.Message);
             }
 
@@ -136,7 +130,7 @@ namespace Kitchen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            autoRefreshTimer?.Stop(); // Oprim timerul la închiderea ferestrei pentru a elibera memoria
+            autoRefreshTimer?.Stop();
             this.Close();
         }
 
@@ -152,21 +146,44 @@ namespace Kitchen
                 string idString = completedOrder.OrderId.Replace("Order #", "").Trim();
                 if (int.TryParse(idString, out int oid))
                 {
+                    // Folosim o tranzacție pentru a ne asigura că ori se salvează totul, ori nimic în caz de eroare
+                    using var conn = new SqlConnection(connString);
+                    conn.Open();
+                    using var transaction = conn.BeginTransaction();
+
                     try
                     {
-                        using var conn = new SqlConnection(connString);
-                        conn.Open();
-
-                        using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn);
+                        // 1. Schimbăm statusul comenzii principale în 'ReadyToServe'
+                        using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn, transaction);
                         cmd.Parameters.AddWithValue("@oid", oid);
                         cmd.ExecuteNonQuery();
 
+                        // 2. Schimbăm statusul produselor din comandă în 'Ready'
                         string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
-                        using var cmdItems = new SqlCommand(updateItemsQuery, conn);
+                        using var cmdItems = new SqlCommand(updateItemsQuery, conn, transaction);
                         cmdItems.Parameters.AddWithValue("@oid", oid);
                         cmdItems.ExecuteNonQuery();
 
-                        MessageBox.Show($"Produsele din comanda #{oid} sunt gata!");
+                        // 3. --- SCĂDEREA AUTOMATĂ A INVENTARULUI ---
+                        // Această interogare actualizează tabela 'Produses' (stocul) scăzând cantitatea necesară (incred.QuantityRequired * oi.Quantity comandată)
+                        string deductStockQuery = @"
+                            UPDATE p
+                            SET p.Quantity = p.Quantity - (di.QuantityRequired * oi.Quantity)
+                            FROM dbo.Produses p
+                            INNER JOIN dbo.DishIngredients di ON p.Id = di.ProductId
+                            INNER JOIN dbo.Dishes d ON di.DishId = d.Id
+                            INNER JOIN dbo.OrderItems oi ON d.Name = oi.Name
+                            WHERE oi.OrderId = @oid";
+
+                        using var cmdDeduct = new SqlCommand(deductStockQuery, conn, transaction);
+                        cmdDeduct.Parameters.AddWithValue("@oid", oid);
+                        cmdDeduct.ExecuteNonQuery();
+                        // --------------------------------------------
+
+                        // Salvăm modificările definitive în Azure SQL
+                        transaction.Commit();
+
+                        MessageBox.Show($"Produsele din comanda #{oid} sunt gata, iar ingredientele au fost scăzute din stoc!", "Comandă Finalizată", MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadActiveOrders();
 
                         if (BillingAndPayment.TableWindow.Instance != null)
@@ -176,7 +193,9 @@ namespace Kitchen
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Eroare la salvare: " + ex.Message);
+                        // În caz de eroare (ex: probleme de rețea), dăm înapoi toate modificările ca să nu stricăm baza de date
+                        transaction.Rollback();
+                        MessageBox.Show("Eroare la finalizarea comenzii și scăderea stocului: " + ex.Message, "Eroare Core", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

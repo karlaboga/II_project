@@ -35,14 +35,14 @@ public class InventoryViewModel : INotifyPropertyChanged
         }
     }
 
-    private int _quantity;
-    public int Quantity
+    private double _quantity; // Modificat din int in double
+    public double Quantity
     {
         get => _quantity;
         set
         {
             _quantity = value;
-            OnPropertyChanged(); // Anunță XAML-ul că s-a schimbat cantitatea
+            OnPropertyChanged();
         }
     }
 
@@ -139,7 +139,7 @@ public class InventoryViewModel : INotifyPropertyChanged
                     Id = Convert.ToInt32(reader["Id"]),
                     ProductName = reader["Name"]?.ToString() ?? "",
                     Category = reader["Category"]?.ToString() ?? "",
-                    Quantity = Convert.ToInt32(reader["Quantity"]),
+                    Quantity = Convert.ToDouble(reader["Quantity"]), 
                     Unit = reader["Unit"]?.ToString() ?? "",
                     MinStock = Convert.ToInt32(reader["MinStock"])
                 });
@@ -246,7 +246,7 @@ public class InventoryViewModel : INotifyPropertyChanged
     {
         ProductName = "";
         Category = "";
-        Quantity = 0;
+        Quantity = 0.0;
         Unit = "Kilograms";
         MinStock = 0;
         SelectedProduct = null;

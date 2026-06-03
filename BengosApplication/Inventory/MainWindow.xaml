@@ -198,106 +198,106 @@
     </Window.Resources>
 
     <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
-        
+
         <Border.Effect>
             <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
         </Border.Effect>
 
         <Grid Margin="25,25,25,22">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="340"/>
                 <ColumnDefinition Width="*"/>
-                
+
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Margin="5,5,37,5" Background="#4A2D1C" CornerRadius="16,0,0,16" Padding="15,40,15,0">
                 <Grid>
-                <Grid.RowDefinitions>
-                    
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="400" Margin="0,0,10,0">
-                    <TextBlock Text="Inventory Item Manager" FontSize="20" FontWeight="Bold" Foreground="#F2F1F0" Margin="5,0,0,15"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <TextBlock Text="Product Name" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
-                    <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
+                    <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="400" Margin="0,0,10,0">
+                        <TextBlock Text="Inventory Item Manager" FontSize="20" FontWeight="Bold" Foreground="#F2F1F0" Margin="5,0,0,15"/>
 
-                    <TextBlock Text="Category" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
-                    <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="Vegetables"/>
-                        <ComboBoxItem Content="Fruits"/>
-                        <ComboBoxItem Content="Herbs &amp; Aromatics"/>
-                        <ComboBoxItem Content="Beef &amp; Pork"/>
-                        <ComboBoxItem Content="Poultry"/>
-                        <ComboBoxItem Content="Seafood &amp; Fish"/>
-                        <ComboBoxItem Content="Plant Proteins"/>
-                        <ComboBoxItem Content="Dairy"/>
-                        <ComboBoxItem Content="Eggs"/>
-                        <ComboBoxItem Content="Oils &amp; Fats"/>
-                        <ComboBoxItem Content="Bakery"/>
-                        <ComboBoxItem Content="Dry Grains &amp; Pastas"/>
-                        <ComboBoxItem Content="Spices"/>
-                        <ComboBoxItem Content="Canned"/>
-                    </ComboBox>
+                        <TextBlock Text="Product Name" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                        <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
 
-                    <TextBlock Text="Quantity" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
-                    <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
+                        <TextBlock Text="Category" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                        <ComboBox Text="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="Vegetables"/>
+                            <ComboBoxItem Content="Fruits"/>
+                            <ComboBoxItem Content="Herbs &amp; Aromatics"/>
+                            <ComboBoxItem Content="Beef &amp; Pork"/>
+                            <ComboBoxItem Content="Poultry"/>
+                            <ComboBoxItem Content="Seafood &amp; Fish"/>
+                            <ComboBoxItem Content="Plant Proteins"/>
+                            <ComboBoxItem Content="Dairy"/>
+                            <ComboBoxItem Content="Eggs"/>
+                            <ComboBoxItem Content="Oils &amp; Fats"/>
+                            <ComboBoxItem Content="Bakery"/>
+                            <ComboBoxItem Content="Dry Grains &amp; Pastas"/>
+                            <ComboBoxItem Content="Spices"/>
+                            <ComboBoxItem Content="Canned"/>
+                        </ComboBox>
 
-                    <TextBlock Text="Unit" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
-                    <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
-                        <ComboBoxItem Content="Kilograms"/>
-                        <ComboBoxItem Content="Liters"/>
-                        <ComboBoxItem Content="Pieces"/>
-                        <ComboBoxItem Content="Packs"/>
-                    </ComboBox>
+                        <TextBlock Text="Quantity" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                        <!-- LINIA MODIFICATĂ: Am schimbat UpdateSourceTrigger din PropertyChanged în LostFocus pentru suport zecimale (double) -->
+                        <TextBox Text="{Binding Quantity, UpdateSourceTrigger=LostFocus}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
 
-                    <TextBlock Text="Min Stock Threshold" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
-                    <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
+                        <TextBlock Text="Unit" Foreground="#F2F1F0" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                        <ComboBox Text="{Binding Unit, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumComboBoxStyle}" Height="30" Margin="5,0,5,10" VerticalContentAlignment="Center">
+                            <ComboBoxItem Content="Kilograms"/>
+                            <ComboBoxItem Content="Liters"/>
+                            <ComboBoxItem Content="Pieces"/>
+                        </ComboBox>
 
-                    <Border Height="15"/>
+                        <TextBlock Text="Min Stock Threshold" Foreground="#8B7365" FontWeight="SemiBold" Margin="5,0,5,3" FontSize="12"/>
+                        <TextBox Text="{Binding MinStock, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PremiumTextBoxStyle}" Height="30" Margin="5,0,5,10"/>
 
-                    <Button Content="Add Item"
+                        <Border Height="15"/>
+
+                        <Button Content="Add Item"
         Style="{StaticResource RoundedButtonStyle}"
         Margin="4"
         Background="#B39A8C"
         Height="38"
         Command="{Binding AddCommand}"/>
-                </StackPanel>
+                    </StackPanel>
 
-                <StackPanel VerticalAlignment="Top" Margin="-5,439,5,0" Grid.RowSpan="2">
+                    <StackPanel VerticalAlignment="Top" Margin="-5,439,5,0" Grid.RowSpan="2">
 
-                    <Button Content="Edit Item"
+                        <Button Content="Edit Item"
         Style="{StaticResource RoundedButtonStyle}"
         Background="#B39A8C"
         Height="34"
         Margin="4"
         Command="{Binding EditCommand}" Width="260"/>
 
-                    <Button Content="Delete"
+                        <Button Content="Delete"
         Style="{StaticResource RoundedButtonStyle}"
         Margin="4"
         Background="#8A3F4A"
         Height="34"
         Command="{Binding DeleteCommand}">
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#A05563"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#A05563"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
-                </StackPanel>
-            </Grid>
+                    </StackPanel>
+                </Grid>
             </Border>
 
             <Grid Grid.Column="1" Margin="15,5,5,5">
@@ -364,8 +364,8 @@
                     Background="{TemplateBinding Background}"
                     CornerRadius="16">
                                     <TextBlock Text="✕"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
