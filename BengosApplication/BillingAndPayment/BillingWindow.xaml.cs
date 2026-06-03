@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace BillingAndPayment
 {
@@ -20,13 +21,12 @@ namespace BillingAndPayment
         private bool isEditing;
         private int? tableId;
         private int? currentOrderId;
+        private DispatcherTimer? statusTimer;
 
         public double CurrentDiscount => discountPercent;
 
-        // Constructor implicit — fara masa
         public BillingWindow() : this(null) { }
 
-        // Constructor cu masa (masa noua, fara comanda existenta)
         public BillingWindow(int? tableId)
         {
             InitializeComponent();
@@ -50,7 +50,6 @@ namespace BillingAndPayment
             DgOrder.SelectionChanged += DgOrder_SelectionChanged;
         }
 
-        // Constructor cu masa + comanda existenta (deschis din TableWindow)
         public BillingWindow(int? tableId, int orderId, double discount)
         {
             InitializeComponent();
@@ -68,6 +67,10 @@ namespace BillingAndPayment
 
             LoadOrderItemsFromDb();
             RefreshTotals();
+            CheckOrderStatusAndDisablePay();
+            StartStatusTimer();
+
+            Closed += (s, e) => statusTimer?.Stop();
 
             BtnEditQty.IsEnabled = OrderItems.Count > 0;
             BtnDeleteItem.IsEnabled = false;
@@ -78,6 +81,33 @@ namespace BillingAndPayment
                 BtnDeleteItem.IsEnabled = OrderItems.Count > 0 && DgOrder.SelectedItem != null;
             };
             DgOrder.SelectionChanged += DgOrder_SelectionChanged;
+        }
+
+        private void CheckOrderStatusAndDisablePay()
+        {
+            if (!currentOrderId.HasValue) return;
+            try
+            {
+                using var conn = new SqlConnection(connString);
+                conn.Open();
+                using var cmd = new SqlCommand(
+                    "SELECT Status FROM Orders WHERE Id=@oid", conn);
+                cmd.Parameters.AddWithValue("@oid", currentOrderId.Value);
+                var status = cmd.ExecuteScalar()?.ToString();
+                BtnPay.IsEnabled = status == "ReadyToServe";
+            }
+            catch
+            {
+                BtnPay.IsEnabled = true;
+            }
+        }
+
+        private void StartStatusTimer()
+        {
+            statusTimer = new DispatcherTimer();
+            statusTimer.Interval = TimeSpan.FromSeconds(5);
+            statusTimer.Tick += (s, e) => CheckOrderStatusAndDisablePay();
+            statusTimer.Start();
         }
 
         // ──────────────────────────────────────────────
@@ -384,8 +414,6 @@ namespace BillingAndPayment
             double subtotalVal = OrderItems.Sum(i => i.Total);
             double totalVal = subtotalVal - (subtotalVal * discountPercent / 100.0);
 
-            // Pasul 1: Dacă este o masă nouă și nu avem încă un Id de comandă în baza de date, 
-            // creăm comanda ca fiind 'Pending' ca să avem un ID valid de trimis către PaymentWindow
             if (!currentOrderId.HasValue)
             {
                 try
@@ -400,7 +428,6 @@ namespace BillingAndPayment
                     cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
                     currentOrderId = (int)cmd.ExecuteScalar();
 
-                    // Salvăm și itemele pentru această comandă nouă
                     foreach (var item in OrderItems)
                     {
                         using var itemCmd = new SqlCommand(
@@ -419,7 +446,6 @@ namespace BillingAndPayment
                 }
             }
 
-            // Pasul 2: Deschidem fereastra de plată trimițând TableId și CurrentOrderId
             var payWindow = new PaymentWindow(
                 totalVal,
                 discountPercent,
@@ -430,7 +456,6 @@ namespace BillingAndPayment
 
             if (payWindow.ShowDialog() == true)
             {
-                // Pasul 3: Curățăm interfața din BillingWindow deoarece plata și statusul mesei au fost deja rezolvate cu succes în PaymentWindow
                 OrderItems.Clear();
                 discountPercent = 0;
                 currentOrderId = null;
@@ -512,9 +537,5 @@ namespace BillingAndPayment
                 : "0.00";
             TxtTotal.Text = $"{totalVal:0.00} RON";
         }
-
-        // ──────────────────────────────────────────────
-        // INNER CLASSES
-        // ──────────────────────────────────────────────
     }
 }
