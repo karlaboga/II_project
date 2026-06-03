@@ -12,7 +12,7 @@ namespace BillingAndPayment
 {
     public partial class BillingWindow : Window
     {
-        private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
+        private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True;";
 
         public ObservableCollection<OrderItem> OrderItems { get; } = new();
         public ObservableCollection<Dish> Dishes { get; } = new();
@@ -256,18 +256,45 @@ namespace BillingAndPayment
         {
             try
             {
-                if (e.Column.Header.ToString() == "Qty" && e.EditingElement is TextBox cell)
+                if (e.Row.Item is not OrderItem item) return;
+                if (e.EditingElement is not TextBox cell) return;
+
+                var col = e.Column.Header.ToString();
+
+                if (col == "Qty")
                 {
                     if (!int.TryParse(cell.Text, out int qty) || qty <= 0 || qty > 100)
                     {
                         e.Cancel = true;
-                        cell.Text = (e.Row.Item as OrderItem)?.Quantity.ToString();
+                        cell.Text = item.Quantity.ToString();
+                        return;
                     }
+                    item.Quantity = qty;
+                }
+                else if (col == "Unit Price")
+                {
+                    if (!double.TryParse(cell.Text, out double price) || price <= 0)
+                    {
+                        e.Cancel = true;
+                        cell.Text = item.Price.ToString("0.00");
+                        return;
+                    }
+                    item.Price = price;
+                }
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
                     DgOrder.Items.Refresh();
                     RefreshTotals();
-                }
+
+                    if (currentOrderId.HasValue)
+                        SyncItemToDb(item.Name, item);
+                }), DispatcherPriority.Background);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare la editarea celulei: " + ex.Message);
+            }
         }
 
         private void BtnEditQty_Click(object sender, RoutedEventArgs e)
