@@ -279,7 +279,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Unit Price" Binding="{Binding PriceDisplay}" IsReadOnly="True" Width="120">
+                        <DataGridTextColumn Header="Unit Price" Binding="{Binding Price, StringFormat='{}{0:0.00}'}" Width="120">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -403,4 +403,3 @@
         </Grid>
     </Border>
 </Window>
-    
