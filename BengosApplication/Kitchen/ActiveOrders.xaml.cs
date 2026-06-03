@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading; // NEAPĂRAT: Avem nevoie de acest namespace pentru DispatcherTimer
+using System.Windows.Threading;
 using Kitchen.Models1;
 
 namespace Kitchen
@@ -13,29 +13,26 @@ namespace Kitchen
     {
         private readonly string connString = @"Server=tcp:server-proiect-bengos-ii.database.windows.net,1433;Initial Catalog=BengosDB;User ID=admin-proiect;Password=Bengos67;Encrypt=True;TrustServerCertificate=False;";
 
-        // Definim timerul la nivel de clasă
         private DispatcherTimer autoRefreshTimer;
 
         public ActiveOrders()
         {
             InitializeComponent();
             LoadActiveOrders();
-            SetupAutoRefresh(); // Pornim configurarea timerului
+            SetupAutoRefresh();
         }
 
-        // Metodă nouă pentru configurarea și pornirea cronometrului
         private void SetupAutoRefresh()
         {
             autoRefreshTimer = new DispatcherTimer();
-            autoRefreshTimer.Interval = TimeSpan.FromSeconds(10); // Setat la fix 10 secunde
+            autoRefreshTimer.Interval = TimeSpan.FromSeconds(10);
             autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-            autoRefreshTimer.Start(); // Pornim timerul
+            autoRefreshTimer.Start();
         }
 
-        // Evenimentul care se declanșează la fiecare 10 secunde
         private void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
-            LoadActiveOrders(); // Reîncarcă automat comenzile din baza de date Azure
+            LoadActiveOrders();
         }
 
         private void LoadActiveOrders()
@@ -50,6 +47,7 @@ namespace Kitchen
                 string orderQuery = @"
                     SELECT 
                         o.Id AS OrderId, 
+                        o.OrderNumber,
                         ISNULL(o.OrderDate, GETDATE()) AS Timestamp, 
                         t.TableNumber AS TableNumber
                     FROM Orders o
@@ -63,6 +61,7 @@ namespace Kitchen
                 List<int> orderIds = new();
                 Dictionary<int, DateTime> orderTimes = new();
                 Dictionary<int, int> tableNumbers = new();
+                Dictionary<int, int> orderNumbers = new();
 
                 while (rdrOrders.Read())
                 {
@@ -70,6 +69,7 @@ namespace Kitchen
                     orderIds.Add(id);
                     orderTimes[id] = Convert.ToDateTime(rdrOrders["Timestamp"]);
                     tableNumbers[id] = Convert.ToInt32(rdrOrders["TableNumber"]);
+                    orderNumbers[id] = Convert.ToInt32(rdrOrders["OrderNumber"]);
                 }
                 rdrOrders.Close();
 
@@ -115,7 +115,8 @@ namespace Kitchen
 
                     activeOrders.Add(new KitchenOrderViewModel
                     {
-                        OrderId = $"Order #{oid}",
+                        OrderDisplay = $"Order #{orderNumbers[oid]}",
+                        OrderNumber = orderNumbers[oid],
                         TableNumber = tableNumbers[oid],
                         Timestamp = orderTimes[oid],
                         TotalPrepTime = (int)Math.Round(averageTime),
@@ -125,8 +126,6 @@ namespace Kitchen
             }
             catch (Exception ex)
             {
-                // Am scos MessageBox-ul de eroare de la Load (opțional) ca să nu bombardeze ecranul 
-                // bucătarului cu pop-up-uri la fiecare 10 secunde dacă pică internetul temporar.
                 System.Diagnostics.Debug.WriteLine("Eroare fundal SQL: " + ex.Message);
             }
 
@@ -136,7 +135,7 @@ namespace Kitchen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            autoRefreshTimer?.Stop(); // Oprim timerul la închiderea ferestrei pentru a elibera memoria
+            autoRefreshTimer?.Stop();
             this.Close();
         }
 
@@ -149,35 +148,43 @@ namespace Kitchen
         {
             if (sender is Button btn && btn.DataContext is KitchenOrderViewModel completedOrder)
             {
-                string idString = completedOrder.OrderId.Replace("Order #", "").Trim();
-                if (int.TryParse(idString, out int oid))
+                int oid = 0;
+                try
                 {
-                    try
+                    using var conn = new SqlConnection(connString);
+                    conn.Open();
+
+                    using var getIdCmd = new SqlCommand(
+                        "SELECT Id FROM Orders WHERE OrderNumber=@onum AND Status='ToKitchen'", conn);
+                    getIdCmd.Parameters.AddWithValue("@onum", completedOrder.OrderNumber);
+                    var result = getIdCmd.ExecuteScalar();
+                    if (result == null)
                     {
-                        using var conn = new SqlConnection(connString);
-                        conn.Open();
-
-                        using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn);
-                        cmd.Parameters.AddWithValue("@oid", oid);
-                        cmd.ExecuteNonQuery();
-
-                        string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
-                        using var cmdItems = new SqlCommand(updateItemsQuery, conn);
-                        cmdItems.Parameters.AddWithValue("@oid", oid);
-                        cmdItems.ExecuteNonQuery();
-
-                        MessageBox.Show($"Produsele din comanda #{oid} sunt gata!");
-                        LoadActiveOrders();
-
-                        if (BillingAndPayment.TableWindow.Instance != null)
-                        {
-                            BillingAndPayment.TableWindow.Instance.LoadTables();
-                        }
+                        MessageBox.Show("Comanda nu a fost găsită în baza de date.");
+                        return;
                     }
-                    catch (Exception ex)
+                    oid = Convert.ToInt32(result);
+
+                    using var cmd = new SqlCommand("UPDATE Orders SET Status = 'ReadyToServe' WHERE Id = @oid", conn);
+                    cmd.Parameters.AddWithValue("@oid", oid);
+                    cmd.ExecuteNonQuery();
+
+                    string updateItemsQuery = "UPDATE OrderItems SET StatusItem = 'Ready' WHERE OrderId = @oid";
+                    using var cmdItems = new SqlCommand(updateItemsQuery, conn);
+                    cmdItems.Parameters.AddWithValue("@oid", oid);
+                    cmdItems.ExecuteNonQuery();
+
+                    MessageBox.Show($"Produsele din comanda #{completedOrder.OrderNumber} sunt gata!");
+                    LoadActiveOrders();
+
+                    if (BillingAndPayment.TableWindow.Instance != null)
                     {
-                        MessageBox.Show("Eroare la salvare: " + ex.Message);
+                        BillingAndPayment.TableWindow.Instance.LoadTables();
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Eroare la salvare: " + ex.Message);
                 }
             }
         }

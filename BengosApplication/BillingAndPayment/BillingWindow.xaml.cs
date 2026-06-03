@@ -21,6 +21,7 @@ namespace BillingAndPayment
         private bool isEditing;
         private int? tableId;
         private int? currentOrderId;
+        private int? currentOrderNumber;
         private DispatcherTimer? statusTimer;
 
         public double CurrentDiscount => discountPercent;
@@ -110,10 +111,6 @@ namespace BillingAndPayment
             statusTimer.Start();
         }
 
-        // ──────────────────────────────────────────────
-        // LOAD
-        // ──────────────────────────────────────────────
-
         private void LoadDishes()
         {
             try
@@ -164,10 +161,6 @@ namespace BillingAndPayment
                 MessageBox.Show("Error loading order items: " + ex.Message);
             }
         }
-
-        // ──────────────────────────────────────────────
-        // EVENTS
-        // ──────────────────────────────────────────────
 
         private void DgOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -420,13 +413,21 @@ namespace BillingAndPayment
                 {
                     using var conn = new SqlConnection(connString);
                     conn.Open();
-                    using var cmd = new SqlCommand(
-                        @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
-                          OUTPUT INSERTED.Id VALUES (@total, @disc, 'Pending', @tableId)", conn);
+                    using var cmd = new SqlCommand(@"
+                        INSERT INTO Orders (Total, DiscountPercent, Status, TableId, OrderNumber)
+                        OUTPUT INSERTED.Id, INSERTED.OrderNumber
+                        VALUES (@total, @disc, 'Pending', @tableId,
+                            ISNULL((SELECT MAX(OrderNumber) FROM Orders WHERE CAST(ISNULL(OrderDate, GETDATE()) AS DATE) = CAST(GETDATE() AS DATE)), 0) + 1)", conn);
                     cmd.Parameters.AddWithValue("@total", totalVal);
                     cmd.Parameters.AddWithValue("@disc", discountPercent);
                     cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
-                    currentOrderId = (int)cmd.ExecuteScalar();
+                    using var rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                    {
+                        currentOrderId = Convert.ToInt32(rdr["Id"]);
+                        currentOrderNumber = Convert.ToInt32(rdr["OrderNumber"]);
+                    }
+                    rdr.Close();
 
                     foreach (var item in OrderItems)
                     {
@@ -459,6 +460,7 @@ namespace BillingAndPayment
                 OrderItems.Clear();
                 discountPercent = 0;
                 currentOrderId = null;
+                currentOrderNumber = null;
                 RefreshTotals();
                 DialogResult = true;
                 Close();
@@ -483,13 +485,21 @@ namespace BillingAndPayment
                 }
                 else
                 {
-                    using var cmd = new SqlCommand(
-                        @"INSERT INTO Orders (Total, DiscountPercent, Status, TableId)
-                          OUTPUT INSERTED.Id VALUES (@total, @disc, 'Paid', @tableId)", conn);
+                    using var cmd = new SqlCommand(@"
+                        INSERT INTO Orders (Total, DiscountPercent, Status, TableId, OrderNumber)
+                        OUTPUT INSERTED.Id, INSERTED.OrderNumber
+                        VALUES (@total, @disc, 'Paid', @tableId,
+                            ISNULL((SELECT MAX(OrderNumber) FROM Orders WHERE CAST(ISNULL(OrderDate, GETDATE()) AS DATE) = CAST(GETDATE() AS DATE)), 0) + 1)", conn);
                     cmd.Parameters.AddWithValue("@total", total);
                     cmd.Parameters.AddWithValue("@disc", discountPercent);
                     cmd.Parameters.AddWithValue("@tableId", (object?)tableId ?? DBNull.Value);
-                    int orderId = (int)cmd.ExecuteScalar();
+                    using var rdr = cmd.ExecuteReader();
+                    int orderId = 0;
+                    if (rdr.Read())
+                    {
+                        orderId = Convert.ToInt32(rdr["Id"]);
+                    }
+                    rdr.Close();
 
                     foreach (var item in OrderItems)
                     {
@@ -513,6 +523,7 @@ namespace BillingAndPayment
 
                 OrderItems.Clear();
                 discountPercent = 0;
+                currentOrderNumber = null;
                 RefreshTotals();
                 DialogResult = true;
             }
