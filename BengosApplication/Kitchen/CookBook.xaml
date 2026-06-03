@@ -20,6 +20,25 @@
                       ResizeBorderThickness="0"/>
     </WindowChrome.WindowChrome>
 
+    <Window.Resources>
+        <Style x:Key="RecipeButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#F2F1F0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6" Padding="10,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Border Background="#F2F1F0" CornerRadius="24" Margin="10">
         <Border.Effect>
             <DropShadowEffect BlurRadius="30" Direction="270" ShadowDepth="4" Opacity="0.15" Color="#4A2D1C"/>
@@ -31,6 +50,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Sidebar Stanga -->
             <Border Background="#E5DFD9" CornerRadius="24,0,0,24">
                 <Grid Margin="15,25,15,15">
                     <Grid.RowDefinitions>
@@ -42,132 +62,7 @@
 
                     <StackPanel Grid.Row="0" Margin="0,0,0,15">
                         <TextBlock Text="Filter Category:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2D1C" Margin="0,0,0,5"/>
-
-                        <ComboBox x:Name="CategoryFilterComboBox"
-                                  Height="35"
-                                  VerticalContentAlignment="Center"
-                                  SelectedIndex="0"
-                                  SelectionChanged="CategoryFilterComboBox_SelectionChanged"
-                                  BorderBrush="#8B7365"
-                                  Background="#F2F1F0">
-                            <ComboBox.Style>
-                                <Style TargetType="ComboBox">
-                                    <Setter Property="BorderBrush" Value="#8B7365"/>
-                                    <Setter Property="Background" Value="#F2F1F0"/>
-                                    <Setter Property="Foreground" Value="#4A2D1C"/>
-                                    <Setter Property="Padding" Value="6,0,0,0"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ComboBox">
-                                                <Grid>
-                                                    <ToggleButton x:Name="ToggleButton"
-                                                                  BorderBrush="{TemplateBinding BorderBrush}"
-                                                                  Background="{TemplateBinding Background}"
-                                                                  Grid.Column="2" 
-                                                                  Focusable="false"
-                                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                  ClickMode="Press">
-                                                        <ToggleButton.Template>
-                                                            <ControlTemplate TargetType="ToggleButton">
-                                                                <Border x:Name="Border" 
-                                                                        Background="{TemplateBinding Background}"
-                                                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                                                        BorderThickness="1"
-                                                                        CornerRadius="4"/>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter TargetName="Border" Property="Background" Value="#D1C7BD"/>
-                                                                        <Setter TargetName="Border" Property="BorderBrush" Value="#4A2D1C"/>
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </ToggleButton.Template>
-                                                    </ToggleButton>
-
-                                                    <ContentPresenter x:Name="ContentSite"
-                                                                      IsHitTestVisible="False" 
-                                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                                      Margin="{TemplateBinding Padding}"
-                                                                      VerticalAlignment="Center"
-                                                                      HorizontalAlignment="Left"/>
-
-                                                    <Path x:Name="Arrow"
-                                                          Grid.Column="2"     
-                                                          Fill="#4A2D1C"
-                                                          HorizontalAlignment="Right" 
-                                                          VerticalAlignment="Center"
-                                                          Margin="0,0,10,0"
-                                                          Data="M 0 0 L 4 4 L 8 0 Z"/>
-
-                                                    <Popup x:Name="Popup"
-                                                           Placement="Bottom"
-                                                           IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                           AllowsTransparency="True" 
-                                                           Focusable="False"
-                                                           PopupAnimation="Slide">
-                                                        <Grid x:Name="DropDown"
-                                                              SnapsToDevicePixels="True"
-                                                              MinWidth="{TemplateBinding ActualWidth}"
-                                                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                                            <Border x:Name="DropDownBorder"
-                                                                    Background="#FFFFFF"
-                                                                    BorderThickness="1"
-                                                                    BorderBrush="#8B7365"
-                                                                    CornerRadius="0,0,4,4"/>
-                                                            <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
-                                                            </ScrollViewer>
-                                                        </Grid>
-                                                    </Popup>
-                                                </Grid>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                                        <Setter TargetName="ToggleButton" Property="BorderBrush" Value="#5F3B26"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ComboBox.Style>
-
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem">
-                                    <Setter Property="Padding" Value="8,6"/>
-                                    <Setter Property="Foreground" Value="#4A2D1C"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="FontSize" Value="14"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ComboBoxItem">
-                                                <Border x:Name="ItemBorder" 
-                                                        Background="{TemplateBinding Background}" 
-                                                        Padding="{TemplateBinding Padding}"
-                                                        SnapsToDevicePixels="True">
-                                                    <ContentPresenter />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#E5DFD9"/>
-                                                        <Setter Property="Foreground" Value="#4A2D1C"/>
-                                                    </Trigger>
-                                                    <Trigger Property="IsHighlighted" Value="True">
-                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
-                                                        <Setter Property="Foreground" Value="#F2F1F0"/>
-                                                    </Trigger>
-                                                    <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#8B7365"/>
-                                                        <Setter Property="Foreground" Value="#F2F1F0"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ComboBox.ItemContainerStyle>
-
+                        <ComboBox x:Name="CategoryFilterComboBox" Height="35" VerticalContentAlignment="Center" SelectedIndex="0" SelectionChanged="CategoryFilterComboBox_SelectionChanged" BorderBrush="#8B7365" Background="#F2F1F0">
                             <ComboBoxItem Content="All Dishes"/>
                             <ComboBoxItem Content="Appetizers"/>
                             <ComboBoxItem Content="Main Course"/>
@@ -176,100 +71,32 @@
                         </ComboBox>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="1" 
-                               Text="Search Dish:" 
-                               FontSize="14" 
-                               FontWeight="SemiBold" 
-                               Foreground="#4A2D1C" 
-                               Margin="0,0,0,5"/>
+                    <TextBlock Grid.Row="1" Text="Search Dish:" FontSize="14" FontWeight="SemiBold" Foreground="#4A2D1C" Margin="0,0,0,5"/>
+                    <TextBox Grid.Row="2" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" Height="35" VerticalContentAlignment="Center" Padding="5" Margin="0,0,0,15" BorderBrush="#8B7365" Background="#F2F1F0"/>
 
-                    <TextBox Grid.Row="2"
-                             x:Name="SearchTextBox"
-                             TextChanged="SearchTextBox_TextChanged"
-                             Height="35"
-                             VerticalContentAlignment="Center"
-                             Padding="5"
-                             Margin="0,0,0,15"
-                             BorderBrush="#8B7365"
-                             Background="#F2F1F0">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Background" Value="#F2F1F0"/>
-                                <Setter Property="BorderBrush" Value="#8B7365"/>
-                                <Setter Property="Foreground" Value="#4A2D1C"/>
-                                <Setter Property="CaretBrush" Value="#4A2D1C"/>
-                                <Setter Property="SelectionBrush" Value="#8B7365"/>
-                                <Setter Property="BorderThickness" Value="1"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border x:Name="TextBoxBorder"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                                    CornerRadius="4">
-                                                <ScrollViewer x:Name="PART_ContentHost" 
-                                                              Focusable="false" 
-                                                              HorizontalScrollBarVisibility="Hidden" 
-                                                              VerticalScrollBarVisibility="Hidden"/>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="TextBoxBorder" Property="BorderBrush" Value="#8B7365"/>
-                                                    <Setter Property="Background" Value="#E5DFD9"/>
-                                                </Trigger>
-                                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                                    <Setter TargetName="TextBoxBorder" Property="BorderBrush" Value="#4A2D1C"/>
-                                                    <Setter TargetName="TextBoxBorder" Property="BorderThickness" Value="2"/>
-                                                    <Setter Property="Background" Value="#FFFFFF"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-
-                    <ListBox Grid.Row="3"
-                             x:Name="RecipeListBox"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             DisplayMemberPath="Name">
+                    <ListBox Grid.Row="3" x:Name="RecipeListBox" Background="Transparent" BorderThickness="0" DisplayMemberPath="Name">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Padding" Value="10"/>
                                 <Setter Property="FontSize" Value="16"/>
                                 <Setter Property="Foreground" Value="#4A2D1C"/>
                                 <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListBoxItem">
-                                            <Border x:Name="ListItemBorder" 
-                                                    Background="{TemplateBinding Background}" 
-                                                    Padding="{TemplateBinding Padding}"
-                                                    CornerRadius="6" Margin="0,2">
-                                                <ContentPresenter />
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="ListItemBorder" Property="Background" Value="#E5DFD9"/>
-                                                    <Setter Property="Foreground" Value="#4A2D1C"/>
-                                                </Trigger>
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Setter TargetName="ListItemBorder" Property="Background" Value="#4A2D1C"/>
-                                                    <Setter Property="Foreground" Value="#F2F1F0"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#D1C7BD"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#4A2D1C"/>
+                                        <Setter Property="Foreground" Value="#F2F1F0"/>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
                 </Grid>
             </Border>
 
+            <!-- Continut Dreapta -->
             <Grid Grid.Column="1" Margin="35,25,25,25">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -285,12 +112,7 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <TextBlock x:Name="TxtDishName"
-                                   Text="Select a Recipe"
-                                   FontSize="28"
-                                   FontWeight="Bold"
-                                   Foreground="#4A2D1C"/>
-
+                        <TextBlock x:Name="TxtDishName" Text="Select a Recipe" FontSize="28" FontWeight="Bold" Foreground="#4A2D1C"/>
                         <WrapPanel Margin="0,8,0,0" Height="34">
                             <TextBlock Text="⏱️ Prep Time: " FontSize="14" Foreground="#8B7365" FontWeight="Bold"/>
                             <TextBlock x:Name="TxtPrepTime" Text="--" FontSize="14" Foreground="#8B7365"/>
@@ -299,36 +121,13 @@
                         </WrapPanel>
                     </StackPanel>
 
+                    <!-- Zona Butoane Actiuni Reteta -->
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-                        <Button x:Name="BtnAddRecipe"
-                                Content="➕ Add Recipe"
-                                Click="BtnAddRecipe_Click"
-                                Width="120"
-                                Height="35"
-                                Margin="0,0,15,0"
-                                FontSize="13"
-                                FontWeight="SemiBold"
-                                Background="#8B7365"
-                                Foreground="#F2F1F0"
-                                BorderThickness="0"
-                                Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="6">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#4A2D1C"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                        <Button x:Name="BtnAddRecipe" Content="➕ Add" Style="{StaticResource RecipeButtonStyle}" Click="BtnAddRecipe_Click" Width="80" Height="35" Margin="0,0,8,0" Background="#8B7365"/>
+                        <Button x:Name="BtnEditRecipe" Content="✏️ Edit" Style="{StaticResource RecipeButtonStyle}" Click="BtnEditRecipe_Click" Width="80" Height="35" Margin="0,0,8,0" Background="#4A2D1C"/>
+                        <Button x:Name="BtnDeleteRecipe" Content="🗑️ Delete" Style="{StaticResource RecipeButtonStyle}" Click="BtnDeleteRecipe_Click" Width="80" Height="35" Margin="0,0,15,0" Background="#8A3F4A"/>
 
-                        <Button x:Name="BtnBack"
-                                Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C"
-                                FontWeight="Bold" Click="BtnBack_Click" Cursor="Hand">
+                        <Button x:Name="BtnBack" Width="32" Height="32" Background="Transparent" Foreground="#4A2D1C" FontWeight="Bold" Click="BtnBack_Click" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="xBorder" Background="{TemplateBinding Background}" CornerRadius="16">
@@ -355,12 +154,7 @@
                 <DockPanel Grid.Row="3">
                     <TextBlock DockPanel.Dock="Top" Text="PREPARATION INSTRUCTIONS" FontSize="16" FontWeight="Bold" Foreground="#8B7365" Margin="0,0,0,8"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <TextBlock x:Name="TxtInstructions"
-                                   Text="Select a dish from the sidebar menu to read instructions."
-                                   FontSize="15"
-                                   Foreground="#4A2D1C"
-                                   TextWrapping="Wrap"
-                                   LineHeight="22"/>
+                        <TextBlock x:Name="TxtInstructions" Text="Select a dish from the sidebar menu to read instructions." FontSize="15" Foreground="#4A2D1C" TextWrapping="Wrap" LineHeight="22"/>
                     </ScrollViewer>
                 </DockPanel>
             </Grid>

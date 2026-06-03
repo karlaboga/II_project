@@ -299,6 +299,7 @@
 
                     <Border Grid.Row="0" Background="#E5DFD9" Padding="15" CornerRadius="8" Margin="0,0,0,15">
                         <Grid>
+                            <!-- REPARAT DIRECT: Modificat în Grid.ColumnDefinitions (cu s la final) -->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="1*"/>
@@ -308,7 +309,7 @@
 
                             <StackPanel Grid.Column="0" Margin="0,0,10,0">
                                 <TextBlock Text="Select Product:" FontSize="12" FontWeight="Bold" Foreground="#4A2D1C" Margin="0,0,0,4"/>
-                                <ComboBox x:Name="ComboInventoryProducts" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}"/>
+                                <ComboBox x:Name="ComboInventoryProducts" SelectionChanged="ComboInventoryProducts_SelectionChanged" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Margin="0,0,10,0">
@@ -318,13 +319,7 @@
 
                             <StackPanel Grid.Column="2" Margin="0,0,10,0">
                                 <TextBlock Text="Unit Needed:" FontSize="12" FontWeight="Bold" Foreground="#4A2D1C" Margin="0,0,0,4"/>
-                                <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}">
-                                    <ComboBoxItem Content="Kilograms"/>
-                                    <ComboBoxItem Content="Grams"/>
-                                    <ComboBoxItem Content="Liters"/>
-                                    <ComboBoxItem Content="Milliliters"/>
-                                    <ComboBoxItem Content="Pieces"/>
-                                </ComboBox>
+                                <ComboBox x:Name="ComboIngredientUnit" Height="35" VerticalContentAlignment="Center" Style="{StaticResource ModernComboBoxStyle}"/>
                             </StackPanel>
 
                             <Button Grid.Column="3" x:Name="BtnAddIngredientRow"
@@ -368,7 +363,7 @@
                             <DataGridTemplateColumn Width="60">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="❌" Style="{StaticResource DataGridDeleteButtonStyle}"/>
+                                        <Button Content="❌" Click="BtnRemoveIngredientRow_Click" Style="{StaticResource DataGridDeleteButtonStyle}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -402,10 +397,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
-                
             </StackPanel>
-
         </Grid>
     </Border>
 </Window>
