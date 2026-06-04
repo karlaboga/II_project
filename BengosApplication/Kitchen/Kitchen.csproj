@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BengosMenu\BengosMenu.csproj" />
+    <ProjectReference Include="..\Bengos\Bengos.csproj" />
     <ProjectReference Include="..\BillingAndPayment\BillingAndPayment.csproj" />
     <ProjectReference Include="..\Inventory\Inventory.csproj" />
   </ItemGroup>
